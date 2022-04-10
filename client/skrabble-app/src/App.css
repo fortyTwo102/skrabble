@@ -64,6 +64,18 @@ nav h1 {
   font-family: Arial, Helvetica, sans-serif;
 }
 
+#player-one {
+  background-color: #5584AC;
+}
+
+#player-two {
+  background-color: #95D1CC;
+}
+
+#cursor {
+  border: 1px solid #E6BA95;
+}
+
 #correct {
   background-color: #528d4e;
 }
