@@ -1,23 +1,32 @@
 import React, { useContext } from 'react'
 import { AppContext } from '../App'
 
+import { ROW, COLUMN } from '../Words'
+
 function Letter({row, column}) {
   const { board, setCursor, letterStyleBoard, setLetterStyleBoard, colorBoard } = useContext(AppContext)
-  const letter = board[row][column]
+  
   const keyColor = colorBoard[row][column]
   const letterStyleVal = letterStyleBoard[row][column]
+  const letter = board[row][column]
 
   const moveCursor = () => {
+
+      if (letter !== ''){
+        return
+      }
+
       const newCursor = [row, column]
       let newLetterStyleBoard = [...letterStyleBoard]
       
-      for (let rindex = 0; rindex < 6; rindex++) {
-        for (let cindex = 0; cindex < 6; cindex++) {
+      for (let rindex = 0; rindex < ROW; rindex++) {
+        for (let cindex = 0; cindex < COLUMN; cindex++) {
           newLetterStyleBoard[rindex][cindex] = "letter"
         }
       }
+
       setLetterStyleBoard(newLetterStyleBoard)
-      newLetterStyleBoard[row][column] = letterStyleVal === "letter" ? "letter-glow" : "letter"
+      newLetterStyleBoard[row][column] = "letter-glow"
       setCursor(newCursor)
       setLetterStyleBoard(newLetterStyleBoard)
       console.log(newLetterStyleBoard)

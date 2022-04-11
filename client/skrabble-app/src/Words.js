@@ -17,10 +17,13 @@ export const colorBoardDefault = [
 ]
 
 export const letterStyleBoardDefault = [
-    ["letter", "letter", "letter", "letter", "letter", "letter"], 
+    ["letter-glow", "letter", "letter", "letter", "letter", "letter"], 
     ["letter", "letter", "letter", "letter", "letter", "letter"],
     ["letter", "letter", "letter", "letter", "letter", "letter"],
     ["letter", "letter", "letter", "letter", "letter", "letter"],
     ["letter", "letter", "letter", "letter", "letter", "letter"],
     ["letter", "letter", "letter", "letter", "letter", "letter"]
 ]
+
+export const ROW = 6;
+export const COLUMN = 6;
