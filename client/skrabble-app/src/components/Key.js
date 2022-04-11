@@ -4,6 +4,7 @@ import { AppContext } from '../App'
 function Key({ keyVal, bigKey }) {
     const { board, setBoard, cursor, colorBoard, setColorBoard, activePlayer, setActivePlayer } = useContext(AppContext)
     const selectLetter = () => {
+        
         const newBoard = [...board]
         const row = cursor[0]
         const column = cursor[1]
