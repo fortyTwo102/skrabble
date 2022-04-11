@@ -6,6 +6,7 @@ function Board() {
 
     const boardItems = []
 
+    // populate the board with letter spots
     for (let rindex = 0; rindex < ROW; rindex++){
         let letters = []
         for (let cindex = 0; cindex < COLUMN; cindex++){
