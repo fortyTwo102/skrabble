@@ -2,6 +2,7 @@ import './App.css';
 
 import Keyboard from './components/Keyboard';
 import Board from './components/Board';
+import Scorecard from './components/Scorecard';
 
 import { createContext, useState } from 'react';
 import { boardDefault, colorBoardDefault, letterStyleBoardDefault} from './Words';
@@ -23,6 +24,7 @@ function App() {
       </nav>
       <AppContext.Provider value={{board, setBoard, cursor, setCursor, colorBoard, setColorBoard, activePlayer, setActivePlayer, letterStyleBoard, setLetterStyleBoard}}>
         <div className='game'>
+          <Scorecard/>
           <Board/>
           <Keyboard/>
         </div>

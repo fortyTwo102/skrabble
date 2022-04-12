@@ -1,6 +1,7 @@
-import React, { useState } from 'react'
-import { boardDefault, ROW, COLUMN } from '../Words';
-import Letter from './Letter';
+import React from 'react'
+import { ROW, COLUMN } from '../Words'
+import Letter from './Letter'
+import './Board.css'
 
 function Board() {
 

@@ -1,7 +1,8 @@
 import React, { useContext } from 'react'
-import { AppContext } from '../App'
 
+import { AppContext } from '../App'
 import { ROW, COLUMN } from '../Words'
+import './Letter.css'
 
 function Letter({row, column}) {
   const { board, setCursor, letterStyleBoard, setLetterStyleBoard, colorBoard } = useContext(AppContext)
@@ -16,7 +17,6 @@ function Letter({row, column}) {
       if (letter !== ''){
         return
       }
-
       
       const newCursor = [row, column]
       let newLetterStyleBoard = [...letterStyleBoard]

@@ -1,7 +1,8 @@
 import React, { useContext } from 'react'
-import { AppContext } from '../App'
 
+import { AppContext } from '../App'
 import { ROW, COLUMN } from '../Words'
+import './Key.css'
 
 function Key({ keyVal, bigKey }) {
     const { board, setBoard, cursor, colorBoard, setColorBoard, activePlayer, setActivePlayer, letterStyleBoard, setLetterStyleBoard } = useContext(AppContext)
@@ -20,7 +21,6 @@ function Key({ keyVal, bigKey }) {
         setColorBoard(newColorBoard)
 
         // remove glow after keyVal is set
-        
         let newLetterStyleBoard = [...letterStyleBoard]
         
         for (let rindex = 0; rindex < ROW; rindex++) {
@@ -35,6 +35,7 @@ function Key({ keyVal, bigKey }) {
         activePlayer === "player-one" ? setActivePlayer("player-two") : setActivePlayer("player-one")
     }
     return (
+        
         <div className='key' id={bigKey && "big"} onClick={inputLetter}>{keyVal}</div>
     )
 }
