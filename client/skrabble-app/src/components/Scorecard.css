@@ -2,6 +2,9 @@
     padding-top: 5px;
     font-weight: bold; 
     font-size: large;
+    position: fixed;
+    top: 485px;
+    font-size: 20px;
 }
 
 p {

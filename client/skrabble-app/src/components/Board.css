@@ -1,15 +1,24 @@
 .board {
-    width: 400px;
-    height: 450px;
+    position: relative;
+    width: 350px;
+    height: 350px;
+    top: 0px;
     border: 1px solid black;
     display: flex;
     flex-direction: column;
+    margin: 0;
+}
+
+.board-container {
+    padding: 30px;
+    position: fixed;
+    margin: 0;
 }
 
 
 .row {
-flex: 33%;
-display: flex;
-flex-direction: row;
-margin: 5px;
+    flex: 33%;
+    display: flex;
+    flex-direction: row;
+    margin: 5px;
 }

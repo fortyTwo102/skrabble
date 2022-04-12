@@ -24,8 +24,10 @@ function App() {
       </nav>
       <AppContext.Provider value={{board, setBoard, cursor, setCursor, colorBoard, setColorBoard, activePlayer, setActivePlayer, letterStyleBoard, setLetterStyleBoard}}>
         <div className='game'>
+          <div className='board-container'>
+            <Board/>
+          </div>
           <Scorecard/>
-          <Board/>
           <Keyboard/>
         </div>
       </AppContext.Provider>
