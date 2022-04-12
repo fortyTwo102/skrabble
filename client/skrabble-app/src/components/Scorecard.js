@@ -1,12 +1,16 @@
-import React from 'react'
+import React, { useContext } from 'react'
+
+import { AppContext } from '../App'
 import './Scorecard.css'
 
 function Scorecard() {
+    const { activePlayer, setActivePlayer} = useContext(AppContext)
+
     let playerOneScore = 29
     let playerTwoScore = 56
-    let isPlayerOneActive = true
-    let activePlayer = "player-one"
+    let isPlayerOneActive = activePlayer === "player-one" ? true : false
     let activeScoreStyleID = activePlayer + "-active"
+    
     return (
         <div className='scorecard'>
             <p className='score-player-one' id={isPlayerOneActive && activeScoreStyleID}>{playerOneScore}</p>
