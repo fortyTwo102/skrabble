@@ -20,7 +20,7 @@ function App() {
   return (
     <div className="App">
       <nav>
-        <h1>Skrabble!</h1>
+        <h1>skrabble.</h1>
       </nav>
       <AppContext.Provider value={{board, setBoard, cursor, setCursor, colorBoard, setColorBoard, activePlayer, setActivePlayer, letterStyleBoard, setLetterStyleBoard}}>
         <div className='game'>
