@@ -5,11 +5,11 @@ import { ROW, COLUMN } from '../Words'
 import './Letter.css'
 
 function Letter({row, column}) {
-  const { board, setCursor, letterStyleBoard, setLetterStyleBoard, colorBoard } = useContext(AppContext)
+  const { board, setBoard, setCursor, letterStyleBoard, activePlayer, setLetterStyleBoard, colorBoard } = useContext(AppContext)
   
-  const keyColor = colorBoard[row][column]
-  const letterStyleVal = letterStyleBoard[row][column]
-  const letter = board[row][column]
+  const keyColor = board[row][column]["player"]
+  const letterStyleVal = board[row][column]["cursor"] ? "letter-glow" : "letter"
+  const letter = board[row][column]["keyVal"]
 
   const moveCursor = () => {
 
@@ -19,21 +19,22 @@ function Letter({row, column}) {
       }
       
       const newCursor = [row, column]
-      let newLetterStyleBoard = [...letterStyleBoard]
+      let newBoard = [...board]
       
       // remove the glow cursor from other place(s)
       for (let rindex = 0; rindex < ROW; rindex++) {
         for (let cindex = 0; cindex < COLUMN; cindex++) {
-          newLetterStyleBoard[rindex][cindex] = "letter"
+          newBoard[rindex][cindex]["cursor"] = false
         }
       }
-      setLetterStyleBoard(newLetterStyleBoard)
+      setBoard(newBoard)
 
       // glow it up
-      newLetterStyleBoard[row][column] = "letter-glow"
-      setLetterStyleBoard(newLetterStyleBoard)
+      newBoard[row][column]["cursor"] = true
       
+      setBoard(newBoard)
       setCursor(newCursor)
+      console.log(newBoard[row][column])
   }
   return (
     <div className={letterStyleVal} id={keyColor} onClick={moveCursor}>{letter}</div>

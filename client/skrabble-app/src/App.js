@@ -5,13 +5,13 @@ import Board from './components/Board';
 import Scorecard from './components/Scorecard';
 
 import { createContext, useState } from 'react';
-import { boardDefault, colorBoardDefault, letterStyleBoardDefault} from './Words';
+import { ROW, COLUMN, boardDefault, colorBoardDefault, letterStyleBoardDefault, mainBoardDefault} from './Words';
 
 export const AppContext = createContext()
 
 function App() {
-  
-  const [board, setBoard] = useState(boardDefault)
+
+  const [board, setBoard] = useState(mainBoardDefault)
   const [cursor, setCursor] = useState([0, 0])
   const [colorBoard, setColorBoard] = useState(colorBoardDefault)
   const [activePlayer, setActivePlayer] = useState("player-one")
