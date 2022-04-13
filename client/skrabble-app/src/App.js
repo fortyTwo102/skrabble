@@ -5,7 +5,7 @@ import Board from './components/Board';
 import Scorecard from './components/Scorecard';
 
 import { createContext, useState } from 'react';
-import { ROW, COLUMN, boardDefault, colorBoardDefault, letterStyleBoardDefault, mainBoardDefault} from './Words';
+import { colorBoardDefault, letterStyleBoardDefault, mainBoardDefault} from './Initializer';
 
 export const AppContext = createContext()
 

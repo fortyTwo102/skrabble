@@ -1,11 +1,11 @@
 import React, { useContext } from 'react'
 
 import { AppContext } from '../App'
-import { ROW, COLUMN } from '../Words'
+import { ROW, COLUMN } from '../Initializer'
 import './Key.css'
 
 function Key({ keyVal, bigKey }) {
-    const { board, setBoard, cursor, colorBoard, setColorBoard, activePlayer, setActivePlayer, letterStyleBoard, setLetterStyleBoard } = useContext(AppContext)
+    const { board, setBoard, cursor, activePlayer, setActivePlayer } = useContext(AppContext)
     const inputLetter = () => {
         
         // assign letter 

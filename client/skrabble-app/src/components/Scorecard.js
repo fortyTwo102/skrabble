@@ -4,7 +4,7 @@ import { AppContext } from '../App'
 import './Scorecard.css'
 
 function Scorecard() {
-    const { activePlayer, setActivePlayer} = useContext(AppContext)
+    const { activePlayer} = useContext(AppContext)
 
     let playerOneScore = 29
     let playerTwoScore = 56

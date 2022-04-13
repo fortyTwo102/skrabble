@@ -1,11 +1,11 @@
 import React, { useContext } from 'react'
 
 import { AppContext } from '../App'
-import { ROW, COLUMN } from '../Words'
+import { ROW, COLUMN } from '../Initializer'
 import './Letter.css'
 
 function Letter({row, column}) {
-  const { board, setBoard, setCursor, letterStyleBoard, activePlayer, setLetterStyleBoard, colorBoard } = useContext(AppContext)
+  const { board, setBoard, setCursor } = useContext(AppContext)
   
   const keyColor = board[row][column]["player"]
   const letterStyleVal = board[row][column]["cursor"] ? "letter-glow" : "letter"

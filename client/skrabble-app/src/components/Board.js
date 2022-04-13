@@ -1,5 +1,5 @@
 import React from 'react'
-import { ROW, COLUMN } from '../Words'
+import { ROW, COLUMN } from '../Initializer'
 import Letter from './Letter'
 import './Board.css'
 
