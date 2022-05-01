@@ -4,10 +4,10 @@ import { AppContext } from '../App'
 import './Scorecard.css'
 
 function Scorecard() {
-    const { activePlayer} = useContext(AppContext)
+    const { activePlayer, tally, setTally } = useContext(AppContext)
 
-    let playerOneScore = 29
-    let playerTwoScore = 56
+    let playerOneScore = tally['playerOne']
+    let playerTwoScore = tally['playerTwo']
     let isPlayerOneActive = activePlayer === "player-one" ? true : false
     let activeScoreStyleID = activePlayer + "-active"
     

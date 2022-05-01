@@ -50,3 +50,7 @@ export const letterStyleBoardDefault = [
     ["letter", "letter", "letter", "letter", "letter", "letter"]
 ]
 
+export const tallyDefault = {
+    'playerOne': 0,
+    'playerTwo': 0
+  }

@@ -2,10 +2,11 @@ import React, { useContext } from 'react'
 
 import { AppContext } from '../App'
 import { ROW, COLUMN } from '../Initializer'
+import { getWordsEndingOnCursor } from '../utils/gameLogic'
 import './Key.css'
 
 function Key({ keyVal, bigKey }) {
-    const { board, setBoard, cursor, activePlayer, setActivePlayer } = useContext(AppContext)
+    const { board, setBoard, cursor, activePlayer, setActivePlayer, tally, setTally } = useContext(AppContext)
     const inputLetter = () => {
         
         // assign letter 
@@ -25,6 +26,16 @@ function Key({ keyVal, bigKey }) {
         }
 
         setBoard(newBoard)
+
+        // -------------------- GAME LOGIC --------------------
+        // 1. find if any words have been made
+        let wordsEndingOnCursor = getWordsEndingOnCursor(cursor, newBoard)
+        // 2. color them if words have been made
+
+        // 3. set score
+
+
+
         
         // set appropriate player
         activePlayer === "player-one" ? setActivePlayer("player-two") : setActivePlayer("player-one")
