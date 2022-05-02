@@ -13,7 +13,7 @@ export const AppContext = createContext()
 function App() {
 
   const [board, setBoard] = useState(mainBoardDefault)
-  const [wordSet, setWordSet] = useState(new Set())
+  const [letterCombs, setLetterCombs] = useState(new Set())
   const [cursor, setCursor] = useState([0, 0])
   const [tally, setTally] = useState(tallyDefault)
   const [colorBoard, setColorBoard] = useState(colorBoardDefault)
@@ -25,7 +25,7 @@ function App() {
       <nav>
         <h1>skrabble.</h1>
       </nav>
-      <AppContext.Provider value={{board, setBoard, cursor, setCursor, colorBoard, setColorBoard, activePlayer, setActivePlayer, letterStyleBoard, setLetterStyleBoard, wordList, tally, setTally}}>
+      <AppContext.Provider value={{board, setBoard, cursor, setCursor, colorBoard, setColorBoard, activePlayer, setActivePlayer, letterStyleBoard, setLetterStyleBoard, wordList, tally, setTally, letterCombs, setLetterCombs}}>
         <div className='game'>
           <div className='board-container'>
             <Board/>

@@ -6,7 +6,7 @@ import { getWordsEndingOnCursor } from '../utils/gameLogic'
 import './Key.css'
 
 function Key({ keyVal, bigKey }) {
-    const { board, setBoard, cursor, activePlayer, setActivePlayer, tally, setTally } = useContext(AppContext)
+    const { board, setBoard, cursor, activePlayer, setActivePlayer, tally, setTally, letterCombs, setLetterCombs} = useContext(AppContext)
     const inputLetter = () => {
         
         // assign letter 
@@ -30,6 +30,9 @@ function Key({ keyVal, bigKey }) {
         // -------------------- GAME LOGIC --------------------
         // 1. find if any words have been made
         let wordsEndingOnCursor = getWordsEndingOnCursor(cursor, newBoard)
+        let newWordSet = new Set([...wordsEndingOnCursor, ...letterCombs])
+        setLetterCombs(newWordSet)
+        console.log(newWordSet)
         // 2. color them if words have been made
 
         // 3. set score
