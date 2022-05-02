@@ -1,3 +1,6 @@
+import { ROW, COLUMN } from "../Initializer"
+import { wordList } from "../Words"
+
 export function getWordsEndingOnCursor(cursor, board) {
 
     let possibleWords = new Set()
@@ -10,7 +13,6 @@ export function getWordsEndingOnCursor(cursor, board) {
     let startY = 0
 
     for(let index = cursorY - 1; index >= 0; index--){
-        // console.log(index, cursorX)
         if (board[index][cursorX]['keyVal'] === ''){
             startY = index + 1
             break
@@ -21,7 +23,7 @@ export function getWordsEndingOnCursor(cursor, board) {
 
     let endY = cursorY
 
-    for(let index = cursorY + 1; index <= 5; index++){
+    for(let index = cursorY + 1; index < COLUMN; index++){
         if (board[index][cursorX]['keyVal'] === ''){
             break
         }
@@ -42,7 +44,6 @@ export function getWordsEndingOnCursor(cursor, board) {
                 possibleWords.add(combOfLetters)
             }
         }
-        
     }
     
     // a. horizontal
@@ -51,7 +52,6 @@ export function getWordsEndingOnCursor(cursor, board) {
     let startX = 0
 
     for(let index = cursorX - 1; index >= 0; index--){
-        // console.log(index, cursorX)
         if (board[cursorY][index]['keyVal'] === ''){
             startX = index + 1
             break
@@ -62,7 +62,7 @@ export function getWordsEndingOnCursor(cursor, board) {
 
     let endX = cursorX
 
-    for(let index = cursorX + 1; index <= 5; index++){
+    for(let index = cursorX + 1; index < ROW; index++){
         if (board[cursorY][index]['keyVal'] === ''){
             break
         }
@@ -82,10 +82,9 @@ export function getWordsEndingOnCursor(cursor, board) {
             if (combOfLetters.length > 0){
                 possibleWords.add(combOfLetters)
             }
-        }
-        
+        }    
     }
-
+    
     return possibleWords
 
 }
