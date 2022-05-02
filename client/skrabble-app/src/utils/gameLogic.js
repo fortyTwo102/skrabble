@@ -22,11 +22,10 @@ export function getWordsEndingOnCursor(cursor, board) {
     let endY = cursorY
 
     for(let index = cursorY + 1; index <= 5; index++){
-        // console.log(index, cursorX)
         if (board[index][cursorX]['keyVal'] === ''){
-            endY = index - 1
             break
         }
+        endY = index
     }
 
     console.log("startY", startY, "endY", endY)
@@ -39,7 +38,9 @@ export function getWordsEndingOnCursor(cursor, board) {
             for(let y = sindex; y <= eindex; y++){
                 combOfLetters += board[y][cursorX]['keyVal']
             }
-            possibleWords.add(combOfLetters)
+            if (combOfLetters.length > 0){
+                possibleWords.add(combOfLetters)
+            }
         }
         
     }
@@ -57,14 +58,32 @@ export function getWordsEndingOnCursor(cursor, board) {
         }
     }
     
-    // console.log("x" ,startX, cursorX)
+    // find endX
 
-    for(startX; startX <= cursorX; startX++){
-        let combOfLetters = ''
-        for(let x = startX; x <= cursorX; x++){
-            combOfLetters += board[cursorY][x]['keyVal']
+    let endX = cursorX
+
+    for(let index = cursorX + 1; index <= 5; index++){
+        if (board[cursorY][index]['keyVal'] === ''){
+            break
         }
-        possibleWords.add(combOfLetters)
+        endX = index
+    }
+
+    console.log("startX", startX, "endX", endX)
+
+    // find possible word combinations
+
+    for(let sindex = startX; sindex <= endX; sindex++){
+        for(let eindex = endX; eindex >= sindex; eindex--){
+            let combOfLetters = ''
+            for(let x = sindex; x <= eindex; x++){
+                combOfLetters += board[cursorY][x]['keyVal']
+            }
+            if (combOfLetters.length > 0){
+                possibleWords.add(combOfLetters)
+            }
+        }
+        
     }
 
     return possibleWords
