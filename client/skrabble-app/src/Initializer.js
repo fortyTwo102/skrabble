@@ -10,7 +10,7 @@ for (let index = 0; index < COLUMN; index++){
 export const mainBoardDefault = Array(6).fill().map(()=>tempCounter.map(function (i) { return {
     "keyVal": "",
     "player": "",
-    "alive": "",
+    "alive": true,
     "cursor": false 
 }}))
 
