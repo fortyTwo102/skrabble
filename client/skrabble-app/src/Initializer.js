@@ -11,7 +11,8 @@ export const mainBoardDefault = Array(6).fill().map(()=>tempCounter.map(function
     "keyVal": "",
     "player": "",
     "alive": true,
-    "cursor": false 
+    "cursor": false,
+    "partOfWord": false
 }}))
 
 // export const mainBoardDefault = [

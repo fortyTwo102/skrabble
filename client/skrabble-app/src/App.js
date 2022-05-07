@@ -14,6 +14,7 @@ function App() {
 
   const [board, setBoard] = useState(mainBoardDefault)
   const [letterCombs, setLetterCombs] = useState(new Set())
+  const [wordsMade, setWordsMade] = useState(new Set())
   const [cursor, setCursor] = useState([0, 0])
   const [tally, setTally] = useState(tallyDefault)
   const [colorBoard, setColorBoard] = useState(colorBoardDefault)
@@ -25,7 +26,7 @@ function App() {
       <nav>
         <h1>skrabble.</h1>
       </nav>
-      <AppContext.Provider value={{board, setBoard, cursor, setCursor, colorBoard, setColorBoard, activePlayer, setActivePlayer, letterStyleBoard, setLetterStyleBoard, wordList, tally, setTally, letterCombs, setLetterCombs}}>
+      <AppContext.Provider value={{board, setBoard, cursor, setCursor, colorBoard, setColorBoard, activePlayer, setActivePlayer, letterStyleBoard, setLetterStyleBoard, wordList, tally, setTally, letterCombs, setLetterCombs, wordsMade, setWordsMade}}>
         <div className='game'>
           <div className='board-container'>
             <Board/>

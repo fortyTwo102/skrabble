@@ -4,9 +4,10 @@ import { AppContext } from '../App'
 import { ROW, COLUMN } from '../Initializer'
 import { getWordsEndingOnCursor } from '../utils/gameLogic'
 import './Key.css'
+import { wordList } from '../Words'
 
 function Key({ keyVal, bigKey }) {
-    const { board, setBoard, cursor, activePlayer, setActivePlayer, tally, setTally, letterCombs, setLetterCombs} = useContext(AppContext)
+    const { board, setBoard, cursor, activePlayer, setActivePlayer, tally, setTally, letterCombs, setLetterCombs, wordsMade, setWordsMade} = useContext(AppContext)
     const inputLetter = () => {
         
         
@@ -15,8 +16,9 @@ function Key({ keyVal, bigKey }) {
         const column = cursor[1]
 
         if (newBoard[row][column]['alive']){
-            
+
             // assign letter 
+
             newBoard[row][column]['keyVal'] = keyVal
             newBoard[row][column]["player"] = activePlayer // takes care of coloring
             newBoard[row][column]['alive'] = false
@@ -35,17 +37,29 @@ function Key({ keyVal, bigKey }) {
 
             // -------------------- GAME LOGIC --------------------
             // 1. find if any words have been made
+            
             let wordsEndingOnCursor = getWordsEndingOnCursor(cursor, newBoard)
             let newWordSet = new Set([...wordsEndingOnCursor, ...letterCombs])
             setLetterCombs(newWordSet)
             console.log(newWordSet)
+
+            newWordSet.forEach(possibleWord => {
+                if (wordList.includes(possibleWord)){
+                    console.log("Word found " + possibleWord)
+                    let newWordsMade = wordsMade.add(possibleWord)
+                    setWordsMade(newWordsMade)
+                }
+            });
+
             // 2. color them if words have been made
+            
+
 
             // 3. set score
             
             // set appropriate player
-
             activePlayer === "player-one" ? setActivePlayer("player-two") : setActivePlayer("player-one")
+        
         }else{
 
             console.log("Board position already has value.")
