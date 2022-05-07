@@ -1,7 +1,17 @@
 import { ROW, COLUMN } from "../Initializer"
 import { wordList } from "../Words"
 
-export function getWordsEndingOnCursor(cursor, board) {
+export function isWordTaken(word, wordsMade) {
+    let isWordTakenFlag = false
+    wordsMade.forEach(wordMade => {
+        let wordMadeObj = JSON.parse(wordMade)
+        if (wordMadeObj["word"] === word) {
+            isWordTakenFlag = true
+        }
+    })
+    return isWordTakenFlag
+}
+export function getWordsEndingOnCursor(cursor, board, wordsMade) {
 
     let possibleWords = new Set()
     let cursorX = cursor[1]
@@ -91,12 +101,12 @@ export function getWordsEndingOnCursor(cursor, board) {
             }
         }    
     }
-    // console.log(possibleWords)
+    // find how many of these letter combinations are actual english words
+
     let newWordsMadeTemp = new Set()
     possibleWords.forEach(possibleWord => {
-        // console.log(possibleWord)
         let possibleWordObj = JSON.parse(possibleWord)
-        if (wordList.includes(possibleWordObj["word"])){
+        if (wordList.includes(possibleWordObj["word"]) && !isWordTaken(possibleWordObj["word"], wordsMade)){
             console.log("Word found " + possibleWordObj["word"])
             newWordsMadeTemp.add(JSON.stringify(possibleWordObj))
         }

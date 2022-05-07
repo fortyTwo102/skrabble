@@ -52,6 +52,6 @@ export const letterStyleBoardDefault = [
 ]
 
 export const tallyDefault = {
-    'playerOne': 0,
-    'playerTwo': 0
+    'player-one': 0,
+    'player-two': 0
   }

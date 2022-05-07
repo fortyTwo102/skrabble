@@ -35,7 +35,7 @@ function Key({ keyVal, bigKey }) {
             // -------------------- GAME LOGIC --------------------
             // 1. find if any words have been made
             
-            let newWordsMade = getWordsEndingOnCursor(cursor, newBoard)
+            let newWordsMade = getWordsEndingOnCursor(cursor, newBoard, wordsMade)
             // console.log("KEY NWM")
             // console.log(newWordsMade)
             let tempWordsMade = new Set([...wordsMade, ...newWordsMade])
@@ -45,18 +45,18 @@ function Key({ keyVal, bigKey }) {
 
             // 2. color them in the color of the appropriate player
             
-            newWordsMade.forEach(wordMade => {
-                let wordMadeObj = JSON.parse(wordMade)
-                console.log(wordMadeObj)
+            newWordsMade.forEach(newWordMade => {
+                let newWordMadeObj = JSON.parse(newWordMade)
+                // console.log(newWordMadeObj)
                 // find if the last move had any words made
                 let anyWordsMade = false
-                wordMadeObj["location"].forEach(loc => {
+                newWordMadeObj["location"].forEach(loc => {
                     if (loc[0] === cursor[0] && loc[1] === cursor[1]){
                         anyWordsMade = true
                     }
                 })
                 // color 
-                wordMadeObj["location"].forEach(loc => {
+                newWordMadeObj["location"].forEach(loc => {
                     if (anyWordsMade){
                         newBoard[loc[0]][loc[1]]["player"] = activePlayer
                         newBoard[loc[0]][loc[1]]["partOfWord"] = true
@@ -67,6 +67,14 @@ function Key({ keyVal, bigKey }) {
             setBoard(newBoard)
 
             // 3. set score
+
+            newWordsMade.forEach(newWordMade => {
+                let newWordMadeObj = JSON.parse(newWordMade)
+                tally[activePlayer] += newWordMadeObj["word"].length
+                setTally(tally)
+            })
+
+            console.log(tally)
             
             // set appropriate player
             activePlayer === "player-one" ? setActivePlayer("player-two") : setActivePlayer("player-one")
