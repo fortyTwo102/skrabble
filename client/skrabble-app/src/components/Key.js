@@ -4,13 +4,11 @@ import { AppContext } from '../App'
 import { ROW, COLUMN } from '../Initializer'
 import { getWordsEndingOnCursor } from '../utils/gameLogic'
 import './Key.css'
-import { wordList } from '../Words'
 
 function Key({ keyVal, bigKey }) {
-    const { board, setBoard, cursor, activePlayer, setActivePlayer, tally, setTally, letterCombs, setLetterCombs, wordsMade, setWordsMade} = useContext(AppContext)
+    const { board, setBoard, cursor, activePlayer, setActivePlayer, tally, setTally, wordsMade, setWordsMade} = useContext(AppContext)
     const inputLetter = () => {
-        
-        
+    
         const newBoard = [...board]
         const row = cursor[0]
         const column = cursor[1]
@@ -20,7 +18,6 @@ function Key({ keyVal, bigKey }) {
             // assign letter 
 
             newBoard[row][column]['keyVal'] = keyVal
-            newBoard[row][column]["player"] = activePlayer // takes care of coloring
             newBoard[row][column]['alive'] = false
 
             setBoard(newBoard)
@@ -33,27 +30,41 @@ function Key({ keyVal, bigKey }) {
                 }
             }
 
-            setBoard(newBoard)
+            
 
             // -------------------- GAME LOGIC --------------------
             // 1. find if any words have been made
             
-            let wordsEndingOnCursor = getWordsEndingOnCursor(cursor, newBoard)
-            let newWordSet = new Set([...wordsEndingOnCursor, ...letterCombs])
-            setLetterCombs(newWordSet)
-            console.log(newWordSet)
+            let newWordsMade = getWordsEndingOnCursor(cursor, newBoard)
+            // console.log("KEY NWM")
+            // console.log(newWordsMade)
+            let tempWordsMade = new Set([...wordsMade, ...newWordsMade])
+            // console.log("KEY TWM")
+            // console.log(tempWordsMade)
+            setWordsMade(tempWordsMade)
 
-            newWordSet.forEach(possibleWord => {
-                if (wordList.includes(possibleWord)){
-                    console.log("Word found " + possibleWord)
-                    let newWordsMade = wordsMade.add(possibleWord)
-                    setWordsMade(newWordsMade)
-                }
-            });
-
-            // 2. color them if words have been made
+            // 2. color them in the color of the appropriate player
             
+            newWordsMade.forEach(wordMade => {
+                let wordMadeObj = JSON.parse(wordMade)
+                console.log(wordMadeObj)
+                // find if the last move had any words made
+                let anyWordsMade = false
+                wordMadeObj["location"].forEach(loc => {
+                    if (loc[0] === cursor[0] && loc[1] === cursor[1]){
+                        anyWordsMade = true
+                    }
+                })
+                // color 
+                wordMadeObj["location"].forEach(loc => {
+                    if (anyWordsMade){
+                        newBoard[loc[0]][loc[1]]["player"] = activePlayer
+                        newBoard[loc[0]][loc[1]]["partOfWord"] = true
+                    }
+                })
+            })
 
+            setBoard(newBoard)
 
             // 3. set score
             

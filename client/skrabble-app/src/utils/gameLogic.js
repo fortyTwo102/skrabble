@@ -36,12 +36,16 @@ export function getWordsEndingOnCursor(cursor, board) {
 
     for(let sindex = startY; sindex <= endY; sindex++){
         for(let eindex = endY; eindex >= sindex; eindex--){
-            let combOfLetters = ''
-            for(let y = sindex; y <= eindex; y++){
-                combOfLetters += board[y][cursorX]['keyVal']
+            let combOfLetters = {
+                "word": '',
+                "location": []
             }
-            if (combOfLetters.length > 0){
-                possibleWords.add(combOfLetters)
+            for(let y = sindex; y <= eindex; y++){
+                combOfLetters["word"] += board[y][cursorX]['keyVal']
+                combOfLetters["location"].push([y, cursorX])
+            }
+            if (combOfLetters["word"].length > 0){
+                possibleWords.add(JSON.stringify(combOfLetters))
             }
         }
     }
@@ -75,16 +79,29 @@ export function getWordsEndingOnCursor(cursor, board) {
 
     for(let sindex = startX; sindex <= endX; sindex++){
         for(let eindex = endX; eindex >= sindex; eindex--){
-            let combOfLetters = ''
+            let combOfLetters = Object.create(null)
+            combOfLetters.word = ''
+            combOfLetters.location = []
             for(let x = sindex; x <= eindex; x++){
-                combOfLetters += board[cursorY][x]['keyVal']
+                combOfLetters["word"] += board[cursorY][x]['keyVal']
+                combOfLetters["location"].push([cursorY, x])
             }
-            if (combOfLetters.length > 0){
-                possibleWords.add(combOfLetters)
+            if (combOfLetters["word"].length > 0){
+                possibleWords.add(JSON.stringify(combOfLetters))
             }
         }    
     }
-    
-    return possibleWords
+    // console.log(possibleWords)
+    let newWordsMadeTemp = new Set()
+    possibleWords.forEach(possibleWord => {
+        // console.log(possibleWord)
+        let possibleWordObj = JSON.parse(possibleWord)
+        if (wordList.includes(possibleWordObj["word"])){
+            console.log("Word found " + possibleWordObj["word"])
+            newWordsMadeTemp.add(JSON.stringify(possibleWordObj))
+        }
+    });
+
+    return newWordsMadeTemp
 
 }
