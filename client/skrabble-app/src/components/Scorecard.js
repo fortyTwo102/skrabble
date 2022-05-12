@@ -6,8 +6,8 @@ import './Scorecard.css'
 function Scorecard() {
     const { activePlayer, tally, setTally } = useContext(AppContext)
 
-    let playerOneScore = tally['playerOne']
-    let playerTwoScore = tally['playerTwo']
+    let playerOneScore = tally['player-one']
+    let playerTwoScore = tally['player-two']
     let isPlayerOneActive = activePlayer === "player-one" ? true : false
     let activeScoreStyleID = activePlayer + "-active"
     
