@@ -30,7 +30,6 @@ function Key({ keyVal, bigKey }) {
                 }
             }
 
-            
 
             // -------------------- GAME LOGIC --------------------
             // 1. find if any words have been made
@@ -39,16 +38,20 @@ function Key({ keyVal, bigKey }) {
             // console.log("KEY NWM")
             // console.log(newWordsMade)
             let tempWordsMade = new Set([...wordsMade, ...newWordsMade])
+
             // console.log("KEY TWM")
             // console.log(tempWordsMade)
+
             setWordsMade(tempWordsMade)
 
             // 2. color them in the color of the appropriate player
             
             newWordsMade.forEach(newWordMade => {
                 let newWordMadeObj = JSON.parse(newWordMade)
+
                 // console.log(newWordMadeObj)
                 // find if the last move had any words made
+                
                 let anyWordsMade = false
                 newWordMadeObj["location"].forEach(loc => {
                     if (loc[0] === cursor[0] && loc[1] === cursor[1]){
