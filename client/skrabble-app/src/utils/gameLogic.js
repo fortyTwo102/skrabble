@@ -1,5 +1,7 @@
 import { ROW, COLUMN } from "../Initializer"
 import { wordList } from "../Words"
+import EndpointCall from "./EndpointCall"
+
 
 export function isWordTaken(word, wordsMade) {
     let isWordTakenFlag = false
@@ -11,6 +13,17 @@ export function isWordTaken(word, wordsMade) {
     })
     return isWordTakenFlag
 }
+
+export function isEnglishWord(word) {
+
+    var result = ''
+    let apiObj = new EndpointCall()
+    let apiResp = apiObj.callApi(word)
+    console.log("result for " + word + " is " + apiResp)
+    return apiResp.result
+
+}
+
 export function getWordsEndingOnCursor(cursor, board, wordsMade) {
 
     let possibleWords = new Set()
@@ -101,17 +114,18 @@ export function getWordsEndingOnCursor(cursor, board, wordsMade) {
             }
         }    
     }
+    
     // find how many of these letter combinations are actual english words
 
     let newWordsMadeTemp = new Set()
     possibleWords.forEach(possibleWord => {
         let possibleWordObj = JSON.parse(possibleWord)
-        if (wordList.includes(possibleWordObj["word"]) && !isWordTaken(possibleWordObj["word"], wordsMade)){
+        if (isEnglishWord(possibleWordObj["word"]) && !isWordTaken(possibleWordObj["word"], wordsMade)){
             console.log("Word found " + possibleWordObj["word"])
             newWordsMadeTemp.add(JSON.stringify(possibleWordObj))
         }
-    });
-
+    })
+    
     return newWordsMadeTemp
 
 }

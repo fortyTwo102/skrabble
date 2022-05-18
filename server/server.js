@@ -1,8 +1,15 @@
 // server/index.js
 
 const express = require("express");
+const PORT = process.env.PORT || 3001
+const cors = require("cors")
 
-const PORT = process.env.PORT || 3001;
+const corsOptions ={
+   origin: '*', 
+   credentials: true,            //access-control-allow-credentials:true
+   optionSuccessStatus: 200,
+}
+
 
 const app = express();
 
@@ -25,8 +32,15 @@ async function check_word(q_word) {
         }
         const collection_obj = await db_obj.collection(q_word[0])
         q_resp = await collection_obj.findOne(query)
+        
+        resp = {}
+        resp.result = true
 
-        return q_resp
+        if (!q_resp) {
+          resp.result = false
+        }
+
+        return resp
 
     } catch (e) {
         throw e
@@ -35,7 +49,11 @@ async function check_word(q_word) {
     }
 }
 
+app.use(cors(corsOptions))
+
 app.get("/api", (req, res) => {
+  res.header("Access-Control-Allow-Origin", "*")
+  res.header("Content-Type", "application/json")
   res.json({ message: "Hello from server!" });
 });
 
