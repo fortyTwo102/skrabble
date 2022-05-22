@@ -14,17 +14,50 @@ export function isWordTaken(word, wordsMade) {
     return isWordTakenFlag
 }
 
-export function isEnglishWord(word) {
+async function callApi (word) {
 
-    var result = ''
-    let apiObj = new EndpointCall()
-    let apiResp = apiObj.callApi(word)
-    console.log("result for " + word + " is " + apiResp)
-    return apiResp.result
+    const response = await fetch(`http://localhost:3001/api/checkWord?q=${word.toLowerCase()}`);
+    const body = await response.json()
+
+    if (response.status !== 200) throw Error(body.message);
+
+    return body
+    
+}
+
+export async function isEnglishWord(word) {
+
+    // let x = ''
+    // let apiObj = new EndpointCall()
+
+    // let apiResp = callApi(word)
+
+    // apiResp.then(function(apiRespResult) {
+    //     console.log("sending from isEnglishWord: ", apiRespResult.result);
+    //     x = apiRespResult.result
+    //     return apiRespResult.result
+    // })
+
+    const wordResponse = fetch(`http://localhost:3001/api/checkWord?q=${word.toLowerCase()}`)
+        .then((response) => response.json())
+        .then((jsonResponse) => {
+            return jsonResponse.result;
+        })
+
+    let returnResult = async function() {
+        return await wordResponse
+    };
+
+    let final_resp = await returnResult()
+
+    
+    console.log("the result for " + word + " is " + final_resp + " of type " + typeof(final_resp))
+
+    return final_resp
 
 }
 
-export function getWordsEndingOnCursor(cursor, board, wordsMade) {
+export async function getWordsEndingOnCursor(cursor, board, wordsMade) {
 
     let possibleWords = new Set()
     let cursorX = cursor[1]
@@ -118,13 +151,27 @@ export function getWordsEndingOnCursor(cursor, board, wordsMade) {
     // find how many of these letter combinations are actual english words
 
     let newWordsMadeTemp = new Set()
-    possibleWords.forEach(possibleWord => {
-        let possibleWordObj = JSON.parse(possibleWord)
-        if (isEnglishWord(possibleWordObj["word"]) && !isWordTaken(possibleWordObj["word"], wordsMade)){
-            console.log("Word found " + possibleWordObj["word"])
-            newWordsMadeTemp.add(JSON.stringify(possibleWordObj))
+
+    const forEachLoop = async _ => {
+        console.log("start")
+        let possibleWordsList = [...possibleWords]
+        for(let index = 0; index < possibleWordsList.length; index++) {
+
+            let possibleWord = possibleWordsList[index]
+            let possibleWordObj = JSON.parse(possibleWord)
+            const cond = await isEnglishWord(possibleWordObj["word"])
+
+
+            if (cond && !isWordTaken(possibleWordObj["word"], wordsMade)){
+                console.log("Word found " + possibleWordObj["word"])
+                newWordsMadeTemp.add(JSON.stringify(possibleWordObj))
+            }
         }
-    })
+        
+        console.log("end")
+    }
+
+    await forEachLoop()
     
     return newWordsMadeTemp
 

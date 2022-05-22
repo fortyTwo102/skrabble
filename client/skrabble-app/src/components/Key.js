@@ -7,7 +7,7 @@ import './Key.css'
 
 function Key({ keyVal, bigKey }) {
     const { board, setBoard, cursor, activePlayer, setActivePlayer, tally, setTally, wordsMade, setWordsMade} = useContext(AppContext)
-    const inputLetter = () => {
+    const inputLetter = async () => {
     
         const newBoard = [...board]
         const row = cursor[0]
@@ -34,9 +34,8 @@ function Key({ keyVal, bigKey }) {
             // -------------------- GAME LOGIC --------------------
             // 1. find if any words have been made
             
-            let newWordsMade = getWordsEndingOnCursor(cursor, newBoard, wordsMade)
+            let newWordsMade = await getWordsEndingOnCursor(cursor, newBoard, wordsMade)
             // console.log("KEY NWM")
-            // console.log(newWordsMade)
             let tempWordsMade = new Set([...wordsMade, ...newWordsMade])
 
             // console.log("KEY TWM")
