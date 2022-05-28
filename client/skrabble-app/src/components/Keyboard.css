@@ -23,9 +23,17 @@
 .keyboard {
     width: 400px;
     height: 200px;
-    position: fixed;
-    display: flex;
-    flex-direction: column;
     bottom: 0px;
+}
+
+
+.keyboard-container { 
+    padding-top: 15px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
 }
   

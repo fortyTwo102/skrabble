@@ -30,15 +30,9 @@ nav h1 {
   font-size: 45px;
 }
 
-.game {
-  margin: 0;
-  height: 450px;
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  justify-content: center;
-  flex-grow: 0;
-  overflow: hidden;
+.game { 
+  text-align: center; 
+  padding: 5px;
 }
 
 #cursor {

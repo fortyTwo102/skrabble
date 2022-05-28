@@ -30,11 +30,13 @@ function App() {
       </nav>
       <AppContext.Provider value={{board, setBoard, cursor, setCursor, colorBoard, setColorBoard, activePlayer, setActivePlayer, letterStyleBoard, setLetterStyleBoard, wordList, tally, setTally, T, setT, letterCombs, setLetterCombs, wordsMade, setWordsMade, wordResult, setWordResult}}>
         <div className='game'>
+          <Scorecard/>
           <div className='board-container'>
             <Board/>
           </div>
-          <Scorecard/>
-          <Keyboard/>
+          <div className='keyboard-container'>
+            <Keyboard/>
+          </div>
         </div>
       </AppContext.Provider>
     </div>

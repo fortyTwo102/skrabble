@@ -1,18 +1,19 @@
 .board {
-    position: relative;
     width: 350px;
     height: 350px;
-    top: 0px;
     border: 1px solid black;
     display: flex;
     flex-direction: column;
-    margin: 0;
+    padding-top: 10px;
 }
 
-.board-container {
-    padding: 30px;
-    position: fixed;
-    margin: 0;
+.board-container { 
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
 }
 
 

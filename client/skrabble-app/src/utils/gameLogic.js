@@ -1,7 +1,4 @@
 import { ROW, COLUMN } from "../Initializer"
-import { wordList } from "../Words"
-import EndpointCall from "./EndpointCall"
-
 
 export function isWordTaken(word, wordsMade) {
     let isWordTakenFlag = false
@@ -14,16 +11,6 @@ export function isWordTaken(word, wordsMade) {
     return isWordTakenFlag
 }
 
-async function callApi (word) {
-
-    const response = await fetch(`http://localhost:3001/api/checkWord?q=${word.toLowerCase()}`);
-    const body = await response.json()
-
-    if (response.status !== 200) throw Error(body.message);
-
-    return body
-    
-}
 
 export async function isEnglishWord(word) {
 
@@ -51,7 +38,7 @@ export async function isEnglishWord(word) {
     let final_resp = await returnResult()
 
     
-    console.log("the result for " + word + " is " + final_resp + " of type " + typeof(final_resp))
+    // console.log("the result for " + word + " is " + final_resp + " of type " + typeof(final_resp))
 
     return final_resp
 
@@ -86,7 +73,7 @@ export async function getWordsEndingOnCursor(cursor, board, wordsMade) {
         endY = index
     }
 
-    console.log("startY", startY, "endY", endY)
+    // console.log("startY", startY, "endY", endY)
 
     // find possible word combinations
 
@@ -153,22 +140,15 @@ export async function getWordsEndingOnCursor(cursor, board, wordsMade) {
     let newWordsMadeTemp = new Set()
 
     const forEachLoop = async _ => {
-        console.log("start")
         let possibleWordsList = [...possibleWords]
         for(let index = 0; index < possibleWordsList.length; index++) {
-
             let possibleWord = possibleWordsList[index]
             let possibleWordObj = JSON.parse(possibleWord)
-            const cond = await isEnglishWord(possibleWordObj["word"])
-
-
-            if (cond && !isWordTaken(possibleWordObj["word"], wordsMade)){
+            if (await isEnglishWord(possibleWordObj["word"]) && !isWordTaken(possibleWordObj["word"], wordsMade)){
                 console.log("Word found " + possibleWordObj["word"])
                 newWordsMadeTemp.add(JSON.stringify(possibleWordObj))
             }
         }
-        
-        console.log("end")
     }
 
     await forEachLoop()
