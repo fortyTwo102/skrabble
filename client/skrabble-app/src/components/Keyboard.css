@@ -21,7 +21,7 @@
 
 
 .keyboard {
-    width: 400px;
+    width: 350px;
     height: 200px;
     bottom: 0px;
 }
@@ -35,5 +35,6 @@
     justify-content: center;
     align-items: center;
     text-align: center;
+    bottom: 0px;
 }
   

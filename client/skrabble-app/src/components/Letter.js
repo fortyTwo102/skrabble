@@ -5,8 +5,9 @@ import { ROW, COLUMN } from '../Initializer'
 import './Letter.css'
 
 function Letter({row, column}) {
-  const { board, setBoard, setCursor } = useContext(AppContext)
   
+  const { board, setBoard, setCursor } = useContext(AppContext)
+
   const keyColor = board[row][column]["player"]
   const letterStyleVal = board[row][column]["cursor"] ? "letter-glow" : "letter"
   const letter = board[row][column]["keyVal"]

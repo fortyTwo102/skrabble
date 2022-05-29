@@ -32,7 +32,12 @@ nav h1 {
 
 .game { 
   text-align: center; 
-  padding: 5px;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 500px;
+  margin: 0 auto;
+  height: calc(100% - 100px);
 }
 
 #cursor {
