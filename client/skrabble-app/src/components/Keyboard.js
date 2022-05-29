@@ -1,7 +1,6 @@
 import React from 'react'
 import Key from './Key'
 import './Keyboard.css'
-import Scorecard from './Scorecard'
 
 function Keyboard() {
 
@@ -22,11 +21,11 @@ function Keyboard() {
                     })}
                 </div>
                 <div className='line3'>
-                    <Key keyVal="enter" bigKey />
+                    <Key keyVal="Enter" bigKey />
                     {keys3.map((key) => {
                         return <Key keyVal={key} />
                     })}
-                    <Key keyVal="delete" bigKey />
+                    <Key keyVal="Delete" bigKey />
                 </div>
             </div>
     )

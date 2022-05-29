@@ -6,24 +6,26 @@ import { getWordsEndingOnCursor } from '../utils/gameLogic'
 import './Key.css'
 
 function Key({ keyVal, bigKey }) {
-    const { board, setBoard, cursor, activePlayer, setActivePlayer, tally, setTally, wordsMade, setWordsMade} = useContext(AppContext)
+    const { board, setBoard, cursor, activePlayer, setActivePlayer, tally, setTally, wordsMade, setWordsMade, turnInProgress, setTurnInProgress} = useContext(AppContext)
     const inputLetter = async () => {
     
         const newBoard = [...board]
         const row = cursor[0]
         const column = cursor[1]
 
-        if (newBoard[row][column]['alive'] && keyVal !== "enter" && keyVal !== "delete"){
+        if (keyVal !== "Enter" && keyVal !== "Delete" && newBoard[row][column]['alive']){
 
             // assign letter 
 
             newBoard[row][column]['keyVal'] = keyVal
-            newBoard[row][column]['alive'] = false
-
             setBoard(newBoard)
+            
+            if (setTurnInProgress) {
+                setTurnInProgress(true)
+            }
 
         
-        } else if (keyVal === "enter") {
+        } else if (keyVal === "Enter" && newBoard[row][column]['alive']) {
             
         // remove glow after keyVal is set
         
@@ -68,8 +70,14 @@ function Key({ keyVal, bigKey }) {
                 }
             })
         })
-
+        
+        newBoard[row][column]['alive'] = false
         setBoard(newBoard)
+
+        if (setTurnInProgress) {
+            setTurnInProgress(false)
+        }
+
 
         // 3. set score
 
@@ -83,10 +91,18 @@ function Key({ keyVal, bigKey }) {
         
         // set appropriate player
         activePlayer === "player-one" ? setActivePlayer("player-two") : setActivePlayer("player-one")
+        
 
-        }
-        else{
-            console.log("Board position already has value.")
+        }else if (keyVal === 'Delete' && newBoard[row][column]['alive']) {
+
+            newBoard[row][column]['keyVal'] = ''
+            setBoard(newBoard)
+            
+            if (setTurnInProgress) {
+                setTurnInProgress(false)
+            }
+        }else{
+            console.log("Unforeseen circumstances.")
         }
     }
     return (

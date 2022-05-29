@@ -6,7 +6,7 @@ import './Letter.css'
 
 function Letter({row, column}) {
   
-  const { board, setBoard, setCursor } = useContext(AppContext)
+  const { board, setBoard, setCursor, turnInProgress, setTurnInProgress } = useContext(AppContext)
 
   const keyColor = board[row][column]["player"]
   const letterStyleVal = board[row][column]["cursor"] ? "letter-glow" : "letter"
@@ -14,8 +14,10 @@ function Letter({row, column}) {
 
   const moveCursor = () => {
 
-      // if there is already a letter in the board spot
-      if (letter !== ''){
+      console.log("TIP " + turnInProgress)
+      
+      if (turnInProgress) {
+        console.log("Not allowed.")
         return
       }
       
