@@ -1,8 +1,9 @@
 // server/index.js
 
 const express = require("express");
-const PORT = process.env.PORT || 3001
+const PORT = process.env.PORT || 3000
 const cors = require("cors")
+const path = require("path");
 
 const corsOptions ={
    origin: '*', 
@@ -12,6 +13,7 @@ const corsOptions ={
 
 
 const app = express();
+const http = require('http').Server(app);
 
 async function check_word(q_word) {
 
@@ -51,6 +53,12 @@ async function check_word(q_word) {
 
 app.use(cors(corsOptions))
 
+app.use(express.static(path.join(__dirname, "..", "client", "skrabble-app", "build")));
+
+app.get("/", (req, res) => {
+  res.sendFile(path.join(__dirname, "..", "client", "skrabble-app", "build", "index.html"));
+});
+
 app.get("/api", (req, res) => {
   res.header("Access-Control-Allow-Origin", "*")
   res.header("Content-Type", "application/json")
@@ -65,5 +73,5 @@ app.get("/api/checkWord", async (req, res) => {
   });
 
 app.listen(PORT, () => {
-  console.log(`Server listening on ${PORT}`);
+  console.log(`[INFO]: Server listening on ${PORT}`);
 })

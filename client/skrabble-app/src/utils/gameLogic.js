@@ -25,7 +25,7 @@ export async function isEnglishWord(word) {
     //     return apiRespResult.result
     // })
 
-    const wordResponse = fetch(`http://localhost:3001/api/checkWord?q=${word.toLowerCase()}`)
+    const wordResponse = fetch(`http://localhost:3000/api/checkWord?q=${word.toLowerCase()}`)
         .then((response) => response.json())
         .then((jsonResponse) => {
             return jsonResponse.result;
