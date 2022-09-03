@@ -4,6 +4,10 @@ const express = require("express");
 const PORT = process.env.PORT || 3000
 const cors = require("cors")
 const path = require("path");
+const app = express();
+const http = require('http').Server(app);
+
+let baseURL = "http://localhost:3000/app/"
 
 const corsOptions ={
    origin: '*', 
@@ -12,8 +16,6 @@ const corsOptions ={
 }
 
 
-const app = express();
-const http = require('http').Server(app);
 
 async function check_word(q_word) {
 
@@ -55,9 +57,28 @@ app.use(cors(corsOptions))
 
 app.use(express.static(path.join(__dirname, "..", "client", "skrabble-app", "build")));
 
-app.get("/", (req, res) => {
+app.get('/app/', (req, res) => {
+  roomPath = req.url
+  roomID = Math.random().toString(36).slice(5) + "/"
+  console.log("[LOG]: 1. Started here. Generated roomID and now redirecting to " + `${baseURL}` +  `${roomID}`)
+  res.redirect(`${baseURL}` +  `${roomID}`)
+});
+
+
+app.get('/app/*/static/*', (req, res) => {
+  let pathToRedirect = req.url
+  let newStaticPath = "/" + pathToRedirect.split("/").slice(3, ).join("/")
+  console.log("[LOG]: 2. Redirecting to " + newStaticPath)
+  res.redirect(`${newStaticPath}`)
+});
+
+app.get('/app/*', (req, res) => {
+  roomPath = req.url
+  roomID = roomPath
+  console.log("[LOG]: 3. In /app/*. Found roomPath: " + roomPath + " and extracted new roomID:" + roomID)
   res.sendFile(path.join(__dirname, "..", "client", "skrabble-app", "build", "index.html"));
 });
+
 
 app.get("/api", (req, res) => {
   res.header("Access-Control-Allow-Origin", "*")
