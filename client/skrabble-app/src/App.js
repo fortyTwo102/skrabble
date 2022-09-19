@@ -1,4 +1,6 @@
 import './App.css';
+import { io } from "socket.io-client";
+import { useEffect, useRef } from 'react';
 
 import Keyboard from './components/Keyboard';
 import Board from './components/Board';
@@ -12,6 +14,7 @@ export const AppContext = createContext()
 
 function App() {
 
+  // State Management
   const [board, setBoard] = useState(mainBoardDefault)
   const [letterCombs, setLetterCombs] = useState(new Set())
   const [wordsMade, setWordsMade] = useState(new Set())
@@ -23,6 +26,22 @@ function App() {
   const [wordResult, setWordResult] = useState(false)
   const [turnInProgress, setTurnInProgress] = useState(false)
   const [T, setT] = useState(tallyDefault)
+
+
+  const socket = useRef();
+  useEffect(() => {
+    socket.current = io("ws://localhost:300");
+    socket.current.on("connection", () => {
+      console.log("connected to server")
+    })
+  }, []);
+
+  // var clientUrl = window.location.href
+  // var roomID = clientUrl.split("/").pop()
+  // console.log("Socket: ", socket)
+  // console.log("Client: " + roomID)
+  // socket.emit('connected', roomID)
+
 
   return (
     <div className="App">
