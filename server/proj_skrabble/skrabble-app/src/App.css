@@ -1,0 +1,45 @@
+.App {
+  margin: 0;
+  padding: 0;
+  text-align: center;
+  background-color: #121212;
+  width: 100vw;
+  height: 100vh;
+  /* display: flex; */
+  color: white;
+}
+
+body {
+  padding: 0%;
+  margin: 0;
+}
+
+nav {
+  height: 60px;
+  width: 100%;
+  margin: 0;
+  border-bottom: 1px solid grey;
+  display: grid;
+  place-items: center;
+}
+
+nav h1 {
+  margin: 0;
+  font-family: Georgia, serif;
+  color: white;
+  font-size: 45px;
+}
+
+.game { 
+  text-align: center; 
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 500px;
+  margin: 0 auto;
+  height: calc(100% - 100px);
+}
+
+#cursor {
+  border: 1px solid #E6BA95;
+}

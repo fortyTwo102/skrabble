@@ -1,0 +1,5 @@
+{
+    "MONGODB_CONN_STRING": "mongodb://localhost:27017",
+    "HOSTNAME": "127.0.0.1",
+    "PORT": "8000"
+}
