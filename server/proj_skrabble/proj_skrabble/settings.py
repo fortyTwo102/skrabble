@@ -39,7 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'corsheaders',
-    'core'
+    'core',
+    'channels'
 ]
 
 MIDDLEWARE = [
@@ -134,3 +135,13 @@ STATICFILES_DIRS =  [
         ]
 
 CORS_ORIGIN_ALLOW_ALL = True
+
+
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+ASGI_APPLICATION = 'proj_skrabble.routing.application'
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels.layers.InMemoryChannelLayer',
+    },
+}

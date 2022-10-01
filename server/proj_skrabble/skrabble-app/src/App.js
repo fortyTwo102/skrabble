@@ -28,12 +28,23 @@ function App() {
   const [T, setT] = useState(tallyDefault)
 
 
-  const socket = useRef();
+  const chatSocket = useRef();
+  const roomName = useRef();
+
   useEffect(() => {
-    socket.current = io("ws://localhost:3001");
-    socket.current.on("connection", () => {
-      console.log("connected to server")
-    })
+    const roomName = JSON.parse(document.getElementById('room-name').textContent);
+    const chatSocket = new WebSocket(
+        'ws://' +
+        window.location.host +
+        '/ws/core/' +
+        roomName +
+        '/'
+    );
+
+    chatSocket.onmessage = function (e) {
+        const data = JSON.parse(e.data);
+        console.log(data["message"])
+    }
   }, []);
 
   // var clientUrl = window.location.href
