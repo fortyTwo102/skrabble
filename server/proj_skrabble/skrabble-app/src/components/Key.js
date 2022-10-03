@@ -6,7 +6,7 @@ import { getWordsEndingOnCursor } from '../utils/gameLogic'
 import './Key.css'
 
 function Key({ keyVal, bigKey }) {
-    const { board, setBoard, cursor, activePlayer, setActivePlayer, tally, setTally, wordsMade, setWordsMade, turnInProgress, setTurnInProgress} = useContext(AppContext)
+    const { board, setBoard, cursor, activePlayer, setActivePlayer, tally, setTally, wordsMade, setWordsMade, turnInProgress, setTurnInProgress, chatSocket} = useContext(AppContext)
     const inputLetter = async () => {
     
         const newBoard = [...board]
@@ -89,11 +89,11 @@ function Key({ keyVal, bigKey }) {
 
         console.log(tally)
         
-        // set appropriate player
+        // 4. set appropriate player
         activePlayer === "player-one" ? setActivePlayer("player-two") : setActivePlayer("player-one")
-        
 
-        }else if (keyVal === 'Delete' && newBoard[row][column]['alive']) {
+
+        } else if (keyVal === 'Delete' && newBoard[row][column]['alive']) {
 
             newBoard[row][column]['keyVal'] = ''
             setBoard(newBoard)
@@ -101,9 +101,20 @@ function Key({ keyVal, bigKey }) {
             if (setTurnInProgress) {
                 setTurnInProgress(false)
             }
-        }else{
+        } else {
             console.log("Unforeseen circumstances.")
         }
+
+        // 5. send game data to other player
+
+        console.log("[STARTDEBUG]: chatSocket at Key.js")
+        console.log(chatSocket)
+        console.log("[ENDDEBUG]: chatSocket at Key.js")
+
+        chatSocket.send(JSON.stringify({
+            "message": "TESTING GAME UPDATE"
+        }))
+        
     }
     return (
         <div className='key' id={bigKey && "big"} onClick={inputLetter}>{keyVal}</div>

@@ -28,7 +28,7 @@ function App() {
   const [T, setT] = useState(tallyDefault)
 
 
-  const chatSocket = useRef();
+  const [chatSocket, setChatSocket] = useState({});
   const roomName = useRef();
 
   useEffect(() => {
@@ -41,10 +41,17 @@ function App() {
         '/'
     );
 
+    console.log("[STARTDEBUG]: chatSocket at start")
+    console.log(chatSocket)
+    console.log("[ENDDEBUG]: chatSocket at start")
+
     chatSocket.onmessage = function (e) {
         const data = JSON.parse(e.data);
         console.log(data["message"])
     }
+
+    setChatSocket(chatSocket)
+
   }, []);
 
   // var clientUrl = window.location.href
@@ -59,7 +66,7 @@ function App() {
       <nav>
         <h1>skrabble.</h1>
       </nav>
-      <AppContext.Provider value={{board, setBoard, cursor, setCursor, colorBoard, setColorBoard, activePlayer, setActivePlayer, letterStyleBoard, setLetterStyleBoard, wordList, tally, setTally, T, setT, letterCombs, setLetterCombs, wordsMade, setWordsMade, wordResult, setWordResult, turnInProgress, setTurnInProgress}}>
+      <AppContext.Provider value={{board, setBoard, cursor, setCursor, colorBoard, setColorBoard, activePlayer, setActivePlayer, letterStyleBoard, setLetterStyleBoard, wordList, tally, setTally, T, setT, letterCombs, setLetterCombs, wordsMade, setWordsMade, wordResult, setWordResult, turnInProgress, setTurnInProgress, chatSocket}}>
         <div className='game'>
           <Scorecard/>
           <div className='board-container'>
