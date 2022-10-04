@@ -41,13 +41,22 @@ function App() {
         '/'
     );
 
-    console.log("[STARTDEBUG]: chatSocket at start")
-    console.log(chatSocket)
-    console.log("[ENDDEBUG]: chatSocket at start")
+    // console.log("[STARTDEBUG]: chatSocket at start")
+    // console.log(chatSocket)
+    // console.log("[ENDDEBUG]: chatSocket at start")
 
     chatSocket.onmessage = function (e) {
+
         const data = JSON.parse(e.data);
-        console.log(data["message"])
+        console.log(data["game_state_message"])
+
+        let game_state_message = JSON.parse(data["game_state_message"])
+        let fetchedBoard = game_state_message["board"]
+        let fetchedtally = game_state_message["tally"]
+
+        setBoard(fetchedBoard)
+        setTally(fetchedtally)
+        
     }
 
     setChatSocket(chatSocket)

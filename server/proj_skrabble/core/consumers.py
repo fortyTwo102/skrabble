@@ -60,11 +60,18 @@ class GameRoomConsumer(AsyncWebsocketConsumer):
         #             }
         #         )
 
-    async def tester_message(self, event):
-        tester = event["message"]
+    async def game_state_message(self, event):
+        game_state_message = event["game_state_message"]
 
         await self.send(text_data=json.dumps({
-            'message': tester,
+            'game_state_message': game_state_message,
+        }))
+        
+    async def tester_message(self, event):
+        tester_message = event["message"]
+
+        await self.send(text_data=json.dumps({
+            'message': tester_message,
         }))
 
     async def disconnect(self, close_code):
@@ -77,13 +84,22 @@ class GameRoomConsumer(AsyncWebsocketConsumer):
 
     async def receive(self, text_data):
         text_data_json = json.loads(text_data)
-        message = text_data_json["message"]
+
+        board = text_data_json["board"]
+        tally = text_data_json["tally"]
+
+        _game_state_message = {
+            "board": board,
+            "tally": tally
+        }
+
+        game_state_message = json.dumps(_game_state_message)
 
         await self.channel_layer.group_send(
             self.room_group_name,
             {
-                'type': 'tester_message',
-                'message': message,
+                'type': 'game_state_message',
+                'game_state_message': game_state_message,
             }
         )
     

@@ -107,12 +107,13 @@ function Key({ keyVal, bigKey }) {
 
         // 5. send game data to other player
 
-        console.log("[STARTDEBUG]: chatSocket at Key.js")
-        console.log(chatSocket)
-        console.log("[ENDDEBUG]: chatSocket at Key.js")
+        // console.log("[STARTDEBUG]: chatSocket at Key.js")
+        // console.log(chatSocket)
+        // console.log("[ENDDEBUG]: chatSocket at Key.js")
 
         chatSocket.send(JSON.stringify({
-            "message": "TESTING GAME UPDATE"
+            "board": newBoard,
+            "tally": tally,
         }))
         
     }
