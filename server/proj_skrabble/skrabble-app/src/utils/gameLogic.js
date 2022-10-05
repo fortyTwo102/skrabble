@@ -3,13 +3,15 @@ import { ROW, COLUMN } from "../Initializer"
 export function isWordTaken(word, wordsMade) {
     let isWordTakenFlag = false
 
-    console.log("word: " + word)
-    console.log("wordsMade: ")
-    console.log(wordsMade)
-    console.log(wordsMade.length)
+    // console.log("word: " + word)
+    // console.log("wordsMade: ")
+    // console.log(wordsMade)
+    // console.log(wordsMade.length)
 
     wordsMade.forEach(wordMade => {
-        if (wordMade === word) {
+        let wordMadeJSON = JSON.parse(wordMade)
+        if (wordMadeJSON["word"] === word) {
+            console.log("Word: " + word + " is already taken.")
             isWordTakenFlag = true
         }
     })
@@ -147,9 +149,16 @@ export async function getWordsEndingOnCursor(cursor, board, wordsMade) {
     const forEachLoop = async _ => {
         let possibleWordsList = [...possibleWords]
         for(let index = 0; index < possibleWordsList.length; index++) {
+
             let possibleWord = possibleWordsList[index]
             let possibleWordObj = JSON.parse(possibleWord)
-            if (await isEnglishWord(possibleWordObj["word"]) && !isWordTaken(possibleWordObj["word"], wordsMade)){
+            let isEnglishWordReturns = await isEnglishWord(possibleWordObj["word"])
+            let isWordTakenReturns = isWordTaken(possibleWordObj["word"], wordsMade)
+            
+            console.log("isEnglishWord: " + isEnglishWordReturns)
+            console.log("isWordTaken: " + isWordTakenReturns)
+
+            if (isEnglishWordReturns && !isWordTakenReturns){
                 console.log("Word found " + possibleWordObj["word"])
                 newWordsMadeTemp.add(JSON.stringify(possibleWordObj))
             }
