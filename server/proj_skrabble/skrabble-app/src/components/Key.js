@@ -51,10 +51,10 @@ function Key({ keyVal, bigKey }) {
 
         // console.log("KEY TWM")
         // console.log(tempWordsMade)
-        console.log("wordsMade:")
+        // console.log("wordsMade:")
 
         setWordsMade(wordsMade)
-        console.log(wordsMade)
+        // console.log(wordsMade)
         chatSocket.send(JSON.stringify({
             "wordsMade": wordsMade,
         }))

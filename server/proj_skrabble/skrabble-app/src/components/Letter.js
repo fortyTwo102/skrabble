@@ -17,7 +17,7 @@ function Letter({row, column}) {
       console.log("TIP " + turnInProgress)
       
       if (turnInProgress) {
-        console.log("Not allowed.")
+        console.log("TIP. Not allowed.")
         return
       }
       

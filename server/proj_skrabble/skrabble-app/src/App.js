@@ -69,7 +69,7 @@ function App() {
           setTally(fetchedTally)
         }
 
-        if (fetchedTurnInProgress){
+        if (fetchedTurnInProgress !== null){
           console.log("Setting TIP:")
           console.log(fetchedTurnInProgress)
           setTurnInProgress(fetchedTurnInProgress)
