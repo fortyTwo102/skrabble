@@ -19,9 +19,15 @@ function Key({ keyVal, bigKey }) {
 
             newBoard[row][column]['keyVal'] = keyVal
             setBoard(newBoard)
+            chatSocket.send(JSON.stringify({
+                "board": newBoard,
+            }))
             
             if (setTurnInProgress) {
                 setTurnInProgress(true)
+                chatSocket.send(JSON.stringify({
+                    "turnInProgress": true,
+                }))
             }
 
         
@@ -41,12 +47,18 @@ function Key({ keyVal, bigKey }) {
         
         let newWordsMade = await getWordsEndingOnCursor(cursor, newBoard, wordsMade)
         // console.log("KEY NWM")
-        let tempWordsMade = new Set([...wordsMade, ...newWordsMade])
+        wordsMade.push(...newWordsMade)
 
         // console.log("KEY TWM")
         // console.log(tempWordsMade)
+        console.log("wordsMade:")
 
-        setWordsMade(tempWordsMade)
+        setWordsMade(wordsMade)
+        console.log(wordsMade)
+        chatSocket.send(JSON.stringify({
+            "wordsMade": wordsMade,
+        }))
+
 
         // 2. color them in the color of the appropriate player
         
@@ -73,9 +85,15 @@ function Key({ keyVal, bigKey }) {
         
         newBoard[row][column]['alive'] = false
         setBoard(newBoard)
+        chatSocket.send(JSON.stringify({
+            "board": newBoard,
+        }))
 
         if (setTurnInProgress) {
             setTurnInProgress(false)
+            chatSocket.send(JSON.stringify({
+                "turnInProgress": false,
+            }))
         }
 
 
@@ -85,22 +103,44 @@ function Key({ keyVal, bigKey }) {
             let newWordMadeObj = JSON.parse(newWordMade)
             tally[activePlayer] += newWordMadeObj["word"].length
             setTally(tally)
+            chatSocket.send(JSON.stringify({
+                "tally": tally,
+            }))
         })
 
         console.log(tally)
         
         // 4. set appropriate player
-        activePlayer === "player-one" ? setActivePlayer("player-two") : setActivePlayer("player-one")
+        if(activePlayer === "player-one"){
+            setActivePlayer("player-two")
+            chatSocket.send(JSON.stringify({
+                "activePlayer": "player-two",
+            }))
+        } else {
+            setActivePlayer("player-one")
+            chatSocket.send(JSON.stringify({
+                "activePlayer": "player-one",
+            }))
+        }
 
 
         } else if (keyVal === 'Delete' && newBoard[row][column]['alive']) {
 
             newBoard[row][column]['keyVal'] = ''
+
             setBoard(newBoard)
+            chatSocket.send(JSON.stringify({
+                "board": newBoard,
+            }))
             
             if (setTurnInProgress) {
                 setTurnInProgress(false)
+                chatSocket.send(JSON.stringify({
+                    "turnInProgress": false,
+                }))
             }
+            
+            
         } else {
             console.log("Unforeseen circumstances.")
         }
@@ -110,11 +150,6 @@ function Key({ keyVal, bigKey }) {
         // console.log("[STARTDEBUG]: chatSocket at Key.js")
         // console.log(chatSocket)
         // console.log("[ENDDEBUG]: chatSocket at Key.js")
-
-        chatSocket.send(JSON.stringify({
-            "board": newBoard,
-            "tally": tally,
-        }))
         
     }
     return (

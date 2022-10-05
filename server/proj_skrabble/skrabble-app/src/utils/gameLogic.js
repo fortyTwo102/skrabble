@@ -2,9 +2,14 @@ import { ROW, COLUMN } from "../Initializer"
 
 export function isWordTaken(word, wordsMade) {
     let isWordTakenFlag = false
+
+    console.log("word: " + word)
+    console.log("wordsMade: ")
+    console.log(wordsMade)
+    console.log(wordsMade.length)
+
     wordsMade.forEach(wordMade => {
-        let wordMadeObj = JSON.parse(wordMade)
-        if (wordMadeObj["word"] === word) {
+        if (wordMade === word) {
             isWordTakenFlag = true
         }
     })

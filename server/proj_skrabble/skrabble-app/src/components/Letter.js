@@ -6,7 +6,7 @@ import './Letter.css'
 
 function Letter({row, column}) {
   
-  const { board, setBoard, setCursor, turnInProgress, setTurnInProgress } = useContext(AppContext)
+  const { board, setBoard, setCursor, turnInProgress, setTurnInProgress, chatSocket } = useContext(AppContext)
 
   const keyColor = board[row][column]["player"]
   const letterStyleVal = board[row][column]["cursor"] ? "letter-glow" : "letter"
@@ -31,12 +31,21 @@ function Letter({row, column}) {
         }
       }
       setBoard(newBoard)
+      chatSocket.send(JSON.stringify({
+          "board": newBoard,
+      }))
 
       // glow it up
       newBoard[row][column]["cursor"] = true
       
       setBoard(newBoard)
       setCursor(newCursor)
+
+      chatSocket.send(JSON.stringify({
+          "board": newBoard,
+          "cursor": newCursor
+      }))
+
       console.log(newBoard[row][column])
   }
   return (

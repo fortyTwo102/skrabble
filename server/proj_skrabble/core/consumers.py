@@ -85,23 +85,29 @@ class GameRoomConsumer(AsyncWebsocketConsumer):
     async def receive(self, text_data):
         text_data_json = json.loads(text_data)
 
-        board = text_data_json["board"]
-        tally = text_data_json["tally"]
+        for game_state_variable in ["board", "tally", "cursor", "turnInProgress", "wordsMade", "activePlayer"]:
 
-        _game_state_message = {
-            "board": board,
-            "tally": tally
-        }
+            game_state_variable_value = text_data_json.get(game_state_variable, None)
 
-        game_state_message = json.dumps(_game_state_message)
+            if game_state_variable_value is not None:
 
-        await self.channel_layer.group_send(
-            self.room_group_name,
-            {
-                'type': 'game_state_message',
-                'game_state_message': game_state_message,
-            }
-        )
+                if game_state_variable == "wordsMade":
+                    print("Processing: " + game_state_variable)
+                    print(text_data_json["wordsMade"])
+
+                _game_state_message = {
+                    game_state_variable: game_state_variable_value,
+                }
+
+                game_state_message = json.dumps(_game_state_message)
+
+                await self.channel_layer.group_send(
+                    self.room_group_name,
+                    {
+                        'type': 'game_state_message',
+                        'game_state_message': game_state_message,
+                    }
+                )
     
     # async def chatroom_message(self, event):
     #     message = event["message"]

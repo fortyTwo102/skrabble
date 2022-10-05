@@ -17,7 +17,7 @@ function App() {
   // State Management
   const [board, setBoard] = useState(mainBoardDefault)
   const [letterCombs, setLetterCombs] = useState(new Set())
-  const [wordsMade, setWordsMade] = useState(new Set())
+  const [wordsMade, setWordsMade] = useState([])
   const [cursor, setCursor] = useState([0, 0])
   const [tally, setTally] = useState(tallyDefault)
   const [colorBoard, setColorBoard] = useState(colorBoardDefault)
@@ -48,14 +48,50 @@ function App() {
     chatSocket.onmessage = function (e) {
 
         const data = JSON.parse(e.data);
-        console.log(data["game_state_message"])
+        console.log("[App.js]: Setting Game States.")
 
         let game_state_message = JSON.parse(data["game_state_message"])
-        let fetchedBoard = game_state_message["board"]
-        let fetchedtally = game_state_message["tally"]
 
-        setBoard(fetchedBoard)
-        setTally(fetchedtally)
+        let fetchedBoard = "board" in game_state_message ? game_state_message["board"] : null
+        let fetchedTally = "tally" in game_state_message ? game_state_message["tally"] : null
+        let fetchedTurnInProgress = "turnInProgress" in game_state_message ? game_state_message["turnInProgress"] : null
+        let fetchedCursor = "cursor" in game_state_message ? game_state_message["cursor"] : null
+        let fetchedWordsMade = "wordsMade" in game_state_message ? game_state_message["wordsMade"] : null
+        let fetchedActivePlayer = "activePlayer" in game_state_message ? game_state_message["activePlayer"] : null
+
+        if (fetchedBoard) {
+          setBoard(fetchedBoard)
+        }
+
+        if (fetchedTally){
+          console.log("Setting tally:")
+          console.log(fetchedTally)
+          setTally(fetchedTally)
+        }
+
+        if (fetchedTurnInProgress){
+          console.log("Setting TIP:")
+          console.log(fetchedTurnInProgress)
+          setTurnInProgress(fetchedTurnInProgress)
+        }
+        
+        if(fetchedCursor){
+          console.log("Setting cursor:")
+          console.log(fetchedCursor)
+          setCursor(fetchedCursor)
+        }
+
+        if (fetchedWordsMade){
+          console.log("Setting words made:")
+          console.log(fetchedWordsMade)
+          setWordsMade(fetchedWordsMade)
+        }
+
+        if (fetchedActivePlayer){
+          console.log("Setting active player:")
+          console.log(fetchedActivePlayer)
+          setActivePlayer(fetchedActivePlayer)
+        }
         
     }
 
