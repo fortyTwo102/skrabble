@@ -4,19 +4,7 @@ from channels.generic.websocket import AsyncWebsocketConsumer
 
 from core.views import room
 
-# class ChatRoomData():
-#     def __init__(self, room_group_name):
-#         self.room_group_name = room_group_name
-#         self.messages = list()
-    
-#     def add_message(self, message):
-#         print("added " + message + " to chatroom " + self.room_group_name, end=" ")
-#         self.messages.append(message)
-#         print(self.messages)
-    
-#     def get_messages(self):
-#         return self.messages
-
+# initialize game room db
 game_room_data_db = dict()
 
 class GameRoomConsumer(AsyncWebsocketConsumer):
@@ -41,6 +29,7 @@ class GameRoomConsumer(AsyncWebsocketConsumer):
 
         await self.accept()
 
+        # just a welcom beacon
         await self.channel_layer.group_send(
             self.room_group_name,
             {
@@ -49,6 +38,7 @@ class GameRoomConsumer(AsyncWebsocketConsumer):
             }
         )
 
+        # if a player is resuming the game in another tab
         if not len(self.game_state) == 0:
             await self.channel_layer.group_send(
                 self.room_group_name,
@@ -59,7 +49,7 @@ class GameRoomConsumer(AsyncWebsocketConsumer):
             )
     
         
-
+    # message handlers
     async def game_state_message(self, event):
         game_state_message = event["game_state_message"]
 
@@ -95,10 +85,6 @@ class GameRoomConsumer(AsyncWebsocketConsumer):
                 self.game_state[game_state_variable] = game_state_variable_value
                 game_room_data_db[self.room_group_name] = self.game_state
 
-                # if game_state_variable == "wordsMade":
-                #     print("Processing: " + game_state_variable)
-                #     print(text_data_json["wordsMade"])
-
                 _game_state_message = {
                     game_state_variable: game_state_variable_value,
                 }
@@ -112,14 +98,6 @@ class GameRoomConsumer(AsyncWebsocketConsumer):
                         'game_state_message': game_state_message,
                     }
                 )
-    
-    # async def chatroom_message(self, event):
-    #     message = event["message"]
-
-    #     await self.send(text_data=json.dumps({
-    #         'message': message,
-    #     }))
-
 
 
 
