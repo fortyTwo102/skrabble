@@ -4,20 +4,20 @@ from channels.generic.websocket import AsyncWebsocketConsumer
 
 from core.views import room
 
-class ChatRoomData():
-    def __init__(self, room_group_name):
-        self.room_group_name = room_group_name
-        self.messages = list()
+# class ChatRoomData():
+#     def __init__(self, room_group_name):
+#         self.room_group_name = room_group_name
+#         self.messages = list()
     
-    def add_message(self, message):
-        print("added " + message + " to chatroom " + self.room_group_name, end=" ")
-        self.messages.append(message)
-        print(self.messages)
+#     def add_message(self, message):
+#         print("added " + message + " to chatroom " + self.room_group_name, end=" ")
+#         self.messages.append(message)
+#         print(self.messages)
     
-    def get_messages(self):
-        return self.messages
+#     def get_messages(self):
+#         return self.messages
 
-chat_room_data_db = dict()
+game_room_data_db = dict()
 
 class GameRoomConsumer(AsyncWebsocketConsumer):
     async def connect(self):
@@ -27,11 +27,11 @@ class GameRoomConsumer(AsyncWebsocketConsumer):
 
         # game state manageent
 
-        # if self.room_group_name in chat_room_data_db:
-        #     self.chat_room_data = chat_room_data_db[self.room_group_name]
-        # else:
-        #     self.chat_room_data = ChatRoomData(self.room_group_name)
-        #     chat_room_data_db[self.room_group_name] = self.chat_room_data
+        if self.room_group_name in game_room_data_db:
+            self.game_state = game_room_data_db[self.room_group_name]
+        else:
+            self.game_state = dict()
+            game_room_data_db[self.room_group_name] = self.game_state
 
 
         await self.channel_layer.group_add(
@@ -49,16 +49,16 @@ class GameRoomConsumer(AsyncWebsocketConsumer):
             }
         )
 
-        # messages = self.chat_room_data.get_messages()
-        # if not len(messages) == 0:
-        #     for message in messages:
-        #         await self.channel_layer.group_send(
-        #             self.room_group_name,
-        #             {
-        #                 'type': 'chatroom_message',
-        #                 'message': message,
-        #             }
-        #         )
+        if not len(self.game_state) == 0:
+            await self.channel_layer.group_send(
+                self.room_group_name,
+                {
+                    'type': 'game_state_message',
+                    'game_state_message':  json.dumps(self.game_state),
+                }
+            )
+    
+        
 
     async def game_state_message(self, event):
         game_state_message = event["game_state_message"]
@@ -80,7 +80,7 @@ class GameRoomConsumer(AsyncWebsocketConsumer):
             self.channel_name
         )
 
-        # chat_room_data_db.pop(self.room_group_name)
+        game_room_data_db.pop(self.room_group_name)
 
     async def receive(self, text_data):
         text_data_json = json.loads(text_data)
@@ -91,9 +91,13 @@ class GameRoomConsumer(AsyncWebsocketConsumer):
 
             if game_state_variable_value is not None:
 
-                if game_state_variable == "wordsMade":
-                    print("Processing: " + game_state_variable)
-                    print(text_data_json["wordsMade"])
+                # save game state in db
+                self.game_state[game_state_variable] = game_state_variable_value
+                game_room_data_db[self.room_group_name] = self.game_state
+
+                # if game_state_variable == "wordsMade":
+                #     print("Processing: " + game_state_variable)
+                #     print(text_data_json["wordsMade"])
 
                 _game_state_message = {
                     game_state_variable: game_state_variable_value,

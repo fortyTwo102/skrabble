@@ -48,7 +48,9 @@ function App() {
     chatSocket.onmessage = function (e) {
 
         const data = JSON.parse(e.data);
-        console.log("[App.js]: Setting Game States.")
+        console.log("[LOG]: Received data: ")
+        console.log(data)
+        console.log("[LOG]: Setting Game States.")
 
         let game_state_message = JSON.parse(data["game_state_message"])
 
