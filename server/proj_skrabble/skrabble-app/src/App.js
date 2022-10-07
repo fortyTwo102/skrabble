@@ -25,6 +25,7 @@ function App() {
   const [letterStyleBoard, setLetterStyleBoard] = useState(letterStyleBoardDefault)
   const [wordResult, setWordResult] = useState(false)
   const [turnInProgress, setTurnInProgress] = useState(false)
+  const [playerRole, setPlayerRole] = useState("")
   const [T, setT] = useState(tallyDefault)
 
 
@@ -60,6 +61,12 @@ function App() {
         let fetchedCursor = "cursor" in game_state_message ? game_state_message["cursor"] : null
         let fetchedWordsMade = "wordsMade" in game_state_message ? game_state_message["wordsMade"] : null
         let fetchedActivePlayer = "activePlayer" in game_state_message ? game_state_message["activePlayer"] : null
+        let fetchedPlayerOneStatus = "player_one" in game_state_message ? game_state_message["player_one"] : null
+        let fetchedPlayerTwoStatus = "player_two" in game_state_message ? game_state_message["player_two"] : null
+
+        // some extra effort for finding observer status
+
+        
 
         if (fetchedBoard) {
           setBoard(fetchedBoard)
