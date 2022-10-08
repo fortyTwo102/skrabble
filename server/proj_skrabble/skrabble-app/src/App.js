@@ -26,7 +26,10 @@ function App() {
   const [wordResult, setWordResult] = useState(false)
   const [turnInProgress, setTurnInProgress] = useState(false)
   const [playerRole, setPlayerRole] = useState("")
+  // const [isRoleAssigned, setIsRoleAssigned] = useState(false)
   const [T, setT] = useState(tallyDefault)
+
+  let isRoleAssigned = false
 
 
   const [chatSocket, setChatSocket] = useState({});
@@ -61,12 +64,7 @@ function App() {
         let fetchedCursor = "cursor" in game_state_message ? game_state_message["cursor"] : null
         let fetchedWordsMade = "wordsMade" in game_state_message ? game_state_message["wordsMade"] : null
         let fetchedActivePlayer = "activePlayer" in game_state_message ? game_state_message["activePlayer"] : null
-        let fetchedPlayerOneStatus = "player_one" in game_state_message ? game_state_message["player_one"] : null
-        let fetchedPlayerTwoStatus = "player_two" in game_state_message ? game_state_message["player_two"] : null
-
-        // some extra effort for finding observer status
-
-        
+        let fetchedPlayerRole = "role" in game_state_message ? game_state_message["role"] : null
 
         if (fetchedBoard) {
           setBoard(fetchedBoard)
@@ -101,7 +99,16 @@ function App() {
           console.log(fetchedActivePlayer)
           setActivePlayer(fetchedActivePlayer)
         }
-        
+
+
+        if (!isRoleAssigned){
+          console.log("Setting player role:")
+          console.log(fetchedPlayerRole)
+          setPlayerRole(fetchedPlayerRole)
+          
+          // this is to keep from the roles from changing while braodcasting
+          isRoleAssigned = true
+        }
     }
 
     setChatSocket(chatSocket)
