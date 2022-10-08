@@ -6,151 +6,151 @@ import { getWordsEndingOnCursor } from '../utils/gameLogic'
 import './Key.css'
 
 function Key({ keyVal, bigKey }) {
-    const { board, setBoard, cursor, activePlayer, setActivePlayer, tally, setTally, wordsMade, setWordsMade, turnInProgress, setTurnInProgress, chatSocket} = useContext(AppContext)
+    const { board, setBoard, cursor, activePlayer, playerRole, setActivePlayer, tally, setTally, wordsMade, setWordsMade, turnInProgress, setTurnInProgress, chatSocket} = useContext(AppContext)
     const inputLetter = async () => {
     
         const newBoard = [...board]
         const row = cursor[0]
         const column = cursor[1]
 
-        if (keyVal !== "Enter" && keyVal !== "Delete" && newBoard[row][column]['alive']){
+        if ((activePlayer == "player-one" && playerRole == "player_one") || (activePlayer == "player-two" && playerRole == "player_two")) {
 
-            // assign letter 
+            if (keyVal !== "Enter" && keyVal !== "Delete" && newBoard[row][column]['alive']){
 
-            newBoard[row][column]['keyVal'] = keyVal
-            setBoard(newBoard)
-            chatSocket.send(JSON.stringify({
-                "board": newBoard,
-            }))
-            
-            if (setTurnInProgress) {
-                setTurnInProgress(true)
+                // assign letter 
+
+                newBoard[row][column]['keyVal'] = keyVal
+                setBoard(newBoard)
                 chatSocket.send(JSON.stringify({
-                    "turnInProgress": true,
+                    "board": newBoard,
                 }))
+                
+                if (setTurnInProgress) {
+                    setTurnInProgress(true)
+                    chatSocket.send(JSON.stringify({
+                        "turnInProgress": true,
+                    }))
+                }
+
+            
+            } else if (keyVal === "Enter" && newBoard[row][column]['alive']) {
+                
+            // remove glow after keyVal is set
+            
+            for (let rindex = 0; rindex < ROW; rindex++) {
+                for (let cindex = 0; cindex < COLUMN; cindex++) {
+                board[rindex][cindex]["cursor"] = false
+                }
             }
 
-        
-        } else if (keyVal === "Enter" && newBoard[row][column]['alive']) {
+
+            // -------------------- GAME LOGIC --------------------
+            // 1. find if any words have been made
             
-        // remove glow after keyVal is set
-        
-        for (let rindex = 0; rindex < ROW; rindex++) {
-            for (let cindex = 0; cindex < COLUMN; cindex++) {
-            board[rindex][cindex]["cursor"] = false
-            }
-        }
+            let newWordsMade = await getWordsEndingOnCursor(cursor, newBoard, wordsMade)
+            // console.log("KEY NWM")
+            wordsMade.push(...newWordsMade)
+
+            // console.log("KEY TWM")
+            // console.log(tempWordsMade)
+            // console.log("wordsMade:")
+
+            setWordsMade(wordsMade)
+            // console.log(wordsMade)
+            chatSocket.send(JSON.stringify({
+                "wordsMade": wordsMade,
+            }))
 
 
-        // -------------------- GAME LOGIC --------------------
-        // 1. find if any words have been made
-        
-        let newWordsMade = await getWordsEndingOnCursor(cursor, newBoard, wordsMade)
-        // console.log("KEY NWM")
-        wordsMade.push(...newWordsMade)
-
-        // console.log("KEY TWM")
-        // console.log(tempWordsMade)
-        // console.log("wordsMade:")
-
-        setWordsMade(wordsMade)
-        // console.log(wordsMade)
-        chatSocket.send(JSON.stringify({
-            "wordsMade": wordsMade,
-        }))
-
-
-        // 2. color them in the color of the appropriate player
-        
-        newWordsMade.forEach(newWordMade => {
-            let newWordMadeObj = JSON.parse(newWordMade)
-
-            // console.log(newWordMadeObj)
-            // find if the last move had any words made
+            // 2. color them in the color of the appropriate player
             
-            let anyWordsMade = false
-            newWordMadeObj["location"].forEach(loc => {
-                if (loc[0] === cursor[0] && loc[1] === cursor[1]){
-                    anyWordsMade = true
-                }
+            newWordsMade.forEach(newWordMade => {
+                let newWordMadeObj = JSON.parse(newWordMade)
+
+                // console.log(newWordMadeObj)
+                // find if the last move had any words made
+                
+                let anyWordsMade = false
+                newWordMadeObj["location"].forEach(loc => {
+                    if (loc[0] === cursor[0] && loc[1] === cursor[1]){
+                        anyWordsMade = true
+                    }
+                })
+                // color 
+                newWordMadeObj["location"].forEach(loc => {
+                    if (anyWordsMade){
+                        newBoard[loc[0]][loc[1]]["player"] = activePlayer
+                        newBoard[loc[0]][loc[1]]["partOfWord"] = true
+                    }
+                })
             })
-            // color 
-            newWordMadeObj["location"].forEach(loc => {
-                if (anyWordsMade){
-                    newBoard[loc[0]][loc[1]]["player"] = activePlayer
-                    newBoard[loc[0]][loc[1]]["partOfWord"] = true
-                }
-            })
-        })
-        
-        newBoard[row][column]['alive'] = false
-        setBoard(newBoard)
-        chatSocket.send(JSON.stringify({
-            "board": newBoard,
-        }))
-
-        if (setTurnInProgress) {
-            setTurnInProgress(false)
-            chatSocket.send(JSON.stringify({
-                "turnInProgress": false,
-            }))
-        }
-
-
-        // 3. set score
-
-        newWordsMade.forEach(newWordMade => {
-            let newWordMadeObj = JSON.parse(newWordMade)
-            tally[activePlayer] += newWordMadeObj["word"].length
-            setTally(tally)
-            chatSocket.send(JSON.stringify({
-                "tally": tally,
-            }))
-        })
-
-        console.log(tally)
-        
-        // 4. set appropriate player
-        if(activePlayer === "player-one"){
-            setActivePlayer("player-two")
-            chatSocket.send(JSON.stringify({
-                "activePlayer": "player-two",
-            }))
-        } else {
-            setActivePlayer("player-one")
-            chatSocket.send(JSON.stringify({
-                "activePlayer": "player-one",
-            }))
-        }
-
-
-        } else if (keyVal === 'Delete' && newBoard[row][column]['alive']) {
-
-            newBoard[row][column]['keyVal'] = ''
-
+            
+            newBoard[row][column]['alive'] = false
             setBoard(newBoard)
             chatSocket.send(JSON.stringify({
                 "board": newBoard,
             }))
-            
+
             if (setTurnInProgress) {
                 setTurnInProgress(false)
                 chatSocket.send(JSON.stringify({
                     "turnInProgress": false,
                 }))
             }
+
+
+            // 3. set score
+
+            newWordsMade.forEach(newWordMade => {
+                let newWordMadeObj = JSON.parse(newWordMade)
+                tally[activePlayer] += newWordMadeObj["word"].length
+                setTally(tally)
+                chatSocket.send(JSON.stringify({
+                    "tally": tally,
+                }))
+            })
+
+            console.log(tally)
             
-            
+            // 4. set appropriate player
+            if(activePlayer === "player-one"){
+                setActivePlayer("player-two")
+                chatSocket.send(JSON.stringify({
+                    "activePlayer": "player-two",
+                }))
+            } else {
+                setActivePlayer("player-one")
+                chatSocket.send(JSON.stringify({
+                    "activePlayer": "player-one",
+                }))
+            }
+
+
+            } else if (keyVal === 'Delete' && newBoard[row][column]['alive']) {
+
+                newBoard[row][column]['keyVal'] = ''
+
+                setBoard(newBoard)
+                chatSocket.send(JSON.stringify({
+                    "board": newBoard,
+                }))
+                
+                if (setTurnInProgress) {
+                    setTurnInProgress(false)
+                    chatSocket.send(JSON.stringify({
+                        "turnInProgress": false,
+                    }))
+                }
+                
+                
+            } else {
+                console.log("Unforeseen circumstances.")
+            }
         } else {
-            console.log("Unforeseen circumstances.")
+            console.log("Uh oh, you can't play right now.")
+            console.log(activePlayer)
+            console.log(playerRole)
         }
-
-        // 5. send game data to other player
-
-        // console.log("[STARTDEBUG]: chatSocket at Key.js")
-        // console.log(chatSocket)
-        // console.log("[ENDDEBUG]: chatSocket at Key.js")
-        
     }
     return (
         <div className='key' id={bigKey && "big"} onClick={inputLetter}>{keyVal}</div>
