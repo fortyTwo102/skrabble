@@ -5,6 +5,7 @@ import { useEffect, useRef } from 'react';
 import Keyboard from './components/Keyboard';
 import Board from './components/Board';
 import Scorecard from './components/Scorecard';
+import GameInfo from './components/GameInfo';
 
 import { createContext, useState } from 'react';
 import { colorBoardDefault, letterStyleBoardDefault, mainBoardDefault, tallyDefault} from './Initializer';
@@ -127,9 +128,10 @@ function App() {
       <nav>
         <h1>skrabble.</h1>
       </nav>
-      <AppContext.Provider value={{board, setBoard, cursor, setCursor, colorBoard, setColorBoard, activePlayer, setActivePlayer, letterStyleBoard, setLetterStyleBoard, wordList, tally, setTally, T, setT, letterCombs, setLetterCombs, wordsMade, setWordsMade, wordResult, setWordResult, turnInProgress, setTurnInProgress, chatSocket}}>
+      <AppContext.Provider value={{board, setBoard, cursor, setCursor, colorBoard, setColorBoard, activePlayer, setActivePlayer, letterStyleBoard, setLetterStyleBoard, wordList, tally, setTally, T, setT, letterCombs, setLetterCombs, wordsMade, setWordsMade, wordResult, setWordResult, turnInProgress, setTurnInProgress, playerRole, setPlayerRole, chatSocket}}>
         <div className='game'>
           <Scorecard/>
+          <GameInfo/>
           <div className='board-container'>
             <Board/>
           </div>

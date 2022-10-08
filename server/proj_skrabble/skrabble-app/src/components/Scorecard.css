@@ -6,22 +6,22 @@
 }
 
 p {
-display: inline;
-word-wrap: break-word;
+    display: inline;
+    word-wrap: break-word;
 }
 
 .score-player-two {
-text-shadow: 0px 0px 5px #df9021;
+    color: #ffb703;
 }
 
 .score-player-one {
-text-shadow: 0px 0px 5px #0f99d8;
+    color: #219ebc;
 }
 
-#player-one-active {
-text-decoration: underline;
+#player-one-score-active {
+    text-decoration: underline;
 }
 
-#player-two-active {
-text-decoration: underline;
+#player-two-score-active {
+    text-decoration: underline;
 }

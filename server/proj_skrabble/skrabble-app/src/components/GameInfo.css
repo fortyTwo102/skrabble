@@ -1,0 +1,34 @@
+.gameinfo {
+    padding-top: 5px;
+    font-weight: bold; 
+    font-size: large;
+    font-size: 20px;
+}
+
+p {
+    display: inline;
+    word-wrap: break-word;
+}
+
+.generic-string1 {
+    color: #ffffff;
+}
+
+.turn-string {
+    color: #8c8c8c;
+    font-size: 14px;
+}
+
+
+
+#player-one-active {
+    color: #219ebc;
+}
+
+#player-two-active {
+    color: #ffb703;
+}
+
+#observer-active {
+    color: #ffffff;
+}
