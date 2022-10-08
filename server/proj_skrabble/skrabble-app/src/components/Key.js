@@ -5,8 +5,13 @@ import { ROW, COLUMN } from '../Initializer'
 import { getWordsEndingOnCursor } from '../utils/gameLogic'
 import './Key.css'
 
+import { useAlert } from 'react-alert'
+import { transitions, positions, types, Provider as AlertProvider } from 'react-alert'
+
 function Key({ keyVal, bigKey }) {
     const { board, setBoard, cursor, activePlayer, playerRole, setActivePlayer, tally, setTally, wordsMade, setWordsMade, turnInProgress, setTurnInProgress, chatSocket} = useContext(AppContext)
+    const alert = useAlert()
+
     const inputLetter = async () => {
     
         const newBoard = [...board]
@@ -147,9 +152,10 @@ function Key({ keyVal, bigKey }) {
                 console.log("Unforeseen circumstances.")
             }
         } else {
-            console.log("Uh oh, you can't play right now.")
-            console.log(activePlayer)
-            console.log(playerRole)
+            alert.show("Not allowed", {
+                timeout: 2000,
+                type: types.ERROR,
+            })
         }
     }
     return (

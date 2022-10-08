@@ -1,4 +1,6 @@
 import React, { useContext } from 'react'
+import { useAlert } from 'react-alert'
+import { transitions, positions, types, Provider as AlertProvider } from 'react-alert'
 
 import { AppContext } from '../App'
 import { ROW, COLUMN } from '../Initializer'
@@ -7,6 +9,7 @@ import './Letter.css'
 function Letter({row, column}) {
   
   const { board, setBoard, setCursor, activePlayer, playerRole, turnInProgress, setTurnInProgress, chatSocket } = useContext(AppContext)
+  const alert = useAlert()
 
   const keyColor = board[row][column]["player"]
   const letterStyleVal = board[row][column]["cursor"] ? "letter-glow" : "letter"
@@ -50,9 +53,10 @@ function Letter({row, column}) {
         console.log(newBoard[row][column])
       }else{
         
-        console.log("Uh oh, you can't play right now.")
-        console.log(activePlayer)
-        console.log(playerRole)
+        alert.show("Not allowed", {
+            timeout: 2000,
+            type: types.ERROR,
+        })
 
       }
   }

@@ -1,6 +1,6 @@
 import './App.css';
-import { io } from "socket.io-client";
 import { useEffect, useRef } from 'react';
+import { useAlert } from 'react-alert'
 
 import Keyboard from './components/Keyboard';
 import Board from './components/Board';
@@ -29,6 +29,7 @@ function App() {
   const [playerRole, setPlayerRole] = useState("")
   // const [isRoleAssigned, setIsRoleAssigned] = useState(false)
   const [T, setT] = useState(tallyDefault)
+  const alert = useAlert()
 
   let isRoleAssigned = false
 
