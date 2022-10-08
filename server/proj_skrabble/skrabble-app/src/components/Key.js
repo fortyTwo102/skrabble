@@ -113,6 +113,11 @@ function Key({ keyVal, bigKey }) {
                 chatSocket.send(JSON.stringify({
                     "tally": tally,
                 }))
+
+                // popup alert
+                alert.success(`+${newWordMadeObj["word"].length} for ${newWordMadeObj["word"]}`, {
+                    timeout: 1500
+                })
             })
 
             console.log(tally)

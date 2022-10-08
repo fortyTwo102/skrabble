@@ -5,8 +5,8 @@
     - Needs to have About section
     - Needs to have Information on Words already made
 - Pop-ups for runtime Information
-    - "+3!"
-    - "Uh oh, please select a box."
+    - "+3!" - DONE
+    - "Uh oh, please select a box." - DONE
 - ENDGAME page
 
 # BACKEND

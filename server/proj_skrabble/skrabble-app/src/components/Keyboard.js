@@ -44,7 +44,7 @@ function Keyboard() {
                 </div>
                 <CopyToClipboard text={url}
                     onCopy={() => alert.success("Copied!", {
-                        timeout: 1500
+                        timeout: 1000
                     })}>
                     <Button variant="contained" color="success" size="small">Copy Link to Room</Button>
                 </CopyToClipboard> 
