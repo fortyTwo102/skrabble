@@ -3,8 +3,8 @@
 - Add sub-page
     - Needs to have HOWTOPLAY
     - Needs to have About section
-    - Needs to have Information on Words already made
-- Pop-ups for runtime Information
+    - Needs to have Information on Words already made - DONE (Added it with pop-up)
+- Pop-ups for runtime Information - DONE
     - "+3!" - DONE
     - "Uh oh, please select a box." - DONE
 - ENDGAME page

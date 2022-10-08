@@ -29,6 +29,7 @@ function App() {
   const [playerRole, setPlayerRole] = useState("")
   // const [isRoleAssigned, setIsRoleAssigned] = useState(false)
   const [T, setT] = useState(tallyDefault)
+  const [letterCounter, SetLetterCounter] = useState(0)
   const alert = useAlert()
 
   let isRoleAssigned = false
@@ -67,6 +68,7 @@ function App() {
         let fetchedWordsMade = "wordsMade" in game_state_message ? game_state_message["wordsMade"] : null
         let fetchedActivePlayer = "activePlayer" in game_state_message ? game_state_message["activePlayer"] : null
         let fetchedPlayerRole = "role" in game_state_message ? game_state_message["role"] : null
+        let fetchedLetterCounter = "letterCounter" in game_state_message ? game_state_message["letterCounter"] : null
 
         if (fetchedBoard) {
           setBoard(fetchedBoard)
@@ -111,6 +113,12 @@ function App() {
           // this is to keep from the roles from changing while braodcasting
           isRoleAssigned = true
         }
+
+        if (fetchedLetterCounter){
+          console.log("Setting letter count:")
+          console.log(fetchedLetterCounter)
+          SetLetterCounter(fetchedLetterCounter)
+        }
     }
 
     setChatSocket(chatSocket)
@@ -129,7 +137,7 @@ function App() {
       <nav>
         <h1>skrabble.</h1>
       </nav>
-      <AppContext.Provider value={{board, setBoard, cursor, setCursor, colorBoard, setColorBoard, activePlayer, setActivePlayer, letterStyleBoard, setLetterStyleBoard, wordList, tally, setTally, T, setT, letterCombs, setLetterCombs, wordsMade, setWordsMade, wordResult, setWordResult, turnInProgress, setTurnInProgress, playerRole, setPlayerRole, chatSocket}}>
+      <AppContext.Provider value={{board, setBoard, cursor, setCursor, colorBoard, setColorBoard, activePlayer, setActivePlayer, letterStyleBoard, setLetterStyleBoard, wordList, tally, setTally, T, setT, letterCombs, setLetterCombs, wordsMade, setWordsMade, wordResult, setWordResult, turnInProgress, setTurnInProgress, playerRole, setPlayerRole, letterCounter, SetLetterCounter, chatSocket}}>
         <div className='game'>
           <Scorecard/>
           <GameInfo/>

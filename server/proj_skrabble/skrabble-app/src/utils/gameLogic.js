@@ -155,8 +155,8 @@ export async function getWordsEndingOnCursor(cursor, board, wordsMade) {
             let isEnglishWordReturns = await isEnglishWord(possibleWordObj["word"])
             let isWordTakenReturns = isWordTaken(possibleWordObj["word"], wordsMade)
             
-            console.log("isEnglishWord: " + isEnglishWordReturns)
-            console.log("isWordTaken: " + isWordTakenReturns)
+            // console.log("isEnglishWord: " + isEnglishWordReturns)
+            // console.log("isWordTaken: " + isWordTakenReturns)
 
             if (isEnglishWordReturns && !isWordTakenReturns){
                 console.log("Word found " + possibleWordObj["word"])

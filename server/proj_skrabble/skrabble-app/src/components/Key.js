@@ -9,7 +9,7 @@ import { useAlert } from 'react-alert'
 import { transitions, positions, types, Provider as AlertProvider } from 'react-alert'
 
 function Key({ keyVal, bigKey }) {
-    const { board, setBoard, cursor, activePlayer, playerRole, setActivePlayer, tally, setTally, wordsMade, setWordsMade, turnInProgress, setTurnInProgress, chatSocket} = useContext(AppContext)
+    const { board, setBoard, cursor, activePlayer, playerRole, setActivePlayer, tally, setTally, wordsMade, setWordsMade, letterCounter, SetLetterCounter, turnInProgress, setTurnInProgress, chatSocket} = useContext(AppContext)
     const alert = useAlert()
 
     const inputLetter = async () => {
@@ -40,100 +40,109 @@ function Key({ keyVal, bigKey }) {
             
             } else if (keyVal === "Enter" && newBoard[row][column]['alive']) {
                 
-            // remove glow after keyVal is set
-            
-            for (let rindex = 0; rindex < ROW; rindex++) {
-                for (let cindex = 0; cindex < COLUMN; cindex++) {
-                board[rindex][cindex]["cursor"] = false
-                }
-            }
-
-
-            // -------------------- GAME LOGIC --------------------
-            // 1. find if any words have been made
-            
-            let newWordsMade = await getWordsEndingOnCursor(cursor, newBoard, wordsMade)
-            // console.log("KEY NWM")
-            wordsMade.push(...newWordsMade)
-
-            // console.log("KEY TWM")
-            // console.log(tempWordsMade)
-            // console.log("wordsMade:")
-
-            setWordsMade(wordsMade)
-            // console.log(wordsMade)
-            chatSocket.send(JSON.stringify({
-                "wordsMade": wordsMade,
-            }))
-
-
-            // 2. color them in the color of the appropriate player
-            
-            newWordsMade.forEach(newWordMade => {
-                let newWordMadeObj = JSON.parse(newWordMade)
-
-                // console.log(newWordMadeObj)
-                // find if the last move had any words made
+                // remove glow after keyVal is set
                 
-                let anyWordsMade = false
-                newWordMadeObj["location"].forEach(loc => {
-                    if (loc[0] === cursor[0] && loc[1] === cursor[1]){
-                        anyWordsMade = true
+                for (let rindex = 0; rindex < ROW; rindex++) {
+                    for (let cindex = 0; cindex < COLUMN; cindex++) {
+                    board[rindex][cindex]["cursor"] = false
                     }
+                }
+
+
+                // -------------------- GAME LOGIC --------------------
+                // 1. find if any words have been made
+                
+                let newWordsMade = await getWordsEndingOnCursor(cursor, newBoard, wordsMade)
+                // console.log("KEY NWM")
+                wordsMade.push(...newWordsMade)
+
+                // console.log("KEY TWM")
+                // console.log(tempWordsMade)
+                // console.log("wordsMade:")
+
+                setWordsMade(wordsMade)
+                // console.log(wordsMade)
+                chatSocket.send(JSON.stringify({
+                    "wordsMade": wordsMade,
+                }))
+
+
+                // 2. color them in the color of the appropriate player
+                
+                newWordsMade.forEach(newWordMade => {
+                    let newWordMadeObj = JSON.parse(newWordMade)
+
+                    // console.log(newWordMadeObj)
+                    // find if the last move had any words made
+                    
+                    let anyWordsMade = false
+                    newWordMadeObj["location"].forEach(loc => {
+                        if (loc[0] === cursor[0] && loc[1] === cursor[1]){
+                            anyWordsMade = true
+                        }
+                    })
+                    // color 
+                    newWordMadeObj["location"].forEach(loc => {
+                        if (anyWordsMade){
+                            newBoard[loc[0]][loc[1]]["player"] = activePlayer
+                            newBoard[loc[0]][loc[1]]["partOfWord"] = true
+                        }
+                    })
                 })
-                // color 
-                newWordMadeObj["location"].forEach(loc => {
-                    if (anyWordsMade){
-                        newBoard[loc[0]][loc[1]]["player"] = activePlayer
-                        newBoard[loc[0]][loc[1]]["partOfWord"] = true
-                    }
+                
+                newBoard[row][column]['alive'] = false
+                setBoard(newBoard)
+                chatSocket.send(JSON.stringify({
+                    "board": newBoard,
+                }))
+
+                if (setTurnInProgress) {
+                    setTurnInProgress(false)
+                    chatSocket.send(JSON.stringify({
+                        "turnInProgress": false,
+                    }))
+                }
+
+
+                // 3. set score
+
+                newWordsMade.forEach(newWordMade => {
+                    let newWordMadeObj = JSON.parse(newWordMade)
+                    tally[activePlayer] += newWordMadeObj["word"].length
+                    setTally(tally)
+                    chatSocket.send(JSON.stringify({
+                        "tally": tally,
+                    }))
+
+                    // popup alert
+                    alert.success(`+${newWordMadeObj["word"].length} for ${newWordMadeObj["word"]}`, {
+                        timeout: 1500
+                    })
                 })
-            })
-            
-            newBoard[row][column]['alive'] = false
-            setBoard(newBoard)
-            chatSocket.send(JSON.stringify({
-                "board": newBoard,
-            }))
 
-            if (setTurnInProgress) {
-                setTurnInProgress(false)
+                console.log(tally)
+                
+                // 4. set appropriate player
+                if(activePlayer === "player-one"){
+                    setActivePlayer("player-two")
+                    chatSocket.send(JSON.stringify({
+                        "activePlayer": "player-two",
+                    }))
+                } else {
+                    setActivePlayer("player-one")
+                    chatSocket.send(JSON.stringify({
+                        "activePlayer": "player-one",
+                    }))
+                }
+
+                // 5. Set GameBoard letter counter
+                SetLetterCounter(letterCounter + 1)
+                console.log("LC:")
+                console.log(letterCounter + 1)
                 chatSocket.send(JSON.stringify({
-                    "turnInProgress": false,
-                }))
-            }
-
-
-            // 3. set score
-
-            newWordsMade.forEach(newWordMade => {
-                let newWordMadeObj = JSON.parse(newWordMade)
-                tally[activePlayer] += newWordMadeObj["word"].length
-                setTally(tally)
-                chatSocket.send(JSON.stringify({
-                    "tally": tally,
+                    "letterCounter": letterCounter + 1,
                 }))
 
-                // popup alert
-                alert.success(`+${newWordMadeObj["word"].length} for ${newWordMadeObj["word"]}`, {
-                    timeout: 1500
-                })
-            })
-
-            console.log(tally)
-            
-            // 4. set appropriate player
-            if(activePlayer === "player-one"){
-                setActivePlayer("player-two")
-                chatSocket.send(JSON.stringify({
-                    "activePlayer": "player-two",
-                }))
-            } else {
-                setActivePlayer("player-one")
-                chatSocket.send(JSON.stringify({
-                    "activePlayer": "player-one",
-                }))
-            }
 
 
             } else if (keyVal === 'Delete' && newBoard[row][column]['alive']) {

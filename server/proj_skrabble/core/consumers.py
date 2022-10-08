@@ -145,7 +145,7 @@ class GameRoomConsumer(AsyncWebsocketConsumer):
     async def receive(self, text_data):
         text_data_json = json.loads(text_data)
 
-        for game_state_variable in ["board", "tally", "cursor", "turnInProgress", "wordsMade", "activePlayer"]:
+        for game_state_variable in ["board", "tally", "cursor", "turnInProgress", "wordsMade", "activePlayer", "letterCounter"]:
 
             game_state_variable_value = text_data_json.get(game_state_variable, None)
 
