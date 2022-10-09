@@ -57,8 +57,7 @@ class GameRoomConsumer(AsyncWebsocketConsumer):
                 print("Player Two has rejoined.")
 
             elif game_room_data_db[self.room_group_name]["player_two"] \
-                and not game_room_data_db[self.room_group_name]["player_one"] \
-                and game_room_data_db[self.room_group_name]["socket_count"] >= 2:
+                and not game_room_data_db[self.room_group_name]["player_one"]:
                 
                 game_room_data_db[self.room_group_name]["player_one"] = True
 

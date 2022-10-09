@@ -20,7 +20,7 @@ function Keyboard() {
         "copied": false,
     }
 
-    const url = window.location.host + "/core/" + JSON.parse(document.getElementById('room-name').textContent);
+    const url = window.location.href
     const alert = useAlert()
 
     return (

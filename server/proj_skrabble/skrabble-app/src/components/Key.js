@@ -1,4 +1,5 @@
 import React, { useContext } from 'react'
+import { Navigate } from 'react-router-dom';
 
 import { AppContext } from '../App'
 import { ROW, COLUMN } from '../Initializer'
@@ -8,9 +9,15 @@ import './Key.css'
 import { useAlert } from 'react-alert'
 import { transitions, positions, types, Provider as AlertProvider } from 'react-alert'
 
+import Button from '@mui/material/Button';  
+
 function Key({ keyVal, bigKey }) {
     const { board, setBoard, cursor, activePlayer, playerRole, setActivePlayer, tally, setTally, wordsMade, setWordsMade, letterCounter, SetLetterCounter, turnInProgress, setTurnInProgress, chatSocket} = useContext(AppContext)
     const alert = useAlert()
+
+    const playAgain = async () => {
+        window.location.replace("../")
+    }
 
     const inputLetter = async () => {
     
@@ -120,9 +127,45 @@ function Key({ keyVal, bigKey }) {
                     })
                 })
 
-                console.log(tally)
+                // 4. Set GameBoard letter counter
+                SetLetterCounter(letterCounter + 1)
+                console.log("LC:")
+                console.log(letterCounter + 1)
+                chatSocket.send(JSON.stringify({
+                    "letterCounter": letterCounter + 1,
+                }))
+
+                // 5. ENDGAME 
+
+                if (letterCounter + 1 == 3) {
+
+                    let endgameLabel = ""
+                    if ((tally["player-one"] > tally["player-two"]) && (activePlayer == "player-one")){
+                        endgameLabel = "winner!"
+                    } else if ((tally["player-one"] < tally["player-two"]) && (activePlayer == "player-one")){
+                        endgameLabel = "Sorry, you lost"
+                    } else if ((tally["player-one"] > tally["player-two"]) && (activePlayer == "player-two")){
+                        endgameLabel = "Sorry, you lost :("
+                    } else if ((tally["player-one"] < tally["player-two"]) && (activePlayer == "player-two")){
+                        endgameLabel = "Congrats, you won!"
+                    } else if (tally["player-one"] == tally["player-two"]){
+                        endgameLabel = "Game drawn!"
+                    } 
+
+                    endgameLabel = "                   "
+                    
+                    alert.info(<p>{endgameLabel}
+                        <Button variant="contained" color="success" size="small" onClick={playAgain}>New Game
+                        </Button></p>, {
+                        timeout: 0,
+                        offset: '100px',
+                        containerStyle: {
+                            fontSize: 10
+                        }
+                    })
+                }
                 
-                // 4. set appropriate player
+                // 6. set appropriate player
                 if(activePlayer === "player-one"){
                     setActivePlayer("player-two")
                     chatSocket.send(JSON.stringify({
@@ -134,16 +177,6 @@ function Key({ keyVal, bigKey }) {
                         "activePlayer": "player-one",
                     }))
                 }
-
-                // 5. Set GameBoard letter counter
-                SetLetterCounter(letterCounter + 1)
-                console.log("LC:")
-                console.log(letterCounter + 1)
-                chatSocket.send(JSON.stringify({
-                    "letterCounter": letterCounter + 1,
-                }))
-
-
 
             } else if (keyVal === 'Delete' && newBoard[row][column]['alive']) {
 
