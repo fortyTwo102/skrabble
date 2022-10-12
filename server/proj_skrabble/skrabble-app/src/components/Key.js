@@ -15,9 +15,6 @@ function Key({ keyVal, bigKey }) {
     const { board, setBoard, cursor, activePlayer, playerRole, setActivePlayer, tally, setTally, wordsMade, setWordsMade, letterCounter, SetLetterCounter, turnInProgress, setTurnInProgress, chatSocket} = useContext(AppContext)
     const alert = useAlert()
 
-    const playAgain = async () => {
-        window.location.replace("../")
-    }
 
     const inputLetter = async () => {
     
@@ -135,36 +132,16 @@ function Key({ keyVal, bigKey }) {
                     "letterCounter": letterCounter + 1,
                 }))
 
-                // 5. ENDGAME 
-
+                // 5. check if all the boxes are filled
                 if (letterCounter + 1 == 3) {
-
-                    let endgameLabel = ""
-                    if ((tally["player-one"] > tally["player-two"]) && (activePlayer == "player-one")){
-                        endgameLabel = "winner!"
-                    } else if ((tally["player-one"] < tally["player-two"]) && (activePlayer == "player-one")){
-                        endgameLabel = "Sorry, you lost"
-                    } else if ((tally["player-one"] > tally["player-two"]) && (activePlayer == "player-two")){
-                        endgameLabel = "Sorry, you lost :("
-                    } else if ((tally["player-one"] < tally["player-two"]) && (activePlayer == "player-two")){
-                        endgameLabel = "Congrats, you won!"
-                    } else if (tally["player-one"] == tally["player-two"]){
-                        endgameLabel = "Game drawn!"
-                    } 
-
-                    endgameLabel = "                   "
                     
-                    alert.info(<p>{endgameLabel}
-                        <Button variant="contained" color="success" size="small" onClick={playAgain}>New Game
-                        </Button></p>, {
-                        timeout: 0,
-                        offset: '100px',
-                        containerStyle: {
-                            fontSize: 10
-                        }
-                    })
+                    console.log("ENDGAME")
+
+                    chatSocket.send(JSON.stringify({
+                        "endGameTally": tally
+                    }))
                 }
-                
+
                 // 6. set appropriate player
                 if(activePlayer === "player-one"){
                     setActivePlayer("player-two")

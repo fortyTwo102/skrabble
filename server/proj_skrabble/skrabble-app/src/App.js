@@ -1,17 +1,20 @@
-import './App.css';
-import { useEffect, useRef } from 'react';
+import { useContext, useEffect, useRef } from 'react';
 import { useAlert } from 'react-alert'
+import { transitions, positions, types, Provider as AlertProvider } from 'react-alert'
+import { createContext, useState } from 'react';
 
+import './App.css';
 import Keyboard from './components/Keyboard';
 import Board from './components/Board';
 import Scorecard from './components/Scorecard';
 import GameInfo from './components/GameInfo';
-
-import { createContext, useState } from 'react';
 import { colorBoardDefault, letterStyleBoardDefault, mainBoardDefault, tallyDefault} from './Initializer';
 import { wordList } from './Words';
 
+import Button from '@mui/material/Button';  
+
 export const AppContext = createContext()
+
 
 function App() {
 
@@ -31,12 +34,19 @@ function App() {
   const [T, setT] = useState(tallyDefault)
   const [letterCounter, SetLetterCounter] = useState(0)
   const alert = useAlert()
+  
+  // const myContext = useContext(AppContext)
 
   let isRoleAssigned = false
 
 
   const [chatSocket, setChatSocket] = useState({});
   const roomName = useRef();
+
+  
+  const playAgain = async () => {
+    window.location.replace("../")
+  }
 
   useEffect(() => {
     const roomName = JSON.parse(document.getElementById('room-name').textContent);
@@ -58,8 +68,9 @@ function App() {
         console.log("[LOG]: Received data: ")
         console.log(data)
         console.log("[LOG]: Setting Game States.")
+        // console.log("[LOG]: PlayerRole: " + myContext.playerRole)
 
-        let game_state_message = JSON.parse(data["game_state_message"])
+        let game_state_message = "game_state_message" in data ? JSON.parse(data["game_state_message"]) : null
 
         let fetchedBoard = "board" in game_state_message ? game_state_message["board"] : null
         let fetchedTally = "tally" in game_state_message ? game_state_message["tally"] : null
@@ -69,6 +80,7 @@ function App() {
         let fetchedActivePlayer = "activePlayer" in game_state_message ? game_state_message["activePlayer"] : null
         let fetchedPlayerRole = "role" in game_state_message ? game_state_message["role"] : null
         let fetchedLetterCounter = "letterCounter" in game_state_message ? game_state_message["letterCounter"] : null
+        let fetchedEndGameTally = "endGameTally" in game_state_message ? game_state_message["endGameTally"] : null
 
         if (fetchedBoard) {
           setBoard(fetchedBoard)
@@ -118,6 +130,73 @@ function App() {
           console.log("Setting letter count:")
           console.log(fetchedLetterCounter)
           SetLetterCounter(fetchedLetterCounter)
+        }
+
+        if (fetchedEndGameTally) {
+          console.log("ENDGAME")
+          let endGameLabel = ""
+          let currentPlayerRole = ""
+          let endGameMessage = ""
+
+          if (document.getElementsByClassName("player-role").hasOwnProperty("player-one-active")) {
+            currentPlayerRole = "Player Blue"
+          } else if (document.getElementsByClassName("player-role").hasOwnProperty("player-two-active")) {
+            currentPlayerRole = "Player Orange"
+          } else if (document.getElementsByClassName("player-role").hasOwnProperty("observer-active")) {
+            currentPlayerRole = "Observer"
+          }
+
+          console.log("Current: " + currentPlayerRole)
+          console.log(fetchedEndGameTally)
+
+
+          if ((fetchedEndGameTally["player-one"] > fetchedEndGameTally["player-two"]) && (currentPlayerRole == "Player Blue")){
+              endGameMessage = {
+                "label": "You won!",
+                "type": types.SUCCESS
+              }
+          } else if ((fetchedEndGameTally["player-one"] < fetchedEndGameTally["player-two"]) && (currentPlayerRole == "Player Blue")){
+              endGameMessage = {
+                  "label": "You lost :(",
+                  "type": types.ERROR
+              }
+          } else if ((fetchedEndGameTally["player-one"] > fetchedEndGameTally["player-two"]) && (currentPlayerRole == "Observer")){
+            endGameMessage = {
+                "label": "Blue won!",
+                "type": types.INFO
+            }
+          } else if ((fetchedEndGameTally["player-one"] < fetchedEndGameTally["player-two"]) && (currentPlayerRole == "Observer")){
+            endGameMessage = {
+                "label": "Orange won!",
+                "type": types.INFO
+            }
+          } else if ((fetchedEndGameTally["player-one"] > fetchedEndGameTally["player-two"]) && (currentPlayerRole == "Player Orange")){
+              endGameMessage = {
+                  "label": "You lost :(",
+                  "type": types.ERROR
+              }
+          } else if ((fetchedEndGameTally["player-one"] < fetchedEndGameTally["player-two"]) && (currentPlayerRole == "Player Orange")){
+              endGameMessage = {
+                  "label": "You won!",
+                  "type": types.SUCCESS
+              }
+          } else if (fetchedEndGameTally["player-one"] == fetchedEndGameTally["player-two"]){
+              endGameMessage = {
+                  "label": "Game drawn!",
+                  "type": types.INFO
+              }
+          } 
+
+          alert.show(endGameMessage["label"], {
+              timeout: 0,
+              type: endGameMessage["type"]
+          })
+          
+          alert.info(<p>
+              <Button variant="contained" color="success" size="small" fullWidth="True" onClick={playAgain}>New Game
+              </Button></p>, {
+              timeout: 0,
+          })
         }
     }
 
