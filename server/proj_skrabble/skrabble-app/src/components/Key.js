@@ -42,9 +42,12 @@ function Key({ keyVal, bigKey }) {
                 }
 
             
-            } else if (keyVal === "Enter" && newBoard[row][column]['alive']) {
+            } else if (keyVal === "Enter"  && newBoard[row][column]['alive'] && newBoard[row][column]["keyVal"] !== "") {
                 
                 // remove glow after keyVal is set
+
+                console.log("KEYVAL: " + keyVal + " of len: " + keyVal.length)
+                console.log("KEYVAL: " + keyVal + " of len: " + keyVal.length)
                 
                 for (let rindex = 0; rindex < ROW; rindex++) {
                     for (let cindex = 0; cindex < COLUMN; cindex++) {
@@ -171,6 +174,14 @@ function Key({ keyVal, bigKey }) {
                     }))
                 }
                 
+                
+            } else if (keyVal === "Enter"  && newBoard[row][column]['alive'] && newBoard[row][column]["keyVal"] === "") {
+
+                
+                alert.show("Empty Input", {
+                    timeout: 2000,
+                    type: types.ERROR,
+                })
                 
             } else {
                 console.log("Unforeseen circumstances.")
