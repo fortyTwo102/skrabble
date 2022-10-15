@@ -32,16 +32,16 @@ function GameInfo() {
 
     if (playerRole.startsWith("observer"))
     {
-        turnString = "You can just watch."
+        turnString = "You can just watch"
     }else{
         if (activePlayer == "player-one" && playerRole == "player_one"){
-            turnString = "It is your turn."
+            turnString = "It is your turn"
         }else if (activePlayer == "player-two" && playerRole == "player_two"){
-            turnString = "It is your turn."
+            turnString = "It is your turn"
         }else if (activePlayer == "player-one" && playerRole == "player_two"){
-            turnString = "Please wait, while \"Blue\" plays their turn."
+            turnString = "Please wait, while \"Blue\" plays their turn"
         }else if (activePlayer == "player-two" && playerRole == "player_one"){
-            turnString = "Please wait, while \"Orange\" plays their turn."
+            turnString = "Please wait, while \"Orange\" plays their turn"
         }
     }
 

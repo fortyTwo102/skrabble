@@ -58,17 +58,17 @@ function App() {
         '/'
     );
 
-    // console.log("[STARTDEBUG]: chatSocket at start")
-    // console.log(chatSocket)
-    // console.log("[ENDDEBUG]: chatSocket at start")
+    // // console.log("[STARTDEBUG]: chatSocket at start")
+    // // console.log(chatSocket)
+    // // console.log("[ENDDEBUG]: chatSocket at start")
 
     chatSocket.onmessage = function (e) {
 
         const data = JSON.parse(e.data);
-        console.log("[LOG]: Received data: ")
-        console.log(data)
-        console.log("[LOG]: Setting Game States.")
-        // console.log("[LOG]: PlayerRole: " + myContext.playerRole)
+        // console.log("[LOG]: Received data: ")
+        // console.log(data)
+        // console.log("[LOG]: Setting Game States.")
+        // // console.log("[LOG]: PlayerRole: " + myContext.playerRole)
 
         let game_state_message = "game_state_message" in data ? JSON.parse(data["game_state_message"]) : null
 
@@ -87,39 +87,39 @@ function App() {
         }
 
         if (fetchedTally){
-          console.log("Setting tally:")
-          console.log(fetchedTally)
+          // console.log("Setting tally:")
+          // console.log(fetchedTally)
           setTally(fetchedTally)
         }
 
         if (fetchedTurnInProgress !== null){
-          console.log("Setting TIP:")
-          console.log(fetchedTurnInProgress)
+          // console.log("Setting TIP:")
+          // console.log(fetchedTurnInProgress)
           setTurnInProgress(fetchedTurnInProgress)
         }
         
         if(fetchedCursor){
-          console.log("Setting cursor:")
-          console.log(fetchedCursor)
+          // console.log("Setting cursor:")
+          // console.log(fetchedCursor)
           setCursor(fetchedCursor)
         }
 
         if (fetchedWordsMade){
-          console.log("Setting words made:")
-          console.log(fetchedWordsMade)
+          // console.log("Setting words made:")
+          // console.log(fetchedWordsMade)
           setWordsMade(fetchedWordsMade)
         }
 
         if (fetchedActivePlayer){
-          console.log("Setting active player:")
-          console.log(fetchedActivePlayer)
+          // console.log("Setting active player:")
+          // console.log(fetchedActivePlayer)
           setActivePlayer(fetchedActivePlayer)
         }
 
 
         if (!isRoleAssigned){
-          console.log("Setting player role:")
-          console.log(fetchedPlayerRole)
+          // console.log("Setting player role:")
+          // console.log(fetchedPlayerRole)
           setPlayerRole(fetchedPlayerRole)
           
           // this is to keep from the roles from changing while braodcasting
@@ -127,13 +127,13 @@ function App() {
         }
 
         if (fetchedLetterCounter){
-          console.log("Setting letter count:")
-          console.log(fetchedLetterCounter)
+          // console.log("Setting letter count:")
+          // console.log(fetchedLetterCounter)
           SetLetterCounter(fetchedLetterCounter)
         }
 
         if (fetchedEndGameTally) {
-          console.log("ENDGAME")
+          // console.log("ENDGAME")
           let endGameLabel = ""
           let currentPlayerRole = ""
           let endGameMessage = ""
@@ -146,8 +146,8 @@ function App() {
             currentPlayerRole = "Observer"
           }
 
-          console.log("Current: " + currentPlayerRole)
-          console.log(fetchedEndGameTally)
+          // console.log("Current: " + currentPlayerRole)
+          // console.log(fetchedEndGameTally)
 
 
           if ((fetchedEndGameTally["player-one"] > fetchedEndGameTally["player-two"]) && (currentPlayerRole == "Player Blue")){
@@ -206,8 +206,8 @@ function App() {
 
   // var clientUrl = window.location.href
   // var roomID = clientUrl.split("/").pop()
-  // console.log("Socket: ", socket)
-  // console.log("Client: " + roomID)
+  // // // console.log("Socket: ", socket)
+  // // // console.log("Client: " + roomID)
   // socket.emit('connected', roomID)
 
 

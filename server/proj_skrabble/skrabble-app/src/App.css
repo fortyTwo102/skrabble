@@ -15,7 +15,7 @@ body {
 }
 
 nav {
-  height: 60px;
+  height: 40px;
   width: 100%;
   margin: 0;
   border-bottom: 1px solid grey;
@@ -27,7 +27,7 @@ nav h1 {
   margin: 0;
   font-family: Georgia, serif;
   color: white;
-  font-size: 45px;
+  font-size: 32px;
 }
 
 .game { 

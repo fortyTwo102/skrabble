@@ -7,10 +7,10 @@
 - Pop-ups for runtime Information - DONE
     - "+3!" - DONE
     - "Uh oh, please select a box." - DONE
-- ENDGAME page
+- ENDGAME page - DONE
 
 # BACKEND
-- Handle ENDGAME scenario
+- Handle ENDGAME scenario - DONE
 
 # DEPLOYMENT
 - Read up on AWS

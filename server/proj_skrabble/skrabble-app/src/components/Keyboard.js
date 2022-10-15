@@ -46,7 +46,7 @@ function Keyboard() {
                     onCopy={() => alert.success("Copied!", {
                         timeout: 1000
                     })}>
-                    <Button variant="contained" color="success" size="small">Copy Link to Room</Button>
+                    <Button variant="contained" color="success" size="small" style={{maxWidth: '180px', maxHeight: '20px', minWidth: '180px', minHeight: '20px'}}>Copy Link to Room</Button>
                 </CopyToClipboard> 
             </div>
     )

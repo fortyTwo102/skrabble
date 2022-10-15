@@ -3,6 +3,12 @@
     display: flex;
     flex-direction: row;
     justify-content: center;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 .line2 {
     flex: 33%;
@@ -11,24 +17,36 @@
     padding-right: 15px;
     flex-direction: row;
     justify-content: center;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 .line3 {
     flex: 33%;
     display: flex;
     flex-direction: row;
     justify-content: center;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 
 
 .keyboard {
-    width: 350px;
-    height: 200px;
+    width: 300px;
+    height: 160px;
     bottom: 0px;
 }
 
 
 .keyboard-container { 
-    padding-top: 15px;
+    padding-top: 10px;
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;

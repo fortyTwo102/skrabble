@@ -57,15 +57,15 @@ function Key({ keyVal, bigKey }) {
                 // 1. find if any words have been made
                 
                 let newWordsMade = await getWordsEndingOnCursor(cursor, newBoard, wordsMade)
-                // console.log("KEY NWM")
+                // // console.log("KEY NWM")
                 wordsMade.push(...newWordsMade)
 
-                // console.log("KEY TWM")
-                // console.log(tempWordsMade)
-                // console.log("wordsMade:")
+                // // console.log("KEY TWM")
+                // // console.log(tempWordsMade)
+                // // console.log("wordsMade:")
 
                 setWordsMade(wordsMade)
-                // console.log(wordsMade)
+                // // console.log(wordsMade)
                 chatSocket.send(JSON.stringify({
                     "wordsMade": wordsMade,
                 }))
@@ -76,7 +76,7 @@ function Key({ keyVal, bigKey }) {
                 newWordsMade.forEach(newWordMade => {
                     let newWordMadeObj = JSON.parse(newWordMade)
 
-                    // console.log(newWordMadeObj)
+                    // // console.log(newWordMadeObj)
                     // find if the last move had any words made
                     
                     let anyWordsMade = false
@@ -126,16 +126,16 @@ function Key({ keyVal, bigKey }) {
 
                 // 4. Set GameBoard letter counter
                 SetLetterCounter(letterCounter + 1)
-                console.log("LC:")
-                console.log(letterCounter + 1)
+                // // console.log("LC:")
+                // // console.log(letterCounter + 1)
                 chatSocket.send(JSON.stringify({
                     "letterCounter": letterCounter + 1,
                 }))
 
                 // 5. check if all the boxes are filled
-                if (letterCounter + 1 == 3) {
+                if (letterCounter + 1 == 36) {
                     
-                    console.log("ENDGAME")
+                    // // console.log("ENDGAME")
 
                     chatSocket.send(JSON.stringify({
                         "endGameTally": tally

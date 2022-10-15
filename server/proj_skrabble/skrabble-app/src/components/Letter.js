@@ -18,7 +18,7 @@ function Letter({row, column}) {
   const moveCursor = () => {
 
     if ((activePlayer == "player-one" && playerRole == "player_one") || (activePlayer == "player-two" && playerRole == "player_two")) {
-        console.log("TIP " + turnInProgress)
+        // console.log("TIP " + turnInProgress)
         
         if (turnInProgress) {
           console.log("TIP. Not allowed.")
