@@ -1,17 +1,24 @@
+// general
 import { useContext, useEffect, useRef } from 'react';
 import { useAlert } from 'react-alert'
 import { transitions, positions, types, Provider as AlertProvider } from 'react-alert'
 import { createContext, useState } from 'react';
 
+// style
 import './App.css';
+
+// components
 import Keyboard from './components/Keyboard';
 import Board from './components/Board';
 import Scorecard from './components/Scorecard';
 import GameInfo from './components/GameInfo';
+import Button from '@mui/material/Button';  
+import NavBar from './components/NavBar';
+
+// utils
 import { colorBoardDefault, letterStyleBoardDefault, mainBoardDefault, tallyDefault} from './Initializer';
 import { wordList } from './Words';
 
-import Button from '@mui/material/Button';  
 
 export const AppContext = createContext()
 
@@ -213,9 +220,7 @@ function App() {
 
   return (
     <div className="App">
-      <nav>
-        <h1>skrabble.</h1>
-      </nav>
+      <NavBar/>
       <AppContext.Provider value={{board, setBoard, cursor, setCursor, colorBoard, setColorBoard, activePlayer, setActivePlayer, letterStyleBoard, setLetterStyleBoard, wordList, tally, setTally, T, setT, letterCombs, setLetterCombs, wordsMade, setWordsMade, wordResult, setWordResult, turnInProgress, setTurnInProgress, playerRole, setPlayerRole, letterCounter, SetLetterCounter, chatSocket}}>
         <div className='game'>
           <Scorecard/>
