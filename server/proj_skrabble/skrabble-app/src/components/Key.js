@@ -1,5 +1,4 @@
 import React, { useContext } from 'react'
-import { Navigate } from 'react-router-dom';
 
 import { AppContext } from '../App'
 import { ROW, COLUMN } from '../Initializer'
@@ -7,9 +6,7 @@ import { getWordsEndingOnCursor } from '../utils/gameLogic'
 import './Key.css'
 
 import { useAlert } from 'react-alert'
-import { transitions, positions, types, Provider as AlertProvider } from 'react-alert'
-
-import Button from '@mui/material/Button';  
+import { types, Provider as AlertProvider } from 'react-alert'
 
 function Key({ keyVal, bigKey }) {
     const { board, setBoard, cursor, activePlayer, playerRole, setActivePlayer, tally, setTally, wordsMade, setWordsMade, letterCounter, SetLetterCounter, turnInProgress, setTurnInProgress, chatSocket} = useContext(AppContext)

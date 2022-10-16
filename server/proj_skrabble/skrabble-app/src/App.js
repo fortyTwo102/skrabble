@@ -37,19 +37,17 @@ function App() {
   const [wordResult, setWordResult] = useState(false)
   const [turnInProgress, setTurnInProgress] = useState(false)
   const [playerRole, setPlayerRole] = useState("")
-  // const [isRoleAssigned, setIsRoleAssigned] = useState(false)
   const [T, setT] = useState(tallyDefault)
   const [letterCounter, SetLetterCounter] = useState(0)
+  const [chatSocket, setChatSocket] = useState({})
+  const [helpModalOpen, setHelpModalOpen] = useState(false)
+  const [aboutModalOpen, setAboutModalOpen] = useState(false)
+
+
   const alert = useAlert()
-  
-  // const myContext = useContext(AppContext)
-
-  let isRoleAssigned = false
-
-
-  const [chatSocket, setChatSocket] = useState({});
   const roomName = useRef();
 
+  let isRoleAssigned = false
   
   const playAgain = async () => {
     window.location.replace("../")
@@ -219,21 +217,21 @@ function App() {
 
 
   return (
-    <div className="App">
-      <NavBar/>
-      <AppContext.Provider value={{board, setBoard, cursor, setCursor, colorBoard, setColorBoard, activePlayer, setActivePlayer, letterStyleBoard, setLetterStyleBoard, wordList, tally, setTally, T, setT, letterCombs, setLetterCombs, wordsMade, setWordsMade, wordResult, setWordResult, turnInProgress, setTurnInProgress, playerRole, setPlayerRole, letterCounter, SetLetterCounter, chatSocket}}>
-        <div className='game'>
-          <Scorecard/>
-          <GameInfo/>
-          <div className='board-container'>
-            <Board/>
+    <AppContext.Provider value={{board, setBoard, cursor, setCursor, colorBoard, setColorBoard, activePlayer, setActivePlayer, letterStyleBoard, setLetterStyleBoard, wordList, tally, setTally, T, setT, letterCombs, setLetterCombs, wordsMade, setWordsMade, wordResult, setWordResult, turnInProgress, setTurnInProgress, playerRole, setPlayerRole, letterCounter, SetLetterCounter, helpModalOpen, setHelpModalOpen, aboutModalOpen, setAboutModalOpen, chatSocket}}>
+      <div className="App">
+        <NavBar/>
+          <div className='game'>
+            <Scorecard/>
+            <GameInfo/>
+            <div className='board-container'>
+              <Board/>
+            </div>
+            <div className='keyboard-container'>
+              <Keyboard/>
+            </div>
           </div>
-          <div className='keyboard-container'>
-            <Keyboard/>
-          </div>
-        </div>
-      </AppContext.Provider>
-    </div>
+      </div>
+    </AppContext.Provider>
   );
 }
 
