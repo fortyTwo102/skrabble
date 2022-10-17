@@ -1,11 +1,14 @@
 import React, { useContext } from 'react'
 import { AppContext } from '../App'
 
+// components
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 
+// assets
 import './HelpModal.css'
+import howToPlayExampleImg from '../images/how-to-play-example.jpg'
 
 const style = {
     position: "absolute",
@@ -66,6 +69,13 @@ function HelpModal() {
                 The points will be awarded for each valid word ending at the
                 letter you play
               </li>
+              <br/>
+              <h4>Example</h4>
+              <img src={ require('../images/how-to-play-example.png') } height="40" width="220" alt="[example]"/>
+              <br/>
+              <p>Here, +2 points are awarded to Player Orange for “Ad”, and +5 
+                to Player Blue for “Ton” and “On”.</p>
+              <br/><br/><br/>
               <li>You can be awarded points for multiple words at once.</li>
               <li>
                 The players can play only one letter at a time, alternatively.

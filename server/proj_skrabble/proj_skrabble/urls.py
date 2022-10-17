@@ -29,4 +29,5 @@ urlpatterns = [
     path('core/<str:room_name>/', include("core.urls")),
     path('core/<str:room_name>/static/js/<str:static_js_filename>', lambda request, room_name, static_js_filename: redirect("/static/js/" + static_js_filename, permanent=False)),
     path('core/<str:room_name>/static/css/<str:static_css_filename>', lambda request, room_name, static_css_filename: redirect("/static/css/" + static_css_filename, permanent=False)),
+    path('core/<str:room_name>/static/media/<str:static_css_filename>', lambda request, room_name, static_css_filename: redirect("/static/media/" + static_css_filename, permanent=False)),
 ]
