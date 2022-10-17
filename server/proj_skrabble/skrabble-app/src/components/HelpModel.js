@@ -5,16 +5,23 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 
+import './HelpModal.css'
+
 const style = {
-  position: 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-  width: 40,
-  bgcolor: 'background.paper',
-  border: '2px solid #000',
-  boxShadow: 24,
-  p: 4,
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    minWidth: "300px",
+    transform: "translate(-50%, -50%)",
+    bgcolor: "black",
+    boxShadow: 24,
+    padding: "15px",
+    height: "400px",
+    color: "white",
+    fontFamily: "Georgia, serif",
+    borderRadius: "10px!important",
+    overflow: "scroll",
+    overflowX: "hidden"
 };
 
 function HelpModal() {
@@ -25,23 +32,53 @@ function HelpModal() {
   const handleHelpClose = () => setHelpModalOpen(false);
 
   return (
-    <div>
     <Modal
         open={helpModalOpen}
         onClose={handleHelpClose}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
-    >
+      >
         <Box sx={style}>
-        <Typography id="modal-modal-title" variant="h6" component="h2">
-            Text in a modal
-        </Typography>
-        <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-            Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
-        </Typography>
+          <div sx={{color: "black"}}>
+            <h2>How To Play</h2>
+            <p>Make as many words as you can!</p>
+            <br />
+          </div>
+          <h4>Starting A Game</h4>
+          <p>
+            <ul>
+              <li>Skrabble is a two player game.</li>
+              <li>
+                You will be assigned the color you play as at start of play.
+                Either Blue or Orange.
+              </li>
+              <li>
+                If you the first person to join, copy and share the link to the
+                Game Room with the person you want to play with.
+              </li>
+              <li>If the Game Room is full, you will joined as an Observer.</li>
+            </ul>
+          </p>
+          <h4>Gameplay</h4>
+          <p>
+            <ul>
+              <li>
+                The points will be awarded for each valid word ending at the
+                letter you play
+              </li>
+              <li>You can be awarded points for multiple words at once.</li>
+              <li>
+                The players can play only one letter at a time, alternatively.
+              </li>
+              <li>
+                When all of the boxes are played, the player With the most
+                points win.
+              </li>
+            </ul>
+          </p>
+          <h4>Happy Skrabbling!</h4>
         </Box>
-    </Modal>
-    </div>
+      </Modal>
   );
 }
 
