@@ -1,46 +1,96 @@
-import React, { useContext } from 'react'
-import { AppContext } from '../App'
+import React, { useContext } from "react";
+import { AppContext } from "../App";
 
-import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
-import Modal from '@mui/material/Modal';
+// components
+import Box from "@mui/material/Box";
+import Modal from "@mui/material/Modal";
+import { Button } from "@mui/material";
+import GitHubIcon from "@mui/icons-material/GitHub";
+import InstagramIcon from "@mui/icons-material/Instagram";
+import LinkedInIcon from "@mui/icons-material/LinkedIn";
 
 const style = {
-  position: 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-  width: 40,
-  bgcolor: 'background.paper',
-  border: '2px solid #000',
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  minWidth: "300px",
+  transform: "translate(-50%, -50%)",
+  bgcolor: "black",
   boxShadow: 24,
-  p: 4,
+  padding: "15px",
+  height: "400px",
+  color: "white",
+  fontFamily: "Georgia, serif",
+  borderRadius: "10px!important",
+  overflow: "scroll",
+  overflowX: "hidden",
 };
 
 function AboutModal() {
-  
-  const { setAboutModalOpen, aboutModalOpen} = useContext(AppContext)
+  const { setAboutModalOpen, aboutModalOpen } = useContext(AppContext);
 
   const handleAboutOpen = () => setAboutModalOpen(true);
   const handleAboutClose = () => setAboutModalOpen(false);
 
+  const openInNewTab = (url) => {
+    window.open(url, "_blank", "noopener,noreferrer");
+  };
+
   return (
     <div>
-    <Modal
+      <Modal
         open={aboutModalOpen}
         onClose={handleAboutClose}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
-    >
+      >
         <Box sx={style}>
-        <Typography id="modal-modal-title" variant="h6" component="h2">
-            Text in a modal
-        </Typography>
-        <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-            Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
-        </Typography>
+          <div>
+            <h2>About</h2>
+            <p>Hi, I am Farooq Ansari. Look me up.</p>
+            <br />
+          </div>
+          <h4>Public Profiles:</h4>
+          <p>
+            <Button
+              variant="outlined"
+              size="small"
+              sx={{
+                color: "white"
+              }}
+              onClick={() => openInNewTab("https://github.com/fortyTwo102/")}
+              startIcon={<GitHubIcon />}
+            >
+              GITHUB
+            </Button>
+            <Button
+              variant="outlined"
+              size="small"
+              sx={{
+                color: "white"
+              }}
+              onClick={() => openInNewTab("https://in.linkedin.com/in/farooqans4ri")}
+              startIcon={<LinkedInIcon />}
+            >
+              LINKEDIN
+            </Button>
+            <Button
+              variant="outlined"
+              size="small"
+              sx={{
+                color: "white"
+              }}
+              onClick={() => openInNewTab("https://instagram.com/paperorchestra/")}
+              startIcon={<InstagramIcon />}
+            >
+              INSTAGRAM
+            </Button>
+          </p>
+          <h4>Mail me at:</h4>
+          <p>farooq73a@gmail.com</p>
+          <h4>Happy Skrabbling!</h4>
         </Box>
-    </Modal>
+      </Modal>
     </div>
   );
 }
