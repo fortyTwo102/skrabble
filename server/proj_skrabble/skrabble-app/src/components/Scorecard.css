@@ -1,0 +1,27 @@
+.scorecard {
+    padding-top: 5px;
+    font-weight: bold; 
+    font-size: large;
+    font-size: 20px;
+}
+
+p {
+    display: inline;
+    word-wrap: break-word;
+}
+
+.score-player-two {
+    color: #ffb703;
+}
+
+.score-player-one {
+    color: #219ebc;
+}
+
+#player-one-score-active {
+    text-decoration: underline;
+}
+
+#player-two-score-active {
+    text-decoration: underline;
+}

@@ -1,0 +1,15 @@
+.box {
+    position: "absolute";
+    top: "50%";
+    left: "50%";
+    transform: "translate(-50%; -50%)";
+    background-color: "black";
+    box-shadow: 24;
+    padding: "15px";
+    height: "400px";
+    color: "white";
+    font-family: "Georgia; serif";
+    border-radius: "10px!important";
+    overflow: auto;
+    overflow-x: "hidden";
+}
