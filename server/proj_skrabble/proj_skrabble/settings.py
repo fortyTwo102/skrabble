@@ -29,7 +29,7 @@ SECRET_KEY = 'django-insecure-rbt4u%wo2%-8=v$i$_x8r&avx1ku(eoibiq!i#ff$qxzipcm7!
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    CONFIG["ALLOWED_HOSTS"]["dev"]
+    CONFIG["ALLOWED_HOSTS"]["prod"]
 ]
 
 
