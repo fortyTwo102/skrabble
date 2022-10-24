@@ -140,7 +140,7 @@ STATICFILES_DIRS =  [
         ]
 
 CORS_ORIGIN_ALLOW_ALL = True
-
+SECURE_CROSS_ORIGIN_OPENER_POLICY = None
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
