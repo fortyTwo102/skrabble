@@ -3,8 +3,17 @@ import sys, os, json
 from django.http import HttpResponse
 
 # import util scripts
-sys.path.append(os.path.join(os.path.dirname(sys.path[0]), "dev_utils"))
-import utils
+
+import json
+from pymongo import MongoClient
+import os
+
+def get_mongodb(db_name):
+
+    client = MongoClient("mongodb://localhost:27017")
+    return client[db_name]
+
+
 
 # Create your views here.
 def word(request):
