@@ -1,0 +1,4 @@
+[Service]
+ExecStart=/root/boot.sh
+[Install]
+WantedBy=default.target
