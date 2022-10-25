@@ -22,7 +22,7 @@ def word(request):
         "result": False
     }
     query = request.GET.get("q")
-    db = utils.get_mongodb(str(len(query)))
+    db = get_mongodb(str(len(query)))
     collection = db[query[0]]
 
     cursor = collection.find()
