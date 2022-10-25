@@ -1,0 +1,13 @@
+[Unit]
+Description=WebSocket Daphne Service
+After=network.target
+
+[Service]
+Type=simple
+User=ubuntu
+WorkingDirectory=/home/ubuntu/project/skrabble/server/proj_skrabble
+ExecStart=/home/ubuntu/project/pyenv/bin/python /home/ubuntu/project/pyenv/bin/daphne -b 0.0.0.0 -p 8001 proj_skrabble.asgi:application
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
