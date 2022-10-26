@@ -33,7 +33,7 @@ export async function isEnglishWord(word) {
   var CONFIG = require("../config.json");
 
   const wordResponse = fetch(
-    `http://${
+    `https://${
       CONFIG["ALLOWED_HOSTS"]["prod"]
     }/api/word?q=${word.toLowerCase()}`
   )
