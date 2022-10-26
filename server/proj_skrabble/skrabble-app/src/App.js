@@ -67,7 +67,7 @@ function App() {
       document.getElementById("room-name").textContent
     );
     const chatSocket = new WebSocket(
-      "ws://" + window.location.host + "/ws/core/" + roomName + "/"
+      "wss://" + window.location.host + "/ws/core/" + roomName + "/"
     );
 
     // // console.log("[STARTDEBUG]: chatSocket at start")
