@@ -72,14 +72,14 @@ function HelpModal() {
             <h4>Example</h4>
             <img
               src={require("../images/how-to-play-example.png")}
-              height="40"
+              height="132"
               width="220"
-              alt="[example]"
+              alt="It is a picture where words are made horizontally and vertically."
             />
             <br />
             <p>
-              Here, +2 points are awarded to Player Orange for 'Ad', and +5 to
-              Player Blue for 'Ton' and 'On'.
+              Here, +5 points are awarded to Player Orange for 'Ad' and 'Ode',
+              and +5 to Player Blue for 'Ton' and 'On'.
             </p>
             <br />
             <br />
@@ -91,6 +91,18 @@ function HelpModal() {
             <li>
               When all of the boxes are played, the player With the most points
               win.
+            </li>
+            <li>
+              In case of dispute, you can check the validity of the word{" "}
+              <a
+                href="https://scrabblecheck.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{ color: "#7EC8E3" }}
+              >
+                here
+              </a>
+              .
             </li>
           </ul>
         </p>

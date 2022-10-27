@@ -152,10 +152,28 @@ function Key({ keyVal, bigKey }) {
           );
 
           // popup alert
-          alert.success(
-            `+${newWordMadeObj["word"].length} for ${newWordMadeObj["word"]}`,
+          // alert.success(
+          //   `+${newWordMadeObj["word"].length} for ${newWordMadeObj["word"]}`,
+          //   {
+          //     timeout: 1500,
+          //   }
+          // );
+
+          alert.show(
+            <div>
+              +{newWordMadeObj["word"].length} for{" "}
+              <a
+                href={"https://scrabblecheck.com/" + newWordMadeObj["word"]}
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{ color: "#7EC8E3" }}
+              >
+                {newWordMadeObj["word"]}
+              </a>
+            </div>,
             {
               timeout: 1500,
+              type: types.SUCCESS,
             }
           );
         });
