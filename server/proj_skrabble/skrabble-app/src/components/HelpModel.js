@@ -4,6 +4,7 @@ import { AppContext } from "../App";
 // components
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
+import Button from "@mui/material/Button";
 
 const style = {
   position: "absolute",

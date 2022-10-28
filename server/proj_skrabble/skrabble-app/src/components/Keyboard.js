@@ -9,12 +9,6 @@ import Button from "@mui/material/Button";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 
 import { useAlert } from "react-alert";
-import {
-  transitions,
-  positions,
-  types,
-  Provider as AlertProvider,
-} from "react-alert";
 
 function Keyboard() {
 
@@ -25,11 +19,6 @@ function Keyboard() {
   
   const { setWordHistoryModalOpen } = useContext(AppContext);
   const handleWordHistoryOpen = () => setWordHistoryModalOpen(true);
-
-  const state = {
-    value: "",
-    copied: false,
-  };
 
   const url = window.location.href;
   const alert = useAlert();

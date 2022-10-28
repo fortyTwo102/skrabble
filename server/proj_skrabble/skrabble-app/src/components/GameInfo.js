@@ -11,10 +11,10 @@ function GameInfo() {
   let turnString = "";
 
   // set approapriate player role info on top
-  if (playerRole == "player_one") {
+  if (playerRole === "player_one") {
     playerRoleLabel = "Player Blue";
     playerRoleStyleID = "player-one-active";
-  } else if (playerRole == "player_two") {
+  } else if (playerRole === "player_two") {
     playerRoleLabel = "Player Orange";
     playerRoleStyleID = "player-two-active";
   } else if (playerRole.startsWith("observer")) {
@@ -27,13 +27,13 @@ function GameInfo() {
   if (playerRole.startsWith("observer")) {
     turnString = "You can just watch";
   } else {
-    if (activePlayer == "player-one" && playerRole == "player_one") {
+    if (activePlayer === "player-one" && playerRole === "player_one") {
       turnString = "It is your turn";
-    } else if (activePlayer == "player-two" && playerRole == "player_two") {
+    } else if (activePlayer === "player-two" && playerRole === "player_two") {
       turnString = "It is your turn";
-    } else if (activePlayer == "player-one" && playerRole == "player_two") {
+    } else if (activePlayer === "player-one" && playerRole === "player_two") {
       turnString = 'Please wait, while "Blue" plays their turn';
-    } else if (activePlayer == "player-two" && playerRole == "player_one") {
+    } else if (activePlayer === "player-two" && playerRole === "player_one") {
       turnString = 'Please wait, while "Orange" plays their turn';
     }
   }
