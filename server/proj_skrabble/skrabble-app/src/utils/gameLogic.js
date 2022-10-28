@@ -34,7 +34,7 @@ export async function isEnglishWord(word) {
 
   const wordResponse = fetch(
     `https://${
-      CONFIG["ALLOWED_HOSTS"]["dev"]
+      CONFIG["ALLOWED_HOSTS"]["prod"]
     }/api/word?q=${word.toLowerCase()}`
   )
     .then((response) => response.json())
