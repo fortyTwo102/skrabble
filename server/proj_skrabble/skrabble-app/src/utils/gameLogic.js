@@ -33,9 +33,9 @@ export async function isEnglishWord(word) {
   var CONFIG = require("../config.json");
 
   const wordResponse = fetch(
-    `http://${
+    `https://${
       CONFIG["ALLOWED_HOSTS"]["dev"]
-    }:8000/api/word?q=${word.toLowerCase()}`
+    }/api/word?q=${word.toLowerCase()}`
   )
     .then((response) => response.json())
     .then((jsonResponse) => {
