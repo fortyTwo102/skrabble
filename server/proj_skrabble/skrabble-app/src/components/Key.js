@@ -22,8 +22,11 @@ function Key({ keyVal, bigKey }) {
     setWordsMade,
     letterCounter,
     SetLetterCounter,
-    turnInProgress,
     setTurnInProgress,
+    wordsMadeByBlue,
+    setWordsMadeByBlue,
+    wordsMadeByOrange,
+    setWordsMadeByOrange,
     chatSocket,
   } = useContext(AppContext);
   const alert = useAlert();
@@ -32,6 +35,8 @@ function Key({ keyVal, bigKey }) {
     const newBoard = [...board];
     const row = cursor[0];
     const column = cursor[1];
+
+    console.log("KeyVAl:" + keyVal)
 
     if (
       (activePlayer == "player-one" && playerRole == "player_one") ||
@@ -68,7 +73,6 @@ function Key({ keyVal, bigKey }) {
         // remove glow after keyVal is set
 
         console.log("KEYVAL: " + keyVal + " of len: " + keyVal.length);
-        console.log("KEYVAL: " + keyVal + " of len: " + keyVal.length);
 
         for (let rindex = 0; rindex < ROW; rindex++) {
           for (let cindex = 0; cindex < COLUMN; cindex++) {
@@ -82,7 +86,8 @@ function Key({ keyVal, bigKey }) {
         let newWordsMade = await getWordsEndingOnCursor(
           cursor,
           newBoard,
-          wordsMade
+          wordsMade,
+          activePlayer
         );
         // // console.log("KEY NWM")
         wordsMade.push(...newWordsMade);
@@ -92,7 +97,8 @@ function Key({ keyVal, bigKey }) {
         // // console.log("wordsMade:")
 
         setWordsMade(wordsMade);
-        // // console.log(wordsMade)
+        // console.log(wordsMade)
+
         chatSocket.send(
           JSON.stringify({
             wordsMade: wordsMade,
@@ -176,6 +182,7 @@ function Key({ keyVal, bigKey }) {
               type: types.SUCCESS,
             }
           );
+
         });
 
         // 4. Set GameBoard letter counter

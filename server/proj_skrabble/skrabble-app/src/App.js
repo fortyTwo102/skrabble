@@ -51,6 +51,7 @@ function App() {
   const [chatSocket, setChatSocket] = useState({});
   const [helpModalOpen, setHelpModalOpen] = useState(false);
   const [aboutModalOpen, setAboutModalOpen] = useState(false);
+  const [wordHistoryModalOpen, setWordHistoryModalOpen] = useState(false);
 
   const alert = useAlert();
   const roomName = useRef();
@@ -323,6 +324,8 @@ function App() {
         setHelpModalOpen,
         aboutModalOpen,
         setAboutModalOpen,
+        wordHistoryModalOpen,
+        setWordHistoryModalOpen,
         chatSocket,
       }}
     >

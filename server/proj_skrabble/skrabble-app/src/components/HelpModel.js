@@ -58,7 +58,7 @@ function HelpModal() {
               You will be assigned the color you play as at start of play.
               Either Blue or Orange.
             </li>
-            <li>If the Game Room is full, you will joined as an Observer.</li>
+            <li>If the Game Room is full, you will be joined as an Observer.</li>
           </ul>
         </p>
         <h4>Gameplay</h4>
@@ -89,7 +89,7 @@ function HelpModal() {
               The players can play only one letter at a time, alternatively.
             </li>
             <li>
-              When all of the boxes are played, the player With the most points
+              When all of the boxes are played, the player with the most points
               win.
             </li>
             <li>
