@@ -51,6 +51,7 @@ function App() {
   const [chatSocket, setChatSocket] = useState({});
   const [helpModalOpen, setHelpModalOpen] = useState(false);
   const [aboutModalOpen, setAboutModalOpen] = useState(false);
+  const [wordHistoryModalOpen, setWordHistoryModalOpen] = useState(false);
 
   const alert = useAlert();
   const roomName = useRef();
@@ -67,7 +68,7 @@ function App() {
       document.getElementById("room-name").textContent
     );
     const chatSocket = new WebSocket(
-      "wss://" + window.location.host + "/ws/core/" + roomName + "/"
+      "ws://" + window.location.host + "/ws/core/" + roomName + "/"
     );
 
     // // console.log("[STARTDEBUG]: chatSocket at start")
@@ -323,6 +324,8 @@ function App() {
         setHelpModalOpen,
         aboutModalOpen,
         setAboutModalOpen,
+        wordHistoryModalOpen,
+        setWordHistoryModalOpen,
         chatSocket,
       }}
     >
