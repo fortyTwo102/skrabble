@@ -29,7 +29,6 @@ const style = {
 function AboutModal() {
   const { setAboutModalOpen, aboutModalOpen } = useContext(AppContext);
 
-  const handleAboutOpen = () => setAboutModalOpen(true);
   const handleAboutClose = () => setAboutModalOpen(false);
 
   const openInNewTab = (url) => {

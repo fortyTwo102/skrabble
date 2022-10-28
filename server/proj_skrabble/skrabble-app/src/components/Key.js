@@ -23,10 +23,6 @@ function Key({ keyVal, bigKey }) {
     letterCounter,
     SetLetterCounter,
     setTurnInProgress,
-    wordsMadeByBlue,
-    setWordsMadeByBlue,
-    wordsMadeByOrange,
-    setWordsMadeByOrange,
     chatSocket,
   } = useContext(AppContext);
   const alert = useAlert();
@@ -39,8 +35,8 @@ function Key({ keyVal, bigKey }) {
     // console.log("KeyVAl:" + keyVal)
 
     if (
-      (activePlayer == "player-one" && playerRole == "player_one") ||
-      (activePlayer == "player-two" && playerRole == "player_two")
+      (activePlayer === "player-one" && playerRole === "player_one") ||
+      (activePlayer === "player-two" && playerRole === "player_two")
     ) {
       if (
         keyVal !== "Enter" &&

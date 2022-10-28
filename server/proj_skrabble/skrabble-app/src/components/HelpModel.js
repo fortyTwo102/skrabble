@@ -25,7 +25,6 @@ const style = {
 function HelpModal() {
   const { setHelpModalOpen, helpModalOpen } = useContext(AppContext);
 
-  const handleHelpOpen = () => setHelpModalOpen(true);
   const handleHelpClose = () => setHelpModalOpen(false);
 
   return (

@@ -1,9 +1,7 @@
 // general
-import { useContext, useEffect, useRef } from "react";
+import { useEffect } from "react";
 import { useAlert } from "react-alert";
 import {
-  transitions,
-  positions,
   types,
   Provider as AlertProvider,
 } from "react-alert";
@@ -54,7 +52,6 @@ function App() {
   const [wordHistoryModalOpen, setWordHistoryModalOpen] = useState(false);
 
   const alert = useAlert();
-  const roomName = useRef();
 
   let isRoleAssigned = false;
 
@@ -167,7 +164,6 @@ function App() {
 
       if (fetchedEndGameTally) {
         // console.log("ENDGAME")
-        let endGameLabel = "";
         let currentPlayerRole = "";
         let endGameMessage = "";
 
@@ -197,7 +193,7 @@ function App() {
         if (
           fetchedEndGameTally["player-one"] >
             fetchedEndGameTally["player-two"] &&
-          currentPlayerRole == "Player Blue"
+          currentPlayerRole === "Player Blue"
         ) {
           endGameMessage = {
             label: "You won!",
@@ -206,7 +202,7 @@ function App() {
         } else if (
           fetchedEndGameTally["player-one"] <
             fetchedEndGameTally["player-two"] &&
-          currentPlayerRole == "Player Blue"
+          currentPlayerRole === "Player Blue"
         ) {
           endGameMessage = {
             label: "You lost :(",
@@ -215,7 +211,7 @@ function App() {
         } else if (
           fetchedEndGameTally["player-one"] >
             fetchedEndGameTally["player-two"] &&
-          currentPlayerRole == "Observer"
+          currentPlayerRole === "Observer"
         ) {
           endGameMessage = {
             label: "Blue won!",
@@ -224,7 +220,7 @@ function App() {
         } else if (
           fetchedEndGameTally["player-one"] <
             fetchedEndGameTally["player-two"] &&
-          currentPlayerRole == "Observer"
+          currentPlayerRole === "Observer"
         ) {
           endGameMessage = {
             label: "Orange won!",
@@ -233,7 +229,7 @@ function App() {
         } else if (
           fetchedEndGameTally["player-one"] >
             fetchedEndGameTally["player-two"] &&
-          currentPlayerRole == "Player Orange"
+          currentPlayerRole === "Player Orange"
         ) {
           endGameMessage = {
             label: "You lost :(",
@@ -242,14 +238,14 @@ function App() {
         } else if (
           fetchedEndGameTally["player-one"] <
             fetchedEndGameTally["player-two"] &&
-          currentPlayerRole == "Player Orange"
+          currentPlayerRole === "Player Orange"
         ) {
           endGameMessage = {
             label: "You won!",
             type: types.SUCCESS,
           };
         } else if (
-          fetchedEndGameTally["player-one"] == fetchedEndGameTally["player-two"]
+          fetchedEndGameTally["player-one"] === fetchedEndGameTally["player-two"]
         ) {
           endGameMessage = {
             label: "Game drawn!",

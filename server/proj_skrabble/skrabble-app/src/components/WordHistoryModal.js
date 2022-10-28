@@ -30,21 +30,17 @@ function WordHistoryModal() {
     wordsMade,
   } = useContext(AppContext);
 
-  const handleAboutOpen = () => setWordHistoryModalOpen(true);
   const handleWordHistoryClose = () => setWordHistoryModalOpen(false);
 
-  const openInNewTab = (url) => {
-    window.open(url, "_blank", "noopener,noreferrer");
-  };
 
   var wordRows = [];
   wordsMade.forEach((wordMade) => {
     var wordMadeJSON = JSON.parse(wordMade);
-    if (wordMadeJSON["player"] == "player-one") {
+    if (wordMadeJSON["player"] === "player-one") {
       wordRows.push(
         <li style={{ color: "#219ebc" }}>{wordMadeJSON["word"]}</li>
       );
-    } else if (wordMadeJSON["player"] == "player-two") {
+    } else if (wordMadeJSON["player"] === "player-two") {
       wordRows.push(
         <li style={{ color: "#ffb703" }}>{wordMadeJSON["word"]}</li>
       );
