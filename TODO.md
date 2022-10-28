@@ -1,4 +1,5 @@
 ## Version 0.9
+
 # FRONTEND
 - Add clear indication as to which colour has its turn currently - DONE
 - Add sub-page
@@ -38,5 +39,6 @@
 
 - Add option to play with computer
 - Add option to play with strangers (Lobby)
+- Add a timer
 
 

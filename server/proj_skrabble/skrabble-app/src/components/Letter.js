@@ -38,7 +38,7 @@ function Letter({ row, column }) {
       // console.log("TIP " + turnInProgress)
 
       if (turnInProgress) {
-        console.log("TIP. Not allowed.");
+        // console.log("TIP. Not allowed.");
         return;
       }
 
@@ -71,7 +71,7 @@ function Letter({ row, column }) {
         })
       );
 
-      console.log(newBoard[row][column]);
+      // console.log(newBoard[row][column]);
     } else {
       alert.show("Not allowed", {
         timeout: 2000,

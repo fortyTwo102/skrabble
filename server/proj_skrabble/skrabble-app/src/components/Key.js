@@ -36,7 +36,7 @@ function Key({ keyVal, bigKey }) {
     const row = cursor[0];
     const column = cursor[1];
 
-    console.log("KeyVAl:" + keyVal)
+    // console.log("KeyVAl:" + keyVal)
 
     if (
       (activePlayer == "player-one" && playerRole == "player_one") ||
@@ -72,7 +72,7 @@ function Key({ keyVal, bigKey }) {
       ) {
         // remove glow after keyVal is set
 
-        console.log("KEYVAL: " + keyVal + " of len: " + keyVal.length);
+        // console.log("KEYVAL: " + keyVal + " of len: " + keyVal.length);
 
         for (let rindex = 0; rindex < ROW; rindex++) {
           for (let cindex = 0; cindex < COLUMN; cindex++) {
@@ -250,7 +250,8 @@ function Key({ keyVal, bigKey }) {
           type: types.ERROR,
         });
       } else {
-        console.log("Unforeseen circumstances.");
+        var a = ""
+        // console.log("Unforeseen circumstances.");
       }
     } else {
       alert.show("Not allowed", {

@@ -11,7 +11,7 @@ export function isWordTaken(word, wordsMade) {
   wordsMade.forEach((wordMade) => {
     let wordMadeJSON = JSON.parse(wordMade);
     if (wordMadeJSON["word"] === word) {
-      console.log("Word: " + word + " is already taken.");
+      // console.log("Word: " + word + " is already taken.");
       isWordTakenFlag = true;
     }
   });
@@ -123,7 +123,7 @@ export async function getWordsEndingOnCursor(cursor, board, wordsMade, activePla
     endX = index;
   }
 
-  console.log("startX", startX, "endX", endX);
+  // console.log("startX", startX, "endX", endX);
 
   // find possible word combinations
 
@@ -162,7 +162,7 @@ export async function getWordsEndingOnCursor(cursor, board, wordsMade, activePla
       // console.log("isWordTaken: " + isWordTakenReturns)
 
       if (isEnglishWordReturns && !isWordTakenReturns) {
-        console.log("Word found " + possibleWordObj["word"]);
+        // console.log("Word found " + possibleWordObj["word"]);
         newWordsMadeTemp.add(JSON.stringify(possibleWordObj));
       }
     }
