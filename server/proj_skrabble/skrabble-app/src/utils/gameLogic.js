@@ -128,16 +128,17 @@ export async function getWordsEndingOnCursor(cursor, board, wordsMade, activePla
   // find possible word combinations
 
   for (let sindex = startX; sindex <= endX; sindex++) {
-    let eindex = endX
-    let combOfLetters = Object.create(null);
-    combOfLetters.word = "";
-    combOfLetters.location = [];
-    for (let x = sindex; x <= eindex; x++) {
-      combOfLetters["word"] += board[cursorY][x]["keyVal"];
-      combOfLetters["location"].push([cursorY, x]);
-    }
-    if (combOfLetters["word"].length > 1) {
-      possibleWords.add(JSON.stringify(combOfLetters));
+    for (let eindex = endX; eindex >= sindex; eindex--) {
+      let combOfLetters = Object.create(null);
+      combOfLetters.word = "";
+      combOfLetters.location = [];
+      for (let x = sindex; x <= eindex; x++) {
+        combOfLetters["word"] += board[cursorY][x]["keyVal"];
+        combOfLetters["location"].push([cursorY, x]);
+      }
+      if (combOfLetters["word"].length > 0) {
+        possibleWords.add(JSON.stringify(combOfLetters));
+      }
     }
   }
 
