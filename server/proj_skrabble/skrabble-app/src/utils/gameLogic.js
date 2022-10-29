@@ -53,7 +53,12 @@ export async function isEnglishWord(word) {
   return final_resp;
 }
 
-export async function getWordsEndingOnCursor(cursor, board, wordsMade, activePlayer) {
+export async function getWordsEndingOnCursor(
+  cursor,
+  board,
+  wordsMade,
+  activePlayer
+) {
   let possibleWords = new Set();
   let cursorX = cursor[1];
   let cursorY = cursor[0];
@@ -128,17 +133,16 @@ export async function getWordsEndingOnCursor(cursor, board, wordsMade, activePla
   // find possible word combinations
 
   for (let sindex = startX; sindex <= endX; sindex++) {
-    for (let eindex = endX; eindex >= sindex; eindex--) {
-      let combOfLetters = Object.create(null);
-      combOfLetters.word = "";
-      combOfLetters.location = [];
-      for (let x = sindex; x <= eindex; x++) {
-        combOfLetters["word"] += board[cursorY][x]["keyVal"];
-        combOfLetters["location"].push([cursorY, x]);
-      }
-      if (combOfLetters["word"].length > 0) {
-        possibleWords.add(JSON.stringify(combOfLetters));
-      }
+    let eindex = endX
+    let combOfLetters = Object.create(null);
+    combOfLetters.word = "";
+    combOfLetters.location = [];
+    for (let x = sindex; x <= eindex; x++) {
+      combOfLetters["word"] += board[cursorY][x]["keyVal"];
+      combOfLetters["location"].push([cursorY, x]);
+    }
+    if (combOfLetters["word"].length > 0) {
+      possibleWords.add(JSON.stringify(combOfLetters));
     }
   }
 
@@ -147,23 +151,24 @@ export async function getWordsEndingOnCursor(cursor, board, wordsMade, activePla
   let newWordsMadeTemp = new Set();
 
   const forEachLoop = async (_) => {
-    
     let possibleWordsList = [...possibleWords];
-    
+
     for (let index = 0; index < possibleWordsList.length; index++) {
-    
       let possibleWord = possibleWordsList[index];
       let possibleWordObj = JSON.parse(possibleWord);
       possibleWordObj["player"] = activePlayer;
+      console.log("checking: " + possibleWordObj["word"]);
       let isEnglishWordReturns = await isEnglishWord(possibleWordObj["word"]);
       let isWordTakenReturns = isWordTaken(possibleWordObj["word"], wordsMade);
 
       // console.log("isEnglishWord: " + isEnglishWordReturns)
       // console.log("isWordTaken: " + isWordTakenReturns)
 
-      if (isEnglishWordReturns && !isWordTakenReturns) {
-        console.log("Word found " + possibleWordObj["word"]);
-        newWordsMadeTemp.add(JSON.stringify(possibleWordObj));
+      if (!isWordTakenReturns) {
+        if (isEnglishWordReturns) {
+          console.log("Word found " + possibleWordObj["word"]);
+          newWordsMadeTemp.add(JSON.stringify(possibleWordObj));
+        }
       }
     }
   };

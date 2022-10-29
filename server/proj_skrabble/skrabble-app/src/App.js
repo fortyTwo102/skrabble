@@ -274,6 +274,7 @@ function App() {
             timeout: 0,
           }
         );
+        return
       }
     };
 

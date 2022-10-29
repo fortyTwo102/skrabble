@@ -1,11 +1,11 @@
 .letter-glow {
-    flex: 100%;
+    flex: 120%;
     height: 100%;
     border: 1px solid grey;
     margin: 3px;
     display: grid;
     place-items: center;
-    font-size: 30px;
+    font-size: 25px;
     font-weight: bolder;
     color: white;
     font-family: Arial, Helvetica, sans-serif;
@@ -21,13 +21,13 @@
 }
   
 .letter {
-    flex: 100%;
+    flex: 120%;
     height: 100%;
     border: 1px solid rgb(80, 80, 80);
     margin: 3px;
     display: grid;
     place-items: center;
-    font-size: 30px;
+    font-size: 25px;
     font-weight: bolder;
     color: rgb(255, 255, 255);
     font-family: Arial, Helvetica, sans-serif;

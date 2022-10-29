@@ -4,7 +4,6 @@ import { AppContext } from "../App";
 // components
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
-import Button from "@mui/material/Button";
 
 const style = {
   position: "absolute",
@@ -17,7 +16,7 @@ const style = {
   padding: "15px",
   height: "400px",
   color: "white",
-  fontFamily: "Georgia, serif",
+  fontFamily: "Century Gothic, serif",
   borderRadius: "10px!important",
   overflow: "scroll",
   overflowX: "hidden",
