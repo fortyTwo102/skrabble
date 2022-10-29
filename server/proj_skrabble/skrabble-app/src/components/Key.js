@@ -27,6 +27,19 @@ function Key({ keyVal, bigKey }) {
   } = useContext(AppContext);
   const alert = useAlert();
 
+  function isWordTaken(word) {
+    let isWordTakenFlag = false;
+
+    wordsMade.forEach((wordMade) => {
+      let wordMadeJSON = JSON.parse(wordMade);
+      if (wordMadeJSON["word"] === word) {
+        console.log("Word: " + word + " is already taken.");
+        isWordTakenFlag = true;
+      }
+    });
+    return isWordTakenFlag;
+  }
+
   const inputLetter = async () => {
     const newBoard = [...board];
     const row = cursor[0];
@@ -85,7 +98,18 @@ function Key({ keyVal, bigKey }) {
           wordsMade,
           activePlayer
         );
-        // // console.log("KEY NWM")
+
+        // double check word taken or not
+
+        var temp = new Set();
+        newWordsMade.forEach((newWordMade) => {
+          let newWordMadeObj = JSON.parse(newWordMade);
+          if (!isWordTaken(newWordMadeObj["word"])) {
+            temp.add(JSON.stringify(newWordMadeObj));
+          }
+        });
+
+        newWordsMade = temp;
         wordsMade.push(...newWordsMade);
 
         // // console.log("KEY TWM")
