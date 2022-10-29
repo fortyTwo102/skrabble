@@ -126,7 +126,7 @@ export async function getWordsEndingOnCursor(cursor, board, wordsMade, activePla
   // console.log("startX", startX, "endX", endX);
 
   // find possible word combinations
-  
+
   for (let sindex = startX; sindex <= endX; sindex++) {
     let eindex = endX
     let combOfLetters = Object.create(null);
@@ -136,7 +136,7 @@ export async function getWordsEndingOnCursor(cursor, board, wordsMade, activePla
       combOfLetters["word"] += board[cursorY][x]["keyVal"];
       combOfLetters["location"].push([cursorY, x]);
     }
-    if (combOfLetters["word"].length > 0) {
+    if (combOfLetters["word"].length > 1) {
       possibleWords.add(JSON.stringify(combOfLetters));
     }
   }
@@ -162,7 +162,7 @@ export async function getWordsEndingOnCursor(cursor, board, wordsMade, activePla
 
       if (!isWordTakenReturns) {
         if (isEnglishWordReturns) {
-          console.log("Word found " + possibleWordObj["word"]);
+          // console.log("Word found " + possibleWordObj["word"]);
           newWordsMadeTemp.add(JSON.stringify(possibleWordObj));
         }
       }
