@@ -1,8 +1,5 @@
 import React, { useContext } from "react";
-import {
-  types,
-  Provider as AlertProvider,
-} from "react-alert";
+import { types, Provider as AlertProvider } from "react-alert";
 
 import { AppContext } from "../App";
 import { ROW, COLUMN } from "../Initializer";
@@ -30,12 +27,30 @@ function Key({ keyVal, bigKey }) {
   } = useContext(AppContext);
   const alert = useAlert();
 
+  function isWordTaken(word) {
+    let isWordTakenFlag = false;
+
+    // console.log("word: " + word)
+    // console.log("wordsMade: ")
+    // console.log(wordsMade)
+    // console.log(wordsMade.length)
+
+    wordsMade.forEach((wordMade) => {
+      let wordMadeJSON = JSON.parse(wordMade);
+      if (wordMadeJSON["word"] === word) {
+        console.log("Word: " + word + " is already taken.");
+        isWordTakenFlag = true;
+      }
+    });
+    return isWordTakenFlag;
+  }
+
   const inputLetter = async () => {
     const newBoard = [...board];
     const row = cursor[0];
     const column = cursor[1];
 
-    console.log("KeyVAl:" + keyVal)
+    console.log("KeyVAl:" + keyVal);
 
     if (
       (activePlayer === "player-one" && playerRole === "player_one") ||
@@ -88,6 +103,25 @@ function Key({ keyVal, bigKey }) {
           wordsMade,
           activePlayer
         );
+
+        // double check word taken or not
+
+        // console.log("NWM1");
+        // console.log(newWordsMade);
+
+        var temp = new Set();
+        newWordsMade.forEach((newWordMade) => {
+          let newWordMadeObj = JSON.parse(newWordMade);
+          if (!isWordTaken(newWordMadeObj["word"])) {
+            temp.add(JSON.stringify(newWordMadeObj));
+          }
+        });
+
+        newWordsMade = temp;
+
+        // console.log("NWM2");
+        // console.log(newWordsMade);
+
         // // console.log("KEY NWM")
         wordsMade.push(...newWordsMade);
 
@@ -181,7 +215,6 @@ function Key({ keyVal, bigKey }) {
               type: types.SUCCESS,
             }
           );
-
         });
 
         // 4. Set GameBoard letter counter
@@ -221,6 +254,8 @@ function Key({ keyVal, bigKey }) {
             })
           );
         }
+
+        return;
       } else if (keyVal === "Delete" && newBoard[row][column]["alive"]) {
         newBoard[row][column]["keyVal"] = "";
 
@@ -257,6 +292,7 @@ function Key({ keyVal, bigKey }) {
         type: types.ERROR,
       });
     }
+    return;
   };
   return (
     <div className="key" id={bigKey && "big"} onClick={inputLetter}>

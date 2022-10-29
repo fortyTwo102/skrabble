@@ -60,6 +60,11 @@ function App() {
   };
 
   useEffect(() => {
+
+    var xpath = "//div[text()='A']";
+    var matchingElement = document.evaluate(xpath, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
+    matchingElement.click()
+
     setHelpModalOpen(true);
     const roomName = JSON.parse(
       document.getElementById("room-name").textContent

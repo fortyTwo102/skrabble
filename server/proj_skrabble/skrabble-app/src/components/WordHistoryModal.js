@@ -37,11 +37,11 @@ function WordHistoryModal() {
     var wordMadeJSON = JSON.parse(wordMade);
     if (wordMadeJSON["player"] === "player-one") {
       wordRows.push(
-        <li style={{ color: "#219ebc" }}>{wordMadeJSON["word"]}</li>
+        <li style={{ color: "#219ebc" }}><strong>{wordMadeJSON["word"]}</strong></li>
       );
     } else if (wordMadeJSON["player"] === "player-two") {
       wordRows.push(
-        <li style={{ color: "#ffb703" }}>{wordMadeJSON["word"]}</li>
+        <li style={{ color: "#ffb703" }}><strong>{wordMadeJSON["word"]}</strong></li>
       );
     }
   });
