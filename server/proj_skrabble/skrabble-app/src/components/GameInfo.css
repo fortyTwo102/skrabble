@@ -11,28 +11,28 @@ p {
 
 .generic-string1 {
     color: #ffffff;
-    font-family: Georgia, serif;
+    font-family: Century Gothic, serif;
 }
 
 .turn-string {
     color: #8c8c8c;
     font-size: 14px;
-    font-family: Georgia, serif;
+    font-family: Century Gothic, serif;
 }
 
 
 
 #player-one-active {
     color: #219ebc;
-    font-family: Georgia, serif;
+    font-family: Century Gothic, serif;
 }
 
 #player-two-active {
     color: #ffb703;
-    font-family: Georgia, serif;
+    font-family: Century Gothic, serif;
 }
 
 #observer-active {
     color: #ffffff;
-    font-family: Georgia, serif;
+    font-family: Century Gothic, serif;
 }
