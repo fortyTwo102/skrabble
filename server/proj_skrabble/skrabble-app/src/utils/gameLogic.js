@@ -33,9 +33,7 @@ export async function isEnglishWord(word) {
   var CONFIG = require("../config.json");
 
   const wordResponse = fetch(
-    `http://${
-      CONFIG["ALLOWED_HOSTS"]["dev"]
-    }:8000/api/word?q=${word.toLowerCase()}`
+    `https://www.skrabble.in/api/word?q=${word.toLowerCase()}`
   )
     .then((response) => response.json())
     .then((jsonResponse) => {
