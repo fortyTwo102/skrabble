@@ -1,7 +1,7 @@
 {
     "MONGODB_CONN_STRING": "mongodb://localhost:27017",
     "ALLOWED_HOSTS": {
-        "dev": "192.168.0.158",
+        "dev": "*",
         "prod": ""
     },
     "PORT": "8000"

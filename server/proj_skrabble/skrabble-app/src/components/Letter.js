@@ -1,8 +1,6 @@
 import React, { useContext } from "react";
 import { useAlert } from "react-alert";
 import {
-  transitions,
-  positions,
   types,
   Provider as AlertProvider,
 } from "react-alert";
@@ -19,7 +17,6 @@ function Letter({ row, column }) {
     activePlayer,
     playerRole,
     turnInProgress,
-    setTurnInProgress,
     chatSocket,
   } = useContext(AppContext);
   const alert = useAlert();
@@ -32,8 +29,8 @@ function Letter({ row, column }) {
 
   const moveCursor = () => {
     if (
-      (activePlayer == "player-one" && playerRole == "player_one") ||
-      (activePlayer == "player-two" && playerRole == "player_two")
+      (activePlayer === "player-one" && playerRole === "player_one") ||
+      (activePlayer === "player-two" && playerRole === "player_two")
     ) {
       // console.log("TIP " + turnInProgress)
 

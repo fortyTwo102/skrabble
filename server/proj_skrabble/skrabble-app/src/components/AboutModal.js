@@ -20,7 +20,7 @@ const style = {
   padding: "15px",
   height: "400px",
   color: "white",
-  fontFamily: "Georgia, serif",
+  fontFamily: "Century Gothic, serif",
   borderRadius: "10px!important",
   overflow: "scroll",
   overflowX: "hidden",
@@ -29,7 +29,6 @@ const style = {
 function AboutModal() {
   const { setAboutModalOpen, aboutModalOpen } = useContext(AppContext);
 
-  const handleAboutOpen = () => setAboutModalOpen(true);
   const handleAboutClose = () => setAboutModalOpen(false);
 
   const openInNewTab = (url) => {

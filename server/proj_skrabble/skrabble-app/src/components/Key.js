@@ -1,4 +1,5 @@
 import React, { useContext } from "react";
+import { types, Provider as AlertProvider } from "react-alert";
 
 import { AppContext } from "../App";
 import { ROW, COLUMN } from "../Initializer";
@@ -6,7 +7,6 @@ import { getWordsEndingOnCursor } from "../utils/gameLogic";
 import "./Key.css";
 
 import { useAlert } from "react-alert";
-import { types, Provider as AlertProvider } from "react-alert";
 
 function Key({ keyVal, bigKey }) {
   const {
@@ -22,20 +22,39 @@ function Key({ keyVal, bigKey }) {
     setWordsMade,
     letterCounter,
     SetLetterCounter,
-    turnInProgress,
     setTurnInProgress,
     chatSocket,
   } = useContext(AppContext);
   const alert = useAlert();
+
+  function isWordTaken(word) {
+    let isWordTakenFlag = false;
+
+    // console.log("word: " + word)
+    // console.log("wordsMade: ")
+    // console.log(wordsMade)
+    // console.log(wordsMade.length)
+
+    wordsMade.forEach((wordMade) => {
+      let wordMadeJSON = JSON.parse(wordMade);
+      if (wordMadeJSON["word"] === word) {
+        console.log("Word: " + word + " is already taken.");
+        isWordTakenFlag = true;
+      }
+    });
+    return isWordTakenFlag;
+  }
 
   const inputLetter = async () => {
     const newBoard = [...board];
     const row = cursor[0];
     const column = cursor[1];
 
+    console.log("KeyVAl:" + keyVal);
+
     if (
-      (activePlayer == "player-one" && playerRole == "player_one") ||
-      (activePlayer == "player-two" && playerRole == "player_two")
+      (activePlayer === "player-one" && playerRole === "player_one") ||
+      (activePlayer === "player-two" && playerRole === "player_two")
     ) {
       if (
         keyVal !== "Enter" &&
@@ -68,7 +87,6 @@ function Key({ keyVal, bigKey }) {
         // remove glow after keyVal is set
 
         console.log("KEYVAL: " + keyVal + " of len: " + keyVal.length);
-        console.log("KEYVAL: " + keyVal + " of len: " + keyVal.length);
 
         for (let rindex = 0; rindex < ROW; rindex++) {
           for (let cindex = 0; cindex < COLUMN; cindex++) {
@@ -82,8 +100,28 @@ function Key({ keyVal, bigKey }) {
         let newWordsMade = await getWordsEndingOnCursor(
           cursor,
           newBoard,
-          wordsMade
+          wordsMade,
+          activePlayer
         );
+
+        // double check word taken or not
+
+        // console.log("NWM1");
+        // console.log(newWordsMade);
+
+        var temp = new Set();
+        newWordsMade.forEach((newWordMade) => {
+          let newWordMadeObj = JSON.parse(newWordMade);
+          if (!isWordTaken(newWordMadeObj["word"])) {
+            temp.add(JSON.stringify(newWordMadeObj));
+          }
+        });
+
+        newWordsMade = temp;
+
+        // console.log("NWM2");
+        // console.log(newWordsMade);
+
         // // console.log("KEY NWM")
         wordsMade.push(...newWordsMade);
 
@@ -92,7 +130,8 @@ function Key({ keyVal, bigKey }) {
         // // console.log("wordsMade:")
 
         setWordsMade(wordsMade);
-        // // console.log(wordsMade)
+        // console.log(wordsMade)
+
         chatSocket.send(
           JSON.stringify({
             wordsMade: wordsMade,
@@ -152,10 +191,28 @@ function Key({ keyVal, bigKey }) {
           );
 
           // popup alert
-          alert.success(
-            `+${newWordMadeObj["word"].length} for ${newWordMadeObj["word"]}`,
+          // alert.success(
+          //   `+${newWordMadeObj["word"].length} for ${newWordMadeObj["word"]}`,
+          //   {
+          //     timeout: 1500,
+          //   }
+          // );
+
+          alert.show(
+            <div>
+              +{newWordMadeObj["word"].length} for{" "}
+              <a
+                href={"https://scrabblecheck.com/" + newWordMadeObj["word"]}
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{ color: "#7EC8E3" }}
+              >
+                {newWordMadeObj["word"]}
+              </a>
+            </div>,
             {
               timeout: 1500,
+              type: types.SUCCESS,
             }
           );
         });
@@ -197,6 +254,8 @@ function Key({ keyVal, bigKey }) {
             })
           );
         }
+
+        return;
       } else if (keyVal === "Delete" && newBoard[row][column]["alive"]) {
         newBoard[row][column]["keyVal"] = "";
 
@@ -233,6 +292,7 @@ function Key({ keyVal, bigKey }) {
         type: types.ERROR,
       });
     }
+    return;
   };
   return (
     <div className="key" id={bigKey && "big"} onClick={inputLetter}>

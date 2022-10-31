@@ -1,9 +1,7 @@
 // general
-import { useContext, useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 import { useAlert } from "react-alert";
 import {
-  transitions,
-  positions,
   types,
   Provider as AlertProvider,
 } from "react-alert";
@@ -51,9 +49,9 @@ function App() {
   const [chatSocket, setChatSocket] = useState({});
   const [helpModalOpen, setHelpModalOpen] = useState(false);
   const [aboutModalOpen, setAboutModalOpen] = useState(false);
+  const [wordHistoryModalOpen, setWordHistoryModalOpen] = useState(false);
 
   const alert = useAlert();
-  const roomName = useRef();
 
   let isRoleAssigned = false;
 
@@ -62,6 +60,11 @@ function App() {
   };
 
   useEffect(() => {
+
+    var xpath = "//div[text()='A']";
+    var matchingElement = document.evaluate(xpath, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
+    matchingElement.click()
+
     setHelpModalOpen(true);
     const roomName = JSON.parse(
       document.getElementById("room-name").textContent
@@ -166,7 +169,6 @@ function App() {
 
       if (fetchedEndGameTally) {
         // console.log("ENDGAME")
-        let endGameLabel = "";
         let currentPlayerRole = "";
         let endGameMessage = "";
 
@@ -196,7 +198,7 @@ function App() {
         if (
           fetchedEndGameTally["player-one"] >
             fetchedEndGameTally["player-two"] &&
-          currentPlayerRole == "Player Blue"
+          currentPlayerRole === "Player Blue"
         ) {
           endGameMessage = {
             label: "You won!",
@@ -205,7 +207,7 @@ function App() {
         } else if (
           fetchedEndGameTally["player-one"] <
             fetchedEndGameTally["player-two"] &&
-          currentPlayerRole == "Player Blue"
+          currentPlayerRole === "Player Blue"
         ) {
           endGameMessage = {
             label: "You lost :(",
@@ -214,7 +216,7 @@ function App() {
         } else if (
           fetchedEndGameTally["player-one"] >
             fetchedEndGameTally["player-two"] &&
-          currentPlayerRole == "Observer"
+          currentPlayerRole === "Observer"
         ) {
           endGameMessage = {
             label: "Blue won!",
@@ -223,7 +225,7 @@ function App() {
         } else if (
           fetchedEndGameTally["player-one"] <
             fetchedEndGameTally["player-two"] &&
-          currentPlayerRole == "Observer"
+          currentPlayerRole === "Observer"
         ) {
           endGameMessage = {
             label: "Orange won!",
@@ -232,7 +234,7 @@ function App() {
         } else if (
           fetchedEndGameTally["player-one"] >
             fetchedEndGameTally["player-two"] &&
-          currentPlayerRole == "Player Orange"
+          currentPlayerRole === "Player Orange"
         ) {
           endGameMessage = {
             label: "You lost :(",
@@ -241,14 +243,14 @@ function App() {
         } else if (
           fetchedEndGameTally["player-one"] <
             fetchedEndGameTally["player-two"] &&
-          currentPlayerRole == "Player Orange"
+          currentPlayerRole === "Player Orange"
         ) {
           endGameMessage = {
             label: "You won!",
             type: types.SUCCESS,
           };
         } else if (
-          fetchedEndGameTally["player-one"] == fetchedEndGameTally["player-two"]
+          fetchedEndGameTally["player-one"] === fetchedEndGameTally["player-two"]
         ) {
           endGameMessage = {
             label: "Game drawn!",
@@ -277,6 +279,7 @@ function App() {
             timeout: 0,
           }
         );
+        return
       }
     };
 
@@ -323,6 +326,8 @@ function App() {
         setHelpModalOpen,
         aboutModalOpen,
         setAboutModalOpen,
+        wordHistoryModalOpen,
+        setWordHistoryModalOpen,
         chatSocket,
       }}
     >

@@ -33,9 +33,7 @@ export async function isEnglishWord(word) {
   var CONFIG = require("../config.json");
 
   const wordResponse = fetch(
-    `http://${
-      CONFIG["ALLOWED_HOSTS"]["dev"]
-    }:8000/api/word?q=${word.toLowerCase()}`
+    `https://www.skrabble.in/api/word?q=${word.toLowerCase()}`
   )
     .then((response) => response.json())
     .then((jsonResponse) => {
@@ -53,14 +51,18 @@ export async function isEnglishWord(word) {
   return final_resp;
 }
 
-export async function getWordsEndingOnCursor(cursor, board, wordsMade) {
+export async function getWordsEndingOnCursor(
+  cursor,
+  board,
+  wordsMade,
+  activePlayer
+) {
   let possibleWords = new Set();
   let cursorX = cursor[1];
   let cursorY = cursor[0];
 
   // a. vertical
   // find startY
-
   let startY = 0;
 
   for (let index = cursorY - 1; index >= 0; index--) {
@@ -149,23 +151,40 @@ export async function getWordsEndingOnCursor(cursor, board, wordsMade) {
 
   const forEachLoop = async (_) => {
     let possibleWordsList = [...possibleWords];
+
     for (let index = 0; index < possibleWordsList.length; index++) {
       let possibleWord = possibleWordsList[index];
       let possibleWordObj = JSON.parse(possibleWord);
+      possibleWordObj["player"] = activePlayer;
+      console.log("checking: " + possibleWordObj["word"]);
       let isEnglishWordReturns = await isEnglishWord(possibleWordObj["word"]);
       let isWordTakenReturns = isWordTaken(possibleWordObj["word"], wordsMade);
 
       // console.log("isEnglishWord: " + isEnglishWordReturns)
       // console.log("isWordTaken: " + isWordTakenReturns)
 
-      if (isEnglishWordReturns && !isWordTakenReturns) {
-        console.log("Word found " + possibleWordObj["word"]);
-        newWordsMadeTemp.add(JSON.stringify(possibleWordObj));
+      if (!isWordTakenReturns) {
+        if (isEnglishWordReturns) {
+          console.log("Word found " + possibleWordObj["word"]);
+          newWordsMadeTemp.add(JSON.stringify(possibleWordObj));
+        }
       }
     }
   };
 
   await forEachLoop();
+
+  console.log("board");
+  console.log(board);
+  console.log("PW");
+  console.log(possibleWords);
+  console.log("WM");
+  console.log(wordsMade);
+  console.log("NWMT");
+  console.log(newWordsMadeTemp);
+  console.log("startX: " + startX + " endX: " + endX);
+  console.log("Cursor");
+  console.log(cursor);
 
   return newWordsMadeTemp;
 }
