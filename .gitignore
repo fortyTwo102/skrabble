@@ -3,3 +3,4 @@ server/database/node_modules
 server/node_modules/
 pyenv
 *.pyc
+__pycache__/
