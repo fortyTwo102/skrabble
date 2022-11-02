@@ -1,9 +1,6 @@
 import React, { useContext } from "react";
 import { useAlert } from "react-alert";
-import {
-  types,
-  Provider as AlertProvider,
-} from "react-alert";
+import { types, Provider as AlertProvider } from "react-alert";
 
 import { AppContext } from "../App";
 import { ROW, COLUMN } from "../Initializer";
@@ -30,7 +27,9 @@ function Letter({ row, column }) {
   const moveCursor = () => {
     if (
       (activePlayer === "player-one" && playerRole === "player_one") ||
-      (activePlayer === "player-two" && playerRole === "player_two")
+      (activePlayer === "player-two" && playerRole === "player_two") ||
+      (activePlayer === "player-two" &&
+        window.location.pathname.startsWith("/ai/"))
     ) {
       // console.log("TIP " + turnInProgress)
 
@@ -69,7 +68,16 @@ function Letter({ row, column }) {
       );
 
       // console.log(newBoard[row][column]);
+
+      // if (activePlayer === "player-two" && playerRole === "player_two"){
+      //   var xpath = "//div[@class='key' and text()='A']";
+      //   var matchingElement = document.evaluate(xpath, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
+      //   matchingElement.click()
+      // }
+
+      // console.log(newBoard[row][column]);
     } else {
+      // console.log("Cursor not allowed");
       alert.show("Not allowed", {
         timeout: 2000,
         type: types.ERROR,

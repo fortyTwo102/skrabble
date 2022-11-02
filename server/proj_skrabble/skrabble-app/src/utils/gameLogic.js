@@ -1,4 +1,5 @@
 import { ROW, COLUMN } from "../Initializer";
+import dictionary from "./dictionary.json";
 
 export function isWordTaken(word, wordsMade) {
   let isWordTakenFlag = false;
@@ -19,24 +20,15 @@ export function isWordTaken(word, wordsMade) {
 }
 
 export async function isEnglishWord(word) {
-  // let x = ''
-  // let apiObj = new EndpointCall()
-
-  // let apiResp = callApi(word)
-
-  // apiResp.then(function(apiRespResult) {
-  //     console.log("sending from isEnglishWord: ", apiRespResult.result);
-  //     x = apiRespResult.result
-  //     return apiRespResult.result
-  // })
-
   var CONFIG = require("../config.json");
 
+  
   const wordResponse = fetch(
     `https://${
       CONFIG["ALLOWED_HOSTS"]["prod"]
     }/api/word?q=${word.toLowerCase()}`
   )
+
     .then((response) => response.json())
     .then((jsonResponse) => {
       return jsonResponse.result;
@@ -53,7 +45,35 @@ export async function isEnglishWord(word) {
   return final_resp;
 }
 
-export async function getWordsEndingOnCursor(cursor, board, wordsMade, activePlayer) {
+export async function isEnglishWordNew(word) {
+  let found = false;
+  word = word.toLowerCase();
+
+  // console.log("checking: " + word);
+  // console.log(dictionary[word.length][word[0]])
+
+  try {
+    if (dictionary[word.length][word[0]].includes(word)) {
+      found = true;
+      // console.log("FOUND: " + word)
+    } else {
+      found = false;
+      // console.log("NOT FOUND: " + word)
+    }
+  } catch (error) {
+    found = false;
+    // console.log("NOT FOUND: " + word)
+  }
+
+  return found;
+}
+
+export async function getWordsEndingOnCursor(
+  cursor,
+  board,
+  wordsMade,
+  activePlayer
+) {
   let possibleWords = new Set();
   let cursorX = cursor[1];
   let cursorY = cursor[0];
@@ -147,15 +167,16 @@ export async function getWordsEndingOnCursor(cursor, board, wordsMade, activePla
   let newWordsMadeTemp = new Set();
 
   const forEachLoop = async (_) => {
-    
     let possibleWordsList = [...possibleWords];
-    
+
     for (let index = 0; index < possibleWordsList.length; index++) {
-    
       let possibleWord = possibleWordsList[index];
       let possibleWordObj = JSON.parse(possibleWord);
       possibleWordObj["player"] = activePlayer;
-      let isEnglishWordReturns = await isEnglishWord(possibleWordObj["word"]);
+      // console.log("checking: " + possibleWordObj["word"]);
+      let isEnglishWordReturns = await isEnglishWordNew(
+        possibleWordObj["word"]
+      );
       let isWordTakenReturns = isWordTaken(possibleWordObj["word"], wordsMade);
 
       // console.log("isEnglishWord: " + isEnglishWordReturns)
@@ -171,6 +192,18 @@ export async function getWordsEndingOnCursor(cursor, board, wordsMade, activePla
   };
 
   await forEachLoop();
+
+  // console.log("board");
+  // console.log(board);
+  // console.log("PW");
+  // console.log(possibleWords);
+  // console.log("WM");
+  // console.log(wordsMade);
+  // console.log("NWMT");
+  // console.log(newWordsMadeTemp);
+  // console.log("startX: " + startX + " endX: " + endX);
+  // console.log("Cursor");
+  // console.log(cursor);
 
   return newWordsMadeTemp;
 }

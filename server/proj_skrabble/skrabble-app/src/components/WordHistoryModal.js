@@ -17,7 +17,7 @@ const style = {
   padding: "15px",
   height: "400px",
   color: "white",
-  fontFamily: "Century Gothic, serif",
+  fontFamily: "Arial, Helvetica, sans-serif",
   borderRadius: "10px!important",
   overflow: "scroll",
   overflowX: "hidden",

@@ -20,7 +20,7 @@ const style = {
   padding: "15px",
   height: "400px",
   color: "white",
-  fontFamily: "Century Gothic, serif",
+  fontFamily: "Arial, Helvetica, sans-serif",
   borderRadius: "10px!important",
   overflow: "scroll",
   overflowX: "hidden",
@@ -55,7 +55,7 @@ function AboutModal() {
               variant="outlined"
               size="small"
               sx={{
-                color: "white"
+                color: "white",
               }}
               onClick={() => openInNewTab("https://github.com/fortyTwo102/")}
               startIcon={<GitHubIcon />}
@@ -66,9 +66,11 @@ function AboutModal() {
               variant="outlined"
               size="small"
               sx={{
-                color: "white"
+                color: "white",
               }}
-              onClick={() => openInNewTab("https://in.linkedin.com/in/farooqans4ri")}
+              onClick={() =>
+                openInNewTab("https://in.linkedin.com/in/farooqans4ri")
+              }
               startIcon={<LinkedInIcon />}
             >
               LINKEDIN
@@ -77,9 +79,11 @@ function AboutModal() {
               variant="outlined"
               size="small"
               sx={{
-                color: "white"
+                color: "white",
               }}
-              onClick={() => openInNewTab("https://instagram.com/paperorchestra/")}
+              onClick={() =>
+                openInNewTab("https://instagram.com/paperorchestra/")
+              }
               startIcon={<InstagramIcon />}
             >
               INSTAGRAM

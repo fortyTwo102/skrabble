@@ -100,7 +100,7 @@ class GameRoomConsumer(AsyncWebsocketConsumer):
         )
 
         self.game_state["role"] = self.user
-        print(self.game_state)
+        # print(self.game_state)
         # if a player is resuming the game in another tab
         if not len(self.game_state) == 0:
             await self.channel_layer.group_send(

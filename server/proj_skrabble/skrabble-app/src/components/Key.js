@@ -1,4 +1,5 @@
 import React, { useContext } from "react";
+import { types, Provider as AlertProvider } from "react-alert";
 
 import { AppContext } from "../App";
 import { ROW, COLUMN } from "../Initializer";
@@ -6,7 +7,6 @@ import { getWordsEndingOnCursor } from "../utils/gameLogic";
 import "./Key.css";
 
 import { useAlert } from "react-alert";
-import { types, Provider as AlertProvider } from "react-alert";
 
 function Key({ keyVal, bigKey }) {
   const {
@@ -30,10 +30,15 @@ function Key({ keyVal, bigKey }) {
   function isWordTaken(word) {
     let isWordTakenFlag = false;
 
+    // console.log("word: " + word)
+    // console.log("wordsMade: ")
+    // console.log(wordsMade)
+    // console.log(wordsMade.length)
+
     wordsMade.forEach((wordMade) => {
       let wordMadeJSON = JSON.parse(wordMade);
       if (wordMadeJSON["word"] === word) {
-        console.log("Word: " + word + " is already taken.");
+        // console.log("Word: " + word + " is already taken.");
         isWordTakenFlag = true;
       }
     });
@@ -45,11 +50,14 @@ function Key({ keyVal, bigKey }) {
     const row = cursor[0];
     const column = cursor[1];
 
-    // console.log("KeyVAl:" + keyVal)
+    // console.log("KeyVAl:" + keyVal);
+    // console.log(newBoard[row][column]);
 
     if (
       (activePlayer === "player-one" && playerRole === "player_one") ||
-      (activePlayer === "player-two" && playerRole === "player_two")
+      (activePlayer === "player-two" && playerRole === "player_two") ||
+      (activePlayer === "player-two" &&
+        window.location.pathname.startsWith("/ai/"))
     ) {
       if (
         keyVal !== "Enter" &&
@@ -74,6 +82,7 @@ function Key({ keyVal, bigKey }) {
             })
           );
         }
+        console.log(newBoard[row][column]);
       } else if (
         keyVal === "Enter" &&
         newBoard[row][column]["alive"] &&
@@ -101,6 +110,9 @@ function Key({ keyVal, bigKey }) {
 
         // double check word taken or not
 
+        // console.log("NWM1");
+        // console.log(newWordsMade);
+
         var temp = new Set();
         newWordsMade.forEach((newWordMade) => {
           let newWordMadeObj = JSON.parse(newWordMade);
@@ -110,6 +122,11 @@ function Key({ keyVal, bigKey }) {
         });
 
         newWordsMade = temp;
+
+        // console.log("NWM2");
+        // console.log(newWordsMade);
+
+        // // console.log("KEY NWM")
         wordsMade.push(...newWordsMade);
 
         // // console.log("KEY TWM")
@@ -150,6 +167,8 @@ function Key({ keyVal, bigKey }) {
 
         newBoard[row][column]["alive"] = false;
         setBoard(newBoard);
+        // console.log(board);
+        // console.log(newBoard);
         chatSocket.send(
           JSON.stringify({
             board: newBoard,
@@ -202,7 +221,6 @@ function Key({ keyVal, bigKey }) {
               type: types.SUCCESS,
             }
           );
-
         });
 
         // 4. Set GameBoard letter counter
@@ -226,22 +244,34 @@ function Key({ keyVal, bigKey }) {
           );
         }
 
+        // because of AI
+
+        let moddedActivePlayer = {
+          activePlayer: "",
+          board: newBoard,
+          wordsMade: wordsMade,
+        };
+
         // 6. set appropriate player
         if (activePlayer === "player-one") {
-          setActivePlayer("player-two");
+          moddedActivePlayer["activePlayer"] = "player-two";
+          setActivePlayer(moddedActivePlayer["activePlayer"]);
           chatSocket.send(
             JSON.stringify({
-              activePlayer: "player-two",
+              activePlayer: moddedActivePlayer,
             })
           );
         } else {
-          setActivePlayer("player-one");
+          moddedActivePlayer["activePlayer"] = "player-one";
+          setActivePlayer(moddedActivePlayer["activePlayer"]);
           chatSocket.send(
             JSON.stringify({
-              activePlayer: "player-one",
+              activePlayer: moddedActivePlayer,
             })
           );
         }
+
+        return;
       } else if (keyVal === "Delete" && newBoard[row][column]["alive"]) {
         newBoard[row][column]["keyVal"] = "";
 
@@ -270,15 +300,19 @@ function Key({ keyVal, bigKey }) {
           type: types.ERROR,
         });
       } else {
-        var a = ""
-        // console.log("Unforeseen circumstances.");
+        // console.log(keyVal);
+        // console.log(newBoard[row][column]);
+        // console.log(playerRole + " x " + activePlayer);
+        console.log("Unforeseen circumstances.");
       }
     } else {
+      console.log("Key not allowed");
       alert.show("Not allowed", {
         timeout: 2000,
         type: types.ERROR,
       });
     }
+    return;
   };
   return (
     <div className="key" id={bigKey && "big"} onClick={inputLetter}>

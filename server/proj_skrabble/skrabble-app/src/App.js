@@ -1,10 +1,7 @@
 // general
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { useAlert } from "react-alert";
-import {
-  types,
-  Provider as AlertProvider,
-} from "react-alert";
+import { types, Provider as AlertProvider } from "react-alert";
 import { createContext, useState } from "react";
 
 // style
@@ -26,6 +23,8 @@ import {
   tallyDefault,
 } from "./Initializer";
 import { wordList } from "./Words";
+import { getLetterToPlay } from "./utils/aiLogic.js";
+import listToMatrix from "./utils/utils.js";
 
 export const AppContext = createContext();
 
@@ -55,34 +54,48 @@ function App() {
 
   let isRoleAssigned = false;
 
-  const playAgain = async () => {
-    window.location.replace("../");
+  const playAgain = () => {
+    // find restart button and click it
+
+    var xpath = `//button[@aria-label='restart']`;
+    var matchingElement = document.evaluate(
+      xpath,
+      document,
+      null,
+      XPathResult.FIRST_ORDERED_NODE_TYPE,
+      null
+    ).singleNodeValue;
+    matchingElement.click();
   };
 
-  useEffect(() => {
+  useEffect(async () => {
     setHelpModalOpen(true);
+
     const roomName = JSON.parse(
       document.getElementById("room-name").textContent
     );
+
     const chatSocket = new WebSocket(
       "wss://" + window.location.host + "/ws/core/" + roomName + "/"
     );
 
-    // // console.log("[STARTDEBUG]: chatSocket at start")
-    // // console.log(chatSocket)
-    // // console.log("[ENDDEBUG]: chatSocket at start")
+    // // // // // // // console.log("[STARTDEBUG]: chatSocket at start")
+    // // // // // // // console.log(chatSocket)
+    // // // // // // // console.log("[ENDDEBUG]: chatSocket at start")
 
-    chatSocket.onmessage = function (e) {
+    chatSocket.onmessage = async function (e) {
       const data = JSON.parse(e.data);
-      // console.log("[LOG]: Received data: ")
-      // console.log(data)
-      // console.log("[LOG]: Setting Game States.")
-      // // console.log("[LOG]: PlayerRole: " + myContext.playerRole)
+      // // // // // // console.log("[LOG]: Received data: ")
+      // // // // // // console.log(data)
+      // // // // // // console.log("[LOG]: Setting Game States.")
+      // // // // // // // console.log("[LOG]: PlayerRole: " + myContext.playerRole)
 
       let game_state_message =
         "game_state_message" in data
           ? JSON.parse(data["game_state_message"])
           : null;
+
+      // // // // // console.log(game_state_message);
 
       let fetchedBoard =
         "board" in game_state_message ? game_state_message["board"] : null;
@@ -113,57 +126,130 @@ function App() {
           ? game_state_message["endGameTally"]
           : null;
 
+      let fetchedColorBoard =
+        "colorBoard" in game_state_message
+          ? game_state_message["colorBoard"]
+          : null;
+
+      let fetchedLetterStyleBoard =
+        "letterStyleBoard" in game_state_message
+          ? game_state_message["letterStyleBoard"]
+          : null;
+
+      if (fetchedColorBoard) {
+        setColorBoard(fetchedColorBoard);
+      }
+
+      if (fetchedLetterStyleBoard) {
+        setLetterStyleBoard(fetchedLetterStyleBoard);
+      }
+
       if (fetchedBoard) {
         setBoard(fetchedBoard);
       }
 
+      if (fetchedLetterCounter) {
+        // // // // // // console.log("Setting letter count:")
+        // // // // // // console.log(fetchedLetterCounter)
+        SetLetterCounter(fetchedLetterCounter);
+      }
+
       if (fetchedTally) {
-        // console.log("Setting tally:")
-        // console.log(fetchedTally)
+        // // // // // console.log("Setting tally:");
+        // // // // // console.log(fetchedTally);
         setTally(fetchedTally);
       }
 
       if (fetchedTurnInProgress !== null) {
-        // console.log("Setting TIP:")
-        // console.log(fetchedTurnInProgress)
+        // // // // // // console.log("Setting TIP:")
+        // // // // // // console.log(fetchedTurnInProgress)
         setTurnInProgress(fetchedTurnInProgress);
       }
 
       if (fetchedCursor) {
-        // console.log("Setting cursor:")
-        // console.log(fetchedCursor)
+        // // // // // // console.log("Setting cursor:")
+        // // // // // // console.log(fetchedCursor)
         setCursor(fetchedCursor);
       }
 
       if (fetchedWordsMade) {
-        // console.log("Setting words made:")
-        // console.log(fetchedWordsMade)
+        // // // // // // console.log("Setting words made:")
+        // // // // // // console.log(fetchedWordsMade)
         setWordsMade(fetchedWordsMade);
       }
 
       if (fetchedActivePlayer) {
-        // console.log("Setting active player:")
-        // console.log(fetchedActivePlayer)
-        setActivePlayer(fetchedActivePlayer);
+        // // // // // // console.log("Setting active player:")
+        // // // // // // console.log(fetchedActivePlayer)
+        setActivePlayer(fetchedActivePlayer["activePlayer"]);
+
+        // // // // // console.log("activePlayer: " + fetchedActivePlayer["activePlayer"]);
+
+        if (window.location.pathname.startsWith("/ai/")) {
+          if (fetchedActivePlayer["activePlayer"] == "player-two") {
+            let F_board = fetchedActivePlayer["board"];
+            let F_wordsMade = fetchedActivePlayer["wordsMade"];
+
+            setBoard(F_board);
+            setWordsMade(F_wordsMade);
+
+            // // // // // // console.log(game_state_message)
+            // // // // // // console.log(fetchedActivePlayer)
+            // // // // // // console.log(F_board)
+            // // // // // // console.log(F_wordsMade)
+
+            // // // console.time("GETWORDS")
+            let return_value = await getLetterToPlay(F_board, F_wordsMade);
+            let letter_AI = return_value[0];
+            let row_AI = return_value[1];
+            let column_AI = return_value[2];
+            // // // console.timeEnd("GETWORDS")
+
+            // // // // // // console.log(return_value, letter_AI, row_AI, column_AI)
+
+            // turning the list of letter elements to 6x6 board matrix
+            var matchingElement = document.getElementsByClassName("letter");
+            var gameBoardTags = listToMatrix(matchingElement, 6);
+
+            // // // // // // console.log("clicking on: )
+            gameBoardTags[row_AI][column_AI].click();
+
+            // inputting the letter
+            var xpath = `//div[@class='key' and text()='${letter_AI}']`;
+            var matchingElement = document.evaluate(
+              xpath,
+              document,
+              null,
+              XPathResult.FIRST_ORDERED_NODE_TYPE,
+              null
+            ).singleNodeValue;
+            matchingElement.click();
+
+            // pressing Enter
+            var xpath = "//div[@class='key' and text()='Enter']";
+            var matchingElement = document.evaluate(
+              xpath,
+              document,
+              null,
+              XPathResult.FIRST_ORDERED_NODE_TYPE,
+              null
+            ).singleNodeValue;
+            matchingElement.click();
+          }
+        }
       }
 
       if (!isRoleAssigned) {
-        // console.log("Setting player role:")
-        // console.log(fetchedPlayerRole)
+        // // // // // // console.log("Setting player role:")
+        // // // // // // console.log(fetchedPlayerRole)
         setPlayerRole(fetchedPlayerRole);
 
         // this is to keep from the roles from changing while braodcasting
         isRoleAssigned = true;
       }
 
-      if (fetchedLetterCounter) {
-        // console.log("Setting letter count:")
-        // console.log(fetchedLetterCounter)
-        SetLetterCounter(fetchedLetterCounter);
-      }
-
       if (fetchedEndGameTally) {
-        // console.log("ENDGAME")
+        // // // // // // console.log("ENDGAME")
         let currentPlayerRole = "";
         let endGameMessage = "";
 
@@ -187,8 +273,8 @@ function App() {
           currentPlayerRole = "Observer";
         }
 
-        // console.log("Current: " + currentPlayerRole)
-        // console.log(fetchedEndGameTally)
+        // // // // // // console.log("Current: " + currentPlayerRole)
+        // // // // // // console.log(fetchedEndGameTally)
 
         if (
           fetchedEndGameTally["player-one"] >
@@ -245,7 +331,8 @@ function App() {
             type: types.SUCCESS,
           };
         } else if (
-          fetchedEndGameTally["player-one"] === fetchedEndGameTally["player-two"]
+          fetchedEndGameTally["player-one"] ===
+          fetchedEndGameTally["player-two"]
         ) {
           endGameMessage = {
             label: "Game drawn!",
@@ -274,7 +361,7 @@ function App() {
             timeout: 0,
           }
         );
-        return
+        return;
       }
     };
 
@@ -283,8 +370,8 @@ function App() {
 
   // var clientUrl = window.location.href
   // var roomID = clientUrl.split("/").pop()
-  // // // console.log("Socket: ", socket)
-  // // // console.log("Client: " + roomID)
+  // // // // // // // // console.log("Socket: ", socket)
+  // // // // // // // // console.log("Client: " + roomID)
   // socket.emit('connected', roomID)
 
   return (

@@ -4,6 +4,11 @@ import { AppContext } from "../App";
 // components
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
+import Person from "@mui/icons-material/Person";
+import Computer from "@mui/icons-material/Computer";
+import RestartAlt from "@mui/icons-material/RestartAlt";
+import HelpOutlineOutlined from "@mui/icons-material/HelpOutlineOutlined";
+import InfoOutlined from "@mui/icons-material/InfoOutlined";
 
 const style = {
   position: "absolute",
@@ -16,7 +21,7 @@ const style = {
   padding: "15px",
   height: "400px",
   color: "white",
-  fontFamily: "Century Gothic, serif",
+  fontFamily: "Arial, Helvetica, sans-serif",
   borderRadius: "10px!important",
   overflow: "scroll",
   overflowX: "hidden",
@@ -25,6 +30,7 @@ const style = {
 function HelpModal() {
   const { setHelpModalOpen, helpModalOpen } = useContext(AppContext);
 
+  const handleHelpOpen = () => setHelpModalOpen(true);
   const handleHelpClose = () => setHelpModalOpen(false);
 
   return (
@@ -57,7 +63,46 @@ function HelpModal() {
               You will be assigned the color you play as at start of play.
               Either Blue or Orange.
             </li>
-            <li>If the Game Room is full, you will be joined as an Observer.</li>
+            <li>
+              Here is what the buttons on the navigation bar stand for:
+              <br />
+              <br />
+              <br />
+              <p>
+                <Computer /> Icon on top-right means that you are playing
+                against a person in a one-to-one battle. You can click on it if
+                you want to play against an AI.
+              </p>
+              <br />
+              <br />
+              <p>
+                <Person /> Icon on top-right means that you are playing against
+                an AI. You can click on it if you want to play against a person.
+              </p>
+              <br />
+              <br />
+              <p>
+                <RestartAlt /> Icon on top-left can be clicked on to RESTART the
+                game.
+              </p>
+              <br />
+              <br />
+              <p>
+                <HelpOutlineOutlined /> Icon on top-left is to open the HELP
+                section.
+              </p>
+              <br />
+              <br />
+              <p>
+                <InfoOutlined /> Icon on top-right is to open the ABOUT section.
+              </p>
+              <br />
+            </li>
+            <br />
+            <br />
+            <li>
+              If the Game Room is full, you will be joined as an Observer.
+            </li>
           </ul>
         </p>
         <h4>Gameplay</h4>
@@ -73,7 +118,7 @@ function HelpModal() {
               src={require("../images/how-to-play-example.png")}
               height="132"
               width="220"
-              alt="[example]"
+              alt="It is a picture where words are made horizontally and vertically."
             />
             <br />
             <p>
