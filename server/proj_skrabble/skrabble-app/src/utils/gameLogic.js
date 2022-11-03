@@ -1,4 +1,5 @@
 import { ROW, COLUMN } from "../Initializer";
+import dictionary from "./dictionary.json";
 
 export function isWordTaken(word, wordsMade) {
   let isWordTakenFlag = false;
@@ -19,17 +20,6 @@ export function isWordTaken(word, wordsMade) {
 }
 
 export async function isEnglishWord(word) {
-  // let x = ''
-  // let apiObj = new EndpointCall()
-
-  // let apiResp = callApi(word)
-
-  // apiResp.then(function(apiRespResult) {
-  //     console.log("sending from isEnglishWord: ", apiRespResult.result);
-  //     x = apiRespResult.result
-  //     return apiRespResult.result
-  // })
-
   var CONFIG = require("../config.json");
 
   const wordResponse = fetch(
@@ -51,6 +41,29 @@ export async function isEnglishWord(word) {
   // console.log("the result for " + word + " is " + final_resp + " of type " + typeof(final_resp))
 
   return final_resp;
+}
+
+export async function isEnglishWordNew(word) {
+  let found = false;
+  word = word.toLowerCase();
+
+  console.log("checking: " + word);
+  // console.log(dictionary[word.length][word[0]])
+
+  try {
+    if (dictionary[word.length][word[0]].includes(word)) {
+      found = true;
+      // console.log("FOUND: " + word)
+    } else {
+      found = false;
+      // console.log("NOT FOUND: " + word)
+    }
+  } catch (error) {
+    found = false;
+    // console.log("NOT FOUND: " + word)
+  }
+
+  return found;
 }
 
 export async function getWordsEndingOnCursor(
@@ -159,7 +172,9 @@ export async function getWordsEndingOnCursor(
       let possibleWordObj = JSON.parse(possibleWord);
       possibleWordObj["player"] = activePlayer;
       console.log("checking: " + possibleWordObj["word"]);
-      let isEnglishWordReturns = await isEnglishWord(possibleWordObj["word"]);
+      let isEnglishWordReturns = await isEnglishWordNew(
+        possibleWordObj["word"]
+      );
       let isWordTakenReturns = isWordTaken(possibleWordObj["word"], wordsMade);
 
       // console.log("isEnglishWord: " + isEnglishWordReturns)

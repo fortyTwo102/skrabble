@@ -2,3 +2,5 @@ client/skrabble-app/node_modules
 server/database/node_modules
 server/node_modules/
 pyenv
+database/raw-db/*
+server/proj_skrabble/core/__pycache__/*

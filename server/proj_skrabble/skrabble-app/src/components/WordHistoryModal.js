@@ -17,18 +17,15 @@ const style = {
   padding: "15px",
   height: "400px",
   color: "white",
-  fontFamily: "Century Gothic, serif",
+  fontFamily: "Arial, Helvetica, sans-serif",
   borderRadius: "10px!important",
   overflow: "scroll",
   overflowX: "hidden",
 };
 
 function WordHistoryModal() {
-  const {
-    setWordHistoryModalOpen,
-    wordHistoryModalOpen,
-    wordsMade,
-  } = useContext(AppContext);
+  const { setWordHistoryModalOpen, wordHistoryModalOpen, wordsMade } =
+    useContext(AppContext);
 
   const handleWordHistoryClose = () => setWordHistoryModalOpen(false);
 
@@ -37,11 +34,15 @@ function WordHistoryModal() {
     var wordMadeJSON = JSON.parse(wordMade);
     if (wordMadeJSON["player"] === "player-one") {
       wordRows.push(
-        <li style={{ color: "#219ebc" }}><strong>{wordMadeJSON["word"]}</strong></li>
+        <li style={{ color: "#219ebc" }}>
+          <strong>{wordMadeJSON["word"]}</strong>
+        </li>
       );
     } else if (wordMadeJSON["player"] === "player-two") {
       wordRows.push(
-        <li style={{ color: "#ffb703" }}><strong>{wordMadeJSON["word"]}</strong></li>
+        <li style={{ color: "#ffb703" }}>
+          <strong>{wordMadeJSON["word"]}</strong>
+        </li>
       );
     }
   });

@@ -17,6 +17,7 @@
     "react-copy-to-clipboard": "^5.1.0",
     "react-dom": "^18.0.0",
     "react-fetch-hook": "^1.9.5",
+    "react-native-toggle-element": "^2.0.1",
     "react-router-dom": "^6.4.2",
     "react-scripts": "^5.0.0",
     "socket.io-client": "^4.5.2",

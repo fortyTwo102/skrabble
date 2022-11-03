@@ -51,10 +51,13 @@ function Key({ keyVal, bigKey }) {
     const column = cursor[1];
 
     console.log("KeyVAl:" + keyVal);
+    console.log(newBoard[row][column]);
 
     if (
       (activePlayer === "player-one" && playerRole === "player_one") ||
-      (activePlayer === "player-two" && playerRole === "player_two")
+      (activePlayer === "player-two" && playerRole === "player_two") ||
+      (activePlayer === "player-two" &&
+        window.location.pathname.startsWith("/ai/"))
     ) {
       if (
         keyVal !== "Enter" &&
@@ -79,6 +82,7 @@ function Key({ keyVal, bigKey }) {
             })
           );
         }
+        console.log(newBoard[row][column]);
       } else if (
         keyVal === "Enter" &&
         newBoard[row][column]["alive"] &&
@@ -163,6 +167,8 @@ function Key({ keyVal, bigKey }) {
 
         newBoard[row][column]["alive"] = false;
         setBoard(newBoard);
+        console.log(board);
+        console.log(newBoard);
         chatSocket.send(
           JSON.stringify({
             board: newBoard,
@@ -238,19 +244,29 @@ function Key({ keyVal, bigKey }) {
           );
         }
 
+        // because of AI
+
+        let moddedActivePlayer = {
+          activePlayer: "",
+          board: newBoard,
+          wordsMade: wordsMade,
+        };
+
         // 6. set appropriate player
         if (activePlayer === "player-one") {
-          setActivePlayer("player-two");
+          moddedActivePlayer["activePlayer"] = "player-two";
+          setActivePlayer(moddedActivePlayer["activePlayer"]);
           chatSocket.send(
             JSON.stringify({
-              activePlayer: "player-two",
+              activePlayer: moddedActivePlayer,
             })
           );
         } else {
-          setActivePlayer("player-one");
+          moddedActivePlayer["activePlayer"] = "player-one";
+          setActivePlayer(moddedActivePlayer["activePlayer"]);
           chatSocket.send(
             JSON.stringify({
-              activePlayer: "player-one",
+              activePlayer: moddedActivePlayer,
             })
           );
         }
@@ -284,9 +300,13 @@ function Key({ keyVal, bigKey }) {
           type: types.ERROR,
         });
       } else {
+        console.log(keyVal);
+        console.log(newBoard[row][column]);
+        console.log(playerRole + " x " + activePlayer);
         console.log("Unforeseen circumstances.");
       }
     } else {
+      console.log("Key not allowed");
       alert.show("Not allowed", {
         timeout: 2000,
         type: types.ERROR,

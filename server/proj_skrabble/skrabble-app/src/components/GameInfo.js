@@ -32,9 +32,20 @@ function GameInfo() {
     } else if (activePlayer === "player-two" && playerRole === "player_two") {
       turnString = "It is your turn";
     } else if (activePlayer === "player-one" && playerRole === "player_two") {
-      turnString = 'Please wait, while "Blue" plays their turn';
-    } else if (activePlayer === "player-two" && playerRole === "player_one") {
-      turnString = 'Please wait, while "Orange" plays their turn';
+      turnString = "Please wait, while BLUE plays their turn";
+    } else if (
+      activePlayer === "player-two" &&
+      playerRole === "player_one" &&
+      window.location.pathname.startsWith("/core/")
+    ) {
+      turnString = "Please wait, while ORANGE plays their turn";
+    } else if (
+      activePlayer === "player-two" &&
+      window.location.pathname.startsWith("/ai/")
+    ) {
+      turnString = "Please wait, while the AI plays its turn";
+    } else {
+      console.error(activePlayer + " x " + playerRole);
     }
   }
 
