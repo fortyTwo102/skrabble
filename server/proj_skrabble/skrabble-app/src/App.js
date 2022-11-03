@@ -278,26 +278,26 @@ function App() {
 
         if (
           document
-            .getElementsByClassName("player-role")
+            .getElementsByClassName("anchor")
             .hasOwnProperty("player-one-active")
         ) {
           currentPlayerRole = "Player Blue";
         } else if (
           document
-            .getElementsByClassName("player-role")
+            .getElementsByClassName("anchor")
             .hasOwnProperty("player-two-active")
         ) {
           currentPlayerRole = "Player Orange";
         } else if (
           document
-            .getElementsByClassName("player-role")
+            .getElementsByClassName("anchor")
             .hasOwnProperty("observer-active")
         ) {
           currentPlayerRole = "Observer";
         }
 
-        // // // // // // console.log("Current: " + currentPlayerRole)
-        // // // // // // console.log(fetchedEndGameTally)
+        // console.log("Current: " + currentPlayerRole)
+        // console.log(fetchedEndGameTally)
 
         if (
           fetchedEndGameTally["player-one"] >

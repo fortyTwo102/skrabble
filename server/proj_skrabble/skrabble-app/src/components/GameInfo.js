@@ -16,22 +16,22 @@ function GameInfo() {
   let playerRoleLabel = "";
   let playerRoleStyleID = "";
   let turnString = "";
-  
+
   if (window.location.pathname.startsWith("/ai/")) {
     setPlayerTwoName("The AI")
   }
 
   // set approapriate player role info on top
-  // if (playerRole === "player_one") {
-  //   playerRoleLabel = "Player Blue";
-  //   playerRoleStyleID = "player-one-active";
-  // } else if (playerRole === "player_two") {
-  //   playerRoleLabel = "Player Orange";
-  //   playerRoleStyleID = "player-two-active";
-  // } else if (playerRole.startsWith("observer")) {
-  //   playerRoleLabel = "Observer";
-  //   playerRoleStyleID = "observer-active";
-  // }
+  if (playerRole === "player_one") {
+    // playerRoleLabel = "Player Blue";
+    playerRoleStyleID = "player-one-active";
+  } else if (playerRole === "player_two") {
+    // playerRoleLabel = "Player Orange";
+    playerRoleStyleID = "player-two-active";
+  } else if (playerRole.startsWith("observer")) {
+    // playerRoleLabel = "Observer";
+    playerRoleStyleID = "observer-active";
+  }
 
   // set approapriate turn info on top
 
@@ -71,6 +71,7 @@ function GameInfo() {
       </p>
       <br />
       <p className="turn-string">{turnString}</p>
+      <p className="anchor" id={playerRoleStyleID}></p>
     </div>
   );
 }
