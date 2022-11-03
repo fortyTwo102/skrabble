@@ -40,7 +40,7 @@ export async function getLetterToPlay(board, wordsMade) {
     for (let column = 0; column < COLUMN; column++)
     {
         if (board[row][column]["keyVal"]){
-            console.log("LETTER HERE")
+            let x = null
         } else {
             cursors.push([row, column])
         }
@@ -60,7 +60,7 @@ export async function getLetterToPlay(board, wordsMade) {
         let points = 0;
 
         newBoard[row][column]["keyVal"] = letters[l_index]
-        console.log("AI PUTTING " + letters[l_index] + " in " + row + "x" + column)
+        // console.log("AI PUTTING " + letters[l_index] + " in " + row + "x" + column)
         let newWordsMade = await getWordsEndingOnCursor(
           cursors[c_index],
           newBoard,
@@ -70,7 +70,7 @@ export async function getLetterToPlay(board, wordsMade) {
 
         newBoard[row][column]["keyVal"] = ""
         
-        console.log(newWordsMade)
+        // console.log(newWordsMade)
         newWordsMade.forEach((newWordMade) => {
           let newWordMadeObj = JSON.parse(newWordMade);
           points += newWordMadeObj["word"].length;
@@ -87,7 +87,7 @@ export async function getLetterToPlay(board, wordsMade) {
 
   await forEachLoop();
 
-  console.log(bestLetter, bestCursorPosition)
+  // console.log(bestLetter, bestCursorPosition)
 
   return [bestLetter, bestCursorPosition[0], bestCursorPosition[1]];
 

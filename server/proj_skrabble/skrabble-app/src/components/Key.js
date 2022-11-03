@@ -82,7 +82,7 @@ function Key({ keyVal, bigKey }) {
             })
           );
         }
-        console.log(newBoard[row][column]);
+        // console.log(newBoard[row][column]);
       } else if (
         keyVal === "Enter" &&
         newBoard[row][column]["alive"] &&
