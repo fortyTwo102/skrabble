@@ -47,8 +47,8 @@ export async function getLetterToPlay(board, wordsMade) {
     }
   }
 
-  console.log(board)
-  console.log(cursors)
+  // console.log(board)
+  // console.log(cursors)
 
   const forEachLoop = async (_) => {
     for (let l_index = 0; l_index < letters.length; l_index++) {
