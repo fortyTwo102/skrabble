@@ -16,6 +16,10 @@ function GameInfo() {
   let playerRoleLabel = "";
   let playerRoleStyleID = "";
   let turnString = "";
+  
+  if (window.location.pathname.startsWith("/ai/")) {
+    setPlayerTwoName("The AI")
+  }
 
   // set approapriate player role info on top
   // if (playerRole === "player_one") {
