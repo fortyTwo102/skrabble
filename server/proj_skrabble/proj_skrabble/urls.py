@@ -25,7 +25,7 @@ urlpatterns = [
     # path("", front, name="front"),
     path('admin/', admin.site.urls),
     path("api/word", word, name="word"),
-    path('', lambda request: redirect("core/", permanent=True)),
+    path('', lambda request: redirect("ai/core/", permanent=True)),
     path('core/', lambda request: redirect(generate_room_name(), permanent=False)),
     path('core/<str:room_name>/', include("core.urls")),
     path('core/<str:room_name>/static/js/<str:static_js_filename>', lambda request, room_name, static_js_filename: redirect("/static/js/" + static_js_filename, permanent=False)),

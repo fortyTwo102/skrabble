@@ -49,6 +49,8 @@ function App() {
   const [helpModalOpen, setHelpModalOpen] = useState(false);
   const [aboutModalOpen, setAboutModalOpen] = useState(false);
   const [wordHistoryModalOpen, setWordHistoryModalOpen] = useState(false);
+  const [playerOneName, setPlayerOneName] = useState("");
+  const [playerTwoName, setPlayerTwoName] = useState("");
 
   const alert = useAlert();
 
@@ -135,6 +137,17 @@ function App() {
         "letterStyleBoard" in game_state_message
           ? game_state_message["letterStyleBoard"]
           : null;
+          
+      let fetchedPlayerOneName =
+      "playerOneName" in game_state_message
+        ? game_state_message["playerOneName"]
+        : null;
+        
+      let fetchedPlayerTwoName =
+      "playerTwoName" in game_state_message
+        ? game_state_message["playerTwoName"]
+        : null;
+  
 
       if (fetchedColorBoard) {
         setColorBoard(fetchedColorBoard);
@@ -146,6 +159,14 @@ function App() {
 
       if (fetchedBoard) {
         setBoard(fetchedBoard);
+      }
+
+      if (fetchedPlayerOneName) {
+        setPlayerOneName(fetchedPlayerOneName);
+      }
+
+      if (fetchedPlayerTwoName) {
+        setPlayerTwoName(fetchedPlayerTwoName);
       }
 
       if (fetchedLetterCounter) {
@@ -253,21 +274,23 @@ function App() {
         let currentPlayerRole = "";
         let endGameMessage = "";
 
+        // console.log("PLAYERROLE:" + playerRole)
+
         if (
           document
-            .getElementsByClassName("player-role")
+            .getElementsByClassName("anchor")
             .hasOwnProperty("player-one-active")
         ) {
           currentPlayerRole = "Player Blue";
         } else if (
           document
-            .getElementsByClassName("player-role")
+            .getElementsByClassName("anchor")
             .hasOwnProperty("player-two-active")
         ) {
           currentPlayerRole = "Player Orange";
         } else if (
           document
-            .getElementsByClassName("player-role")
+            .getElementsByClassName("anchor")
             .hasOwnProperty("observer-active")
         ) {
           currentPlayerRole = "Observer";
@@ -410,6 +433,10 @@ function App() {
         setAboutModalOpen,
         wordHistoryModalOpen,
         setWordHistoryModalOpen,
+        playerOneName,
+        setPlayerOneName,
+        playerTwoName,
+        setPlayerTwoName,
         chatSocket,
       }}
     >

@@ -4,21 +4,32 @@ import { AppContext } from "../App";
 import "./GameInfo.css";
 
 function GameInfo() {
-  const { activePlayer, playerRole } = useContext(AppContext);
+  const {
+    activePlayer,
+    playerRole,
+    playerOneName,
+    setPlayerOneName,
+    playerTwoName,
+    setPlayerTwoName,
+  } = useContext(AppContext);
 
   let playerRoleLabel = "";
   let playerRoleStyleID = "";
   let turnString = "";
 
+  if (window.location.pathname.startsWith("/ai/")) {
+    setPlayerTwoName("The AI")
+  }
+
   // set approapriate player role info on top
   if (playerRole === "player_one") {
-    playerRoleLabel = "Player Blue";
+    // playerRoleLabel = "Player Blue";
     playerRoleStyleID = "player-one-active";
   } else if (playerRole === "player_two") {
-    playerRoleLabel = "Player Orange";
+    // playerRoleLabel = "Player Orange";
     playerRoleStyleID = "player-two-active";
   } else if (playerRole.startsWith("observer")) {
-    playerRoleLabel = "Observer";
+    // playerRoleLabel = "Observer";
     playerRoleStyleID = "observer-active";
   }
 
@@ -32,13 +43,13 @@ function GameInfo() {
     } else if (activePlayer === "player-two" && playerRole === "player_two") {
       turnString = "It is your turn";
     } else if (activePlayer === "player-one" && playerRole === "player_two") {
-      turnString = "Please wait, while BLUE plays their turn";
+      turnString = "Please wait, while " + playerOneName + " plays their turn";
     } else if (
       activePlayer === "player-two" &&
       playerRole === "player_one" &&
       window.location.pathname.startsWith("/core/")
     ) {
-      turnString = "Please wait, while ORANGE plays their turn";
+      turnString = "Please wait, while " + playerTwoName + " plays their turn";
     } else if (
       activePlayer === "player-two" &&
       window.location.pathname.startsWith("/ai/")
@@ -51,12 +62,16 @@ function GameInfo() {
 
   return (
     <div className="gameinfo">
-      <p className="generic-string1">You joined as: </p>
-      <p className="player-role" id={playerRoleStyleID}>
-        {playerRoleLabel}
+      <p className="player-one" id="player-one-active">
+        {playerOneName}
+      </p>
+      <p className="versus"> has challenged </p>
+      <p className="player-two" id="player-two-active">
+        {playerTwoName}
       </p>
       <br />
       <p className="turn-string">{turnString}</p>
+      <p className="anchor" id={playerRoleStyleID}></p>
     </div>
   );
 }

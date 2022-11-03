@@ -47,8 +47,8 @@ export async function getLetterToPlay(board, wordsMade) {
     }
   }
 
-  console.log(board)
-  console.log(cursors)
+//   console.log(board)
+//   console.log(cursors)
 
   const forEachLoop = async (_) => {
     for (let l_index = 0; l_index < letters.length; l_index++) {
@@ -60,7 +60,7 @@ export async function getLetterToPlay(board, wordsMade) {
         let points = 0;
 
         newBoard[row][column]["keyVal"] = letters[l_index]
-        console.log("AI PUTTING " + letters[l_index] + " in " + row + "x" + column)
+        // console.log("AI PUTTING " + letters[l_index] + " in " + row + "x" + column)
         let newWordsMade = await getWordsEndingOnCursor(
           cursors[c_index],
           newBoard,

@@ -9,6 +9,8 @@ import Computer from "@mui/icons-material/Computer";
 import RestartAlt from "@mui/icons-material/RestartAlt";
 import HelpOutlineOutlined from "@mui/icons-material/HelpOutlineOutlined";
 import InfoOutlined from "@mui/icons-material/InfoOutlined";
+import TextField from "@mui/material/TextField";
+import { makeStyles } from "@material-ui/core/styles";
 
 const style = {
   position: "absolute",
@@ -27,11 +29,65 @@ const style = {
   overflowX: "hidden",
 };
 
+
+const useStyles = makeStyles({
+  root: {
+    "& .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline": {
+      borderColor: "white",
+    },
+    "&:hover .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline": {
+      borderColor: "white",
+    },
+    "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": {
+      borderColor: "white",
+    },
+    "& .MuiOutlinedInput-input": {
+      color: "white",
+    },
+    "&:hover .MuiOutlinedInput-input": {
+      color: "white",
+    },
+    "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-input": {
+      color: "white",
+    },
+    "& .MuiInputLabel-outlined": {
+      color: "white",
+    },
+    "&:hover .MuiInputLabel-outlined": {
+      color: "white",
+    },
+    "& .MuiInputLabel-outlined.Mui-focused": {
+      color: "white",
+    },
+  },
+});
+
 function HelpModal() {
-  const { setHelpModalOpen, helpModalOpen } = useContext(AppContext);
+  const { setHelpModalOpen, helpModalOpen, playerRole, playerOneName, playerTwoName, setPlayerOneName, setPlayerTwoName, chatSocket} = useContext(AppContext);
 
   const handleHelpOpen = () => setHelpModalOpen(true);
   const handleHelpClose = () => setHelpModalOpen(false);
+  const handleNameInput = (e) => {
+  const { name, value } = e.target;
+  
+  if (playerRole === "player_one") {
+    setPlayerOneName(value)
+    chatSocket.send(
+      JSON.stringify({
+        playerOneName: value,
+      })
+    );
+  } else if (playerRole === "player_two"){
+    setPlayerTwoName(value)
+    chatSocket.send(
+      JSON.stringify({
+        playerTwoName: value,
+      })
+    );
+  }
+  };
+
+  let classes = useStyles();
 
   return (
     <Modal
@@ -44,6 +100,19 @@ function HelpModal() {
         <div>
           <h2>How To Play</h2>
           <p>Make as many words as you can.</p>
+          <br />
+          <br />
+          <p>Please enter your name here:</p>
+          <br />
+          <br />
+          <TextField
+            id="outlined-basic"
+            label="Name"
+            variant="outlined"
+            className={classes.root}
+            onChange={handleNameInput}
+          />
+          <br />
           <br />
         </div>
         <h4>Starting A Game</h4>
@@ -137,9 +206,21 @@ function HelpModal() {
               win.
             </li>
             <li>
-              In case of dispute, you can check the validity of the word{" "}
+              In case of dispute, you can quickly check the validity of the word{" "}
               <a
                 href="https://scrabblecheck.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{ color: "#7EC8E3" }}
+              >
+                here
+              </a>
+              .
+            </li>
+            <li>
+              The actual word list used in this game can be found{" "}
+              <a
+                href="https://www.wordgamedictionary.com/word-lists/"
                 target="_blank"
                 rel="noopener noreferrer"
                 style={{ color: "#7EC8E3" }}
