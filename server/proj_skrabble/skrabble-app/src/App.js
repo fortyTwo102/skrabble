@@ -171,7 +171,7 @@ function App() {
       }
 
 
-      if (fetchedLetterCounter) {
+      if (fetchedLetterCounter === 0) {
         // // // // // // console.log("Setting letter count:")
         // // // // // // console.log(fetchedLetterCounter)
         SetLetterCounter(fetchedLetterCounter);
