@@ -117,6 +117,7 @@ function HelpModal() {
             id="outlined-basic"
             label="Name"
             variant="outlined"
+            defaultValue={playerRole == "player_one" ? playerOneName : playerTwoName}
             className={classes.root}
             onChange={handleNameInput}
           />
