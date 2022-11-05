@@ -61,14 +61,9 @@ function NavBar() {
           wordsMade: [],
         },
         letterStyleBoard: letterStyleBoardDefault,
+        clearScreen: true
       })
     );
-
-    alert.removeAll();
-    alert.show("Game Restarted!", {
-      timeout: 2000,
-      type: types.INFO,
-    });
   };
 
   return (

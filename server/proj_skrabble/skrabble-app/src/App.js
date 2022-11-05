@@ -146,7 +146,12 @@ function App() {
       let fetchedPlayerTwoName =
       "playerTwoName" in game_state_message
         ? game_state_message["playerTwoName"]
-        : null;
+        : null;        
+      
+      let fetchedClearScreen =
+      "clearScreen" in game_state_message
+        ? game_state_message["clearScreen"]
+        : null;  
       
     
 
@@ -169,9 +174,17 @@ function App() {
       if (fetchedPlayerTwoName) {
         setPlayerTwoName(fetchedPlayerTwoName);
       }
+      
+      if (fetchedClearScreen) {
+        alert.removeAll();
+        alert.show("Game Restarted!", {
+          timeout: 2000,
+          type: types.INFO,
+        });
+      }
 
 
-      if (fetchedLetterCounter === 0) {
+      if (fetchedLetterCounter || fetchedLetterCounter === 0) {
         // // // // // // console.log("Setting letter count:")
         // // // // // // console.log(fetchedLetterCounter)
         SetLetterCounter(fetchedLetterCounter);
