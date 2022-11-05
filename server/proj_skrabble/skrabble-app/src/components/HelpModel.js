@@ -117,7 +117,7 @@ function HelpModal() {
             id="outlined-basic"
             label="Name"
             variant="outlined"
-            defaultValue={playerRole == "player_one" ? playerOneName : playerTwoName}
+            defaultValue={playerRole == "player_one" ? playerOneName : (!playerTwoName === "The AI" ? playerOneName : "")}
             className={classes.root}
             onChange={handleNameInput}
           />
