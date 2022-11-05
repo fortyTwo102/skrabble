@@ -26,7 +26,7 @@ import Person from "@mui/icons-material/Person";
 import { useAlert } from "react-alert";
 
 function NavBar() {
-  const { setAboutModalOpen, setHelpModalOpen, chatSocket } =
+  const { setAboutModalOpen, setHelpModalOpen, setLetterCounter, chatSocket } =
     useContext(AppContext);
 
   const alert = useAlert();
@@ -63,7 +63,8 @@ function NavBar() {
         letterStyleBoard: letterStyleBoardDefault,
       })
     );
-
+    
+    console.log("Removing all alerts.")
     alert.removeAll();
     alert.show("Game Restarted!", {
       timeout: 2000,

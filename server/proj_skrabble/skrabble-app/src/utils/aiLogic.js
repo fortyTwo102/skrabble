@@ -70,7 +70,7 @@ export async function getLetterToPlay(board, wordsMade) {
 
         newBoard[row][column]["keyVal"] = ""
         
-        console.log(newWordsMade)
+        // console.log(newWordsMade)
         newWordsMade.forEach((newWordMade) => {
           let newWordMadeObj = JSON.parse(newWordMade);
           points += newWordMadeObj["word"].length;
@@ -87,7 +87,7 @@ export async function getLetterToPlay(board, wordsMade) {
 
   await forEachLoop();
 
-  console.log(bestLetter, bestCursorPosition)
+  // console.log(bestLetter, bestCursorPosition)
 
   return [bestLetter, bestCursorPosition[0], bestCursorPosition[1]];
 

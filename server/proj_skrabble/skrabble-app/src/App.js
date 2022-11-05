@@ -97,6 +97,7 @@ function App() {
           ? JSON.parse(data["game_state_message"])
           : null;
 
+      console.log("GAME STATE RECEIVED:")
       console.log(game_state_message);
 
       let fetchedBoard =
@@ -142,12 +143,13 @@ function App() {
       "playerOneName" in game_state_message
         ? game_state_message["playerOneName"]
         : null;
-        
+
       let fetchedPlayerTwoName =
       "playerTwoName" in game_state_message
         ? game_state_message["playerTwoName"]
-        : null;
-  
+        : null;        
+      
+      console.log("fetched LC: " + fetchedLetterCounter)
 
       if (fetchedColorBoard) {
         setColorBoard(fetchedColorBoard);
@@ -169,15 +171,15 @@ function App() {
         setPlayerTwoName(fetchedPlayerTwoName);
       }
 
-      if (fetchedLetterCounter) {
-        // console.log("Setting letter count:")
-        // console.log(fetchedLetterCounter)
+      if (fetchedLetterCounter || fetchedLetterCounter == 0) {
+        console.log("Setting letter count:")
+        console.log(fetchedLetterCounter)
         SetLetterCounter(fetchedLetterCounter);
       }
 
       if (fetchedTally) {
-        console.log("Setting tally:");
-        console.log(fetchedTally);
+        // console.log("Setting tally:");
+        // console.log(fetchedTally);
         setTally(fetchedTally);
       }
 
@@ -204,7 +206,7 @@ function App() {
         // console.log(fetchedActivePlayer)
         setActivePlayer(fetchedActivePlayer["activePlayer"]);
 
-        console.log("activePlayer: " + fetchedActivePlayer["activePlayer"]);
+        // console.log("activePlayer: " + fetchedActivePlayer["activePlayer"]);
 
         if (window.location.pathname.startsWith("/ai/")) {
           if (fetchedActivePlayer["activePlayer"] == "player-two") {
@@ -270,7 +272,11 @@ function App() {
       }
 
       if (fetchedEndGameTally) {
-        // console.log("ENDGAME")
+
+        console.log("ENDGAME")
+        console.log(fetchedEndGameTally)
+        console.log(letterCounter)
+        
         let currentPlayerRole = "";
         let endGameMessage = "";
 

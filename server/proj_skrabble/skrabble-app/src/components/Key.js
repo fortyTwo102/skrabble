@@ -90,7 +90,7 @@ function Key({ keyVal, bigKey }) {
       ) {
         // remove glow after keyVal is set
 
-        console.log("KEYVAL: " + keyVal + " of len: " + keyVal.length);
+        // console.log("KEYVAL: " + keyVal + " of len: " + keyVal.length);
 
         for (let rindex = 0; rindex < ROW; rindex++) {
           for (let cindex = 0; cindex < COLUMN; cindex++) {
@@ -167,8 +167,8 @@ function Key({ keyVal, bigKey }) {
 
         newBoard[row][column]["alive"] = false;
         setBoard(newBoard);
-        console.log(board);
-        console.log(newBoard);
+        // console.log(board);
+        // console.log(newBoard);
         chatSocket.send(
           JSON.stringify({
             board: newBoard,
@@ -225,8 +225,10 @@ function Key({ keyVal, bigKey }) {
 
         // 4. Set GameBoard letter counter
         SetLetterCounter(letterCounter + 1);
-        // // console.log("LC:")
-        // // console.log(letterCounter + 1)
+
+        console.log("LC:")
+        console.log(letterCounter + 1)
+
         chatSocket.send(
           JSON.stringify({
             letterCounter: letterCounter + 1,
@@ -234,8 +236,8 @@ function Key({ keyVal, bigKey }) {
         );
 
         // 5. check if all the boxes are filled
-        if (letterCounter + 1 == 36) {
-          // // console.log("ENDGAME")
+        if (letterCounter + 1 == 5) {
+          console.log("ENDGAME SENDING BECAUSE: " +  letterCounter)
 
           chatSocket.send(
             JSON.stringify({

@@ -12,7 +12,7 @@ export function isWordTaken(word, wordsMade) {
   wordsMade.forEach((wordMade) => {
     let wordMadeJSON = JSON.parse(wordMade);
     if (wordMadeJSON["word"] === word) {
-      console.log("Word: " + word + " is already taken.");
+      // console.log("Word: " + word + " is already taken.");
       isWordTakenFlag = true;
     }
   });
@@ -47,7 +47,7 @@ export async function isEnglishWordNew(word) {
   let found = false;
   word = word.toLowerCase();
 
-  console.log("checking: " + word);
+  // console.log("checking: " + word);
   // console.log(dictionary[word.length][word[0]])
 
   try {
@@ -141,7 +141,7 @@ export async function getWordsEndingOnCursor(
     endX = index;
   }
 
-  console.log("startX", startX, "endX", endX);
+  // console.log("startX", startX, "endX", endX);
 
   // find possible word combinations
 
@@ -171,7 +171,7 @@ export async function getWordsEndingOnCursor(
       let possibleWord = possibleWordsList[index];
       let possibleWordObj = JSON.parse(possibleWord);
       possibleWordObj["player"] = activePlayer;
-      console.log("checking: " + possibleWordObj["word"]);
+      // console.log("checking: " + possibleWordObj["word"]);
       let isEnglishWordReturns = await isEnglishWordNew(
         possibleWordObj["word"]
       );
@@ -191,17 +191,17 @@ export async function getWordsEndingOnCursor(
 
   await forEachLoop();
 
-  console.log("board");
-  console.log(board);
-  console.log("PW");
-  console.log(possibleWords);
-  console.log("WM");
-  console.log(wordsMade);
-  console.log("NWMT");
-  console.log(newWordsMadeTemp);
-  console.log("startX: " + startX + " endX: " + endX);
-  console.log("Cursor");
-  console.log(cursor);
+  // console.log("board");
+  // console.log(board);
+  // console.log("PW");
+  // console.log(possibleWords);
+  // console.log("WM");
+  // console.log(wordsMade);
+  // console.log("NWMT");
+  // console.log(newWordsMadeTemp);
+  // console.log("startX: " + startX + " endX: " + endX);
+  // console.log("Cursor");
+  // console.log(cursor);
 
   return newWordsMadeTemp;
 }
