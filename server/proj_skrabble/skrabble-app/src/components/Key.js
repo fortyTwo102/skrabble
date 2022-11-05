@@ -204,30 +204,36 @@ function Key({ keyVal, bigKey }) {
           //   }
           // );
 
-          alert.show(
-            <div>
-              +{newWordMadeObj["word"].length} for{" "}
-              <a
-                href={"https://scrabblecheck.com/" + newWordMadeObj["word"]}
-                target="_blank"
-                rel="noopener noreferrer"
-                style={{ color: "#7EC8E3" }}
-              >
-                {newWordMadeObj["word"]}
-              </a>
-            </div>,
-            {
-              timeout: 1500,
-              type: types.SUCCESS,
-            }
-          );
+          if (
+            window.location.pathname.startsWith("/core/") ||
+            (window.location.pathname.startsWith("/ai/") &&
+              activePlayer === "player-one")
+          ) {
+            alert.show(
+              <div>
+                +{newWordMadeObj["word"].length} for{" "}
+                <a
+                  href={"https://scrabblecheck.com/" + newWordMadeObj["word"]}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  style={{ color: "#7EC8E3" }}
+                >
+                  {newWordMadeObj["word"]}
+                </a>
+              </div>,
+              {
+                timeout: 1500,
+                type: types.SUCCESS,
+              }
+            );
+          }
         });
 
         // 4. Set GameBoard letter counter
         SetLetterCounter(letterCounter + 1);
 
-        console.log("LC:")
-        console.log(letterCounter + 1)
+        console.log("LC:");
+        console.log(letterCounter + 1);
 
         chatSocket.send(
           JSON.stringify({
@@ -237,7 +243,8 @@ function Key({ keyVal, bigKey }) {
 
         // 5. check if all the boxes are filled
         if (letterCounter + 1 == 5) {
-          console.log("ENDGAME SENDING BECAUSE: " +  letterCounter)
+          console.log("ENDGAME SENDING BECAUSE: " + letterCounter);
+          // console.log(tally);
 
           chatSocket.send(
             JSON.stringify({

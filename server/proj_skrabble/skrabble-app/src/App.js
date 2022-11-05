@@ -149,6 +149,11 @@ function App() {
         ? game_state_message["playerTwoName"]
         : null;        
       
+      let fetchedClearScreen =
+      "clearScreen" in game_state_message
+        ? game_state_message["clearScreen"]
+        : null;       
+
       console.log("fetched LC: " + fetchedLetterCounter)
 
       if (fetchedColorBoard) {
@@ -161,6 +166,14 @@ function App() {
 
       if (fetchedBoard) {
         setBoard(fetchedBoard);
+      }
+
+      if (fetchedClearScreen) {
+        alert.removeAll();
+        alert.show("Game Restarted!", {
+          timeout: 2000,
+          type: types.INFO,
+        });
       }
 
       if (fetchedPlayerOneName) {

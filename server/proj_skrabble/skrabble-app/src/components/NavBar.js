@@ -61,15 +61,11 @@ function NavBar() {
           wordsMade: [],
         },
         letterStyleBoard: letterStyleBoardDefault,
+        clearScreen: true
       })
     );
     
-    console.log("Removing all alerts.")
-    alert.removeAll();
-    alert.show("Game Restarted!", {
-      timeout: 2000,
-      type: types.INFO,
-    });
+    // console.log("Removing all alerts.")
   };
 
   return (
