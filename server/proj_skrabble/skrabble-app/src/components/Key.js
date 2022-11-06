@@ -8,6 +8,13 @@ import "./Key.css";
 
 import { useAlert } from "react-alert";
 
+const removeDuplicatesFromArrayByProperty = (arr, prop) => arr.reduce((accumulator, currentValue) => {
+  if(!accumulator.find(obj => obj[prop] === currentValue[prop])){
+    accumulator.push(currentValue);
+  }
+  return accumulator;
+}, [])
+
 function Key({ keyVal, bigKey }) {
   const {
     board,
@@ -113,15 +120,15 @@ function Key({ keyVal, bigKey }) {
         // console.log("NWM1");
         // console.log(newWordsMade);
 
-        var temp = new Set();
+        var temp = new Array();
         newWordsMade.forEach((newWordMade) => {
           let newWordMadeObj = JSON.parse(newWordMade);
           if (!isWordTaken(newWordMadeObj["word"])) {
-            temp.add(JSON.stringify(newWordMadeObj));
+            temp.push(JSON.stringify(newWordMadeObj));
           }
         });
 
-        newWordsMade = temp;
+        newWordsMade = removeDuplicatesFromArrayByProperty(temp, "word");
 
         // console.log("NWM2");
         // console.log(newWordsMade);
