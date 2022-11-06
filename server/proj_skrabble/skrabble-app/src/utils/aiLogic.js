@@ -68,6 +68,9 @@ export async function getLetterToPlay(board, wordsMade) {
           activePlayer
         );
 
+        console.log("NWM:")
+        console.log(newWordsMade)
+
         newBoard[row][column]["keyVal"] = ""
         
         // console.log(newWordsMade)

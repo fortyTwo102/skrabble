@@ -12,3 +12,5 @@ export default function listToMatrix(list, elementsPerSubArray) {
   
     return matrix;
   }
+
+//   console.log(removeDuplicatesFromArrayByProperty(myArr, 'name'));

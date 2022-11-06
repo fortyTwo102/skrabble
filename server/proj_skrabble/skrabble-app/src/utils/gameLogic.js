@@ -196,7 +196,7 @@ export async function getWordsEndingOnCursor(
   // console.log("PW");
   // console.log(possibleWords);
   // console.log("WM");
-  // console.log(wordsMade);
+  // // console.log(wordsMade);
   // console.log("NWMT");
   // console.log(newWordsMadeTemp);
   // console.log("startX: " + startX + " endX: " + endX);

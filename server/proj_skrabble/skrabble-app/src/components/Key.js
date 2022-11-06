@@ -8,6 +8,14 @@ import "./Key.css";
 
 import { useAlert } from "react-alert";
 
+const removeDuplicatesFromArrayByProperty = (arr, prop) => arr.reduce((accumulator, currentValue) => {
+  if(!accumulator.find(obj => obj[prop] === currentValue[prop])){
+    accumulator.push(currentValue);
+  }
+  return accumulator;
+}, [])
+
+
 function Key({ keyVal, bigKey }) {
   const {
     board,
@@ -108,23 +116,30 @@ function Key({ keyVal, bigKey }) {
           activePlayer
         );
 
-        // double check word taken or not
+        console.log(newWordsMade)
 
-        // console.log("NWM1");
-        // console.log(newWordsMade);
-
-        var temp = new Set();
+        // turn it into array
+        
+        var temp1 = new Array();
         newWordsMade.forEach((newWordMade) => {
           let newWordMadeObj = JSON.parse(newWordMade);
+          temp1.push(newWordMadeObj);
+        });
+
+        newWordsMade = removeDuplicatesFromArrayByProperty(temp1, "word")
+
+        // double check word taken or not
+        var temp2 = new Array();
+        newWordsMade.forEach((newWordMadeObj) => {
           if (!isWordTaken(newWordMadeObj["word"])) {
-            temp.add(JSON.stringify(newWordMadeObj));
+            temp2.push(JSON.stringify(newWordMadeObj));
           }
         });
 
-        newWordsMade = temp;
+        newWordsMade = temp2
 
-        // console.log("NWM2");
-        // console.log(newWordsMade);
+        console.log("NWM2");
+        console.log(newWordsMade);
 
         // // console.log("KEY NWM")
         wordsMade.push(...newWordsMade);
@@ -186,6 +201,11 @@ function Key({ keyVal, bigKey }) {
 
         // 3. set score
 
+        console.log("BEFORE:")
+        console.log(newWordsMade)
+        console.log("AFTER:")
+        console.log(removeDuplicatesFromArrayByProperty(newWordsMade, "word"))
+
         newWordsMade.forEach((newWordMade) => {
           let newWordMadeObj = JSON.parse(newWordMade);
           tally[activePlayer] += newWordMadeObj["word"].length;
@@ -242,7 +262,7 @@ function Key({ keyVal, bigKey }) {
         );
 
         // 5. check if all the boxes are filled
-        if (letterCounter + 1 == 5) {
+        if (letterCounter + 1 == 10) {
           console.log("ENDGAME SENDING BECAUSE: " + letterCounter);
           // console.log(tally);
 

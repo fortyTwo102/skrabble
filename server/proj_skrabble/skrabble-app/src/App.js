@@ -49,8 +49,8 @@ function App() {
   const [helpModalOpen, setHelpModalOpen] = useState(false);
   const [aboutModalOpen, setAboutModalOpen] = useState(false);
   const [wordHistoryModalOpen, setWordHistoryModalOpen] = useState(false);
-  const [playerOneName, setPlayerOneName] = useState("");
-  const [playerTwoName, setPlayerTwoName] = useState("");
+  const [playerOneName, setPlayerOneName] = useState("Blue");
+  const [playerTwoName, setPlayerTwoName] = useState("Orange");
 
   const alert = useAlert();
 
