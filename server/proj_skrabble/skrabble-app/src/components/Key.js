@@ -115,20 +115,26 @@ function Key({ keyVal, bigKey }) {
           activePlayer
         );
 
-        // double check word taken or not
-
-        // console.log("NWM1");
-        // console.log(newWordsMade);
-
-        var temp = new Array();
+        // turn it into array
+        
+        var temp1 = new Array();
         newWordsMade.forEach((newWordMade) => {
           let newWordMadeObj = JSON.parse(newWordMade);
+          temp1.push(newWordMadeObj);
+        });
+
+        newWordsMade = removeDuplicatesFromArrayByProperty(temp1, "word")
+
+        // double check word taken or not
+        
+        var temp2 = new Array();
+        newWordsMade.forEach((newWordMadeObj) => {
           if (!isWordTaken(newWordMadeObj["word"])) {
-            temp.push(JSON.stringify(newWordMadeObj));
+            temp2.push(JSON.stringify(newWordMadeObj));
           }
         });
 
-        newWordsMade = removeDuplicatesFromArrayByProperty(temp, "word");
+        newWordsMade = temp2
 
         // console.log("NWM2");
         // console.log(newWordsMade);
